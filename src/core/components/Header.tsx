@@ -15,7 +15,7 @@ export const Header = () => {
     }
 
     return (
-        <header className="bg-neutral-200 dark:bg-neutral-700 p-2">
+        <header className="bg-neutral-200 dark:bg-neutral-700 p-2 sticky top-0 z-900">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="text-neutral-900 dark:text-neutral-50 text-2xl font-bold text-center px-2">BiblioClase</div>
 

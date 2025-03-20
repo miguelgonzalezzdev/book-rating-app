@@ -1,0 +1,89 @@
+{
+  "genres": [
+    {
+      "id": 1,
+      "name": "Ficción",
+      "color": "#E63946"
+    },
+    {
+      "id": 2,
+      "name": "No ficción",
+      "color": "#457B9D"
+    },
+    {
+      "id": 3,
+      "name": "Poesía",
+      "color": "#A663CC"
+    },
+    {
+      "id": 4,
+      "name": "Drama",
+      "color": "#8D0801"
+    },
+    {
+      "id": 5,
+      "name": "Fantasía",
+      "color": "#6D597A"
+    },
+    {
+      "id": 6,
+      "name": "Ciencia ficción",
+      "color": "#4D908E"
+    },
+    {
+      "id": 7,
+      "name": "Terror",
+      "color": "#252958"
+    },
+    {
+      "id": 8,
+      "name": "Misterio",
+      "color": "#2E4057"
+    },
+    {
+      "id": 9,
+      "name": "Thriller",
+      "color": "#A4161A"
+    },
+    {
+      "id": 10,
+      "name": "Histórica",
+      "color": "#BC6C25"
+    },
+    {
+      "id": 11,
+      "name": "Aventura",
+      "color": "#1B998B"
+    },
+    {
+      "id": 12,
+      "name": "Distopía",
+      "color": "#495057"
+    },
+    {
+      "id": 13,
+      "name": "Utopía",
+      "color": "#3A86FF"
+    },
+    {
+      "id": 14,
+      "name": "Clásicos",
+      "color": "#F4A261"
+    },
+    {
+      "id": 15,
+      "name": "Biografía",
+      "color": "#8A817C"
+    },
+    {
+      "id": 16,
+      "name": "Romance",
+      "color": "#C1121F"
+    },
+    {
+      "id": 17,
+      "name": "Cuentos",
+      "color": "#735D78"
+    }
+  ]
+}
