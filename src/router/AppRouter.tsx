@@ -7,12 +7,14 @@ import { BookPage } from "../search/components/BookPage.tsx";
 import { BooksList } from "../search/components/BooksList.tsx";
 import { LoginPage } from "../login/components/LoginPage.tsx";
 import { MainLayout } from "../core/components/MainLayout.tsx";
+import { RegisterPage } from "../register/components/RegisterPage.tsx";
  
 export const AppRouter = () => {
     return (
         <Routes>
             {/* Ruta sin layout (login) */}
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
 
             {/* Rutas con layout compartido */}
             <Route element={<MainLayout />}>
