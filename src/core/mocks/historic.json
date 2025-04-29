@@ -1,0 +1,70 @@
+{
+  "historical": [
+    {
+      "id": 1,
+      "type": "review",
+      "actionText": "ha publicado una reseña",
+      "dateTime": "2025-04-25 09:10:30",
+      "user": {
+        "userName": "Chimpansini Bananini",
+        "imgProfile": ""
+      },
+      "review": {
+        "idReview": 34,
+        "imgReview": "",
+        "text": "Los tres cerditos es mi cuento preferido y estas son las cosas que me gustan de él...",
+        "dateTimeReview": "2025-04-25 09:10:30"
+      }
+    },
+    {
+      "id": 2,
+      "type": "like",
+      "actionText": "le ha dado like a una reseña",
+      "dateTime": "2025-04-24 10:30:00",
+      "user": {
+        "userName": "Bombini Gusini",
+        "imgProfile": "",
+        "actionType": "like"
+      },
+      "review": {
+        "idReview": 12,
+        "imgReview": "",
+        "text": "Don Quijote de la mancha, un libro que es mas duro que cagar ladrillos. No se lo recomiendo...",
+        "dateTimeReview": "2025-04-24 10:30:00"
+      }
+    },
+    {
+      "id": 3,
+      "type": "review",
+      "actionText": "ha publicado una reseña",
+      "dateTime": "2025-04-24 10:30:00",
+      "user": {
+        "userName": "Tralalelo Tralala",
+        "imgProfile": ""
+      },
+      "review": {
+        "idReview": 10,
+        "imgReview": "",
+        "text": "Don Quijote de la mancha, un libro que es mas duro que cagar ladrillos. No se lo recomiendo...",
+        "dateTimeReview": "2025-04-24 10:30:00"
+      }
+    },
+    {
+      "id": 4,
+      "type": "like",
+      "actionText": "le ha dado like a una reseña",
+      "dateTime": "2025-04-20 20:30:00",
+      "user": {
+        "userName": "Tum tum tum Sahur",
+        "imgProfile": "",
+        "actionType": "like"
+      },
+      "review": {
+        "idReview": 12,
+        "imgReview": "",
+        "text": "Tum tum tum tum tum tum tum tum tum tum tum tum tum tum tum SAAAAAHUUUUUUR...",
+        "dateTimeReview": "2025-04-20 20:30:00"
+      }
+    }
+  ]
+}
