@@ -5,17 +5,27 @@ import { ReviewPage } from "../review/components/ReviewPage.tsx";
 import { ProfilePage } from "../profile/components/ProfilePage.tsx";
 import { BookPage } from "../search/components/BookPage.tsx";
 import { BooksList } from "../search/components/BooksList.tsx";
-
+import { LoginPage } from "../login/components/LoginPage.tsx";
+import { MainLayout } from "../core/components/MainLayout.tsx";
+ 
 export const AppRouter = () => {
     return (
         <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/search/:query" element={<BooksList />} />
-            <Route path="/search/book/:query" element={<BookPage />} />
-            <Route path="/review" element={<ReviewPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/*" element={<Navigate to='/' />} />
+            {/* Ruta sin layout (login) */}
+            <Route path="/login" element={<LoginPage />} />
+
+            {/* Rutas con layout compartido */}
+            <Route element={<MainLayout />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/search" element={<SearchPage />} />
+                <Route path="/search/:query" element={<BooksList />} />
+                <Route path="/search/book/:query" element={<BookPage />} />
+                <Route path="/review" element={<ReviewPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+            </Route>
+
+            {/* Redirección por defecto */}
+            <Route path="*" element={<Navigate to="/" />} />
         </Routes>
     )
 }
