@@ -1,12 +1,13 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { User } from '../types'
+import { supabase } from '../supabase/supabaseClient'
 
 interface AuthState {
-  user: User | null
-  isAuthenticated: boolean
-  setUser: (user: AuthState['user']) => void
-  logout: () => void
+    user: User | null
+    isAuthenticated: boolean
+    setUser: (user: AuthState['user']) => void
+    logout: () => void
 }
 
 export const useAuthStore = create<AuthState>()(persist((set) => {
@@ -16,7 +17,8 @@ export const useAuthStore = create<AuthState>()(persist((set) => {
         setUser: (user) => {
             set({ user, isAuthenticated: !!user })
         },
-        logout: () => {
+        logout: async () => {
+            await supabase.auth.signOut()
             set({ user: null, isAuthenticated: false })
         }
     }

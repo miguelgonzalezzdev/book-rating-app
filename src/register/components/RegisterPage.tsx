@@ -53,7 +53,7 @@ export const RegisterPage = () => {
             <Link to="/" className="text-neutral-900 dark:text-neutral-50 text-5xl font-bold text-center px-2 cursor-pointer">BiblioClase</Link>
             <form onSubmit={handleSubmit} className="w-full max-w-md bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-2xl shadow-md p-8 flex flex-col gap-6">
                 <h2 className="text-2xl font-semibold text-center text-neutral-900 dark:text-neutral-50">Regístrate</h2>
-
+                
                 <FormInputField
                     id="name"
                     name="name"
@@ -109,41 +109,3 @@ export const RegisterPage = () => {
         </main>
     )
 }
-
-/*
-<input
-type="text"
-name="name"
-id="name"
-placeholder="Nombre"
-onChange={handleName}
-className={`${baseInputClasses} ${error && name === '' ? errorInputClasses : ''}`}
-/>
-
-<input
-type="text"
-name="surname"
-id="surname"
-placeholder="Apellidos"
-onChange={handleSurname}
-className={`${baseInputClasses} ${error && surname === '' ? errorInputClasses : ''}`}
-/>
-
-<input
-type="email"
-name="email"
-id="email"
-placeholder="Correo electrónico"
-onChange={handleEmail}
-className={`${baseInputClasses} ${error && email === '' ? errorInputClasses : ''}`}
-/>
-
-<input
-type="password"
-name="password"
-id="password"
-placeholder="Contraseña"
-onChange={handlePassword}
-className={`${baseInputClasses} ${error && password === '' ? errorInputClasses : ''}`}
-                />
-*/

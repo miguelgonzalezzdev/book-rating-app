@@ -10,15 +10,18 @@ import { MainLayout } from "../../core/components/MainLayout.tsx";
 import { RegisterPage } from "../../register/components/RegisterPage.tsx";
 import { ProtectedRoute } from "./ProtectedRoute.tsx";
 import { useAuthListener } from "../hooks/useAuthListener.ts";
+import { PublicOnlyRoute } from "./PublicOnlyRoute.tsx";
 
 export const AppRouter = () => {
     useAuthListener()
 
     return (
         <Routes>
-            {/* Ruta SIN layout */}
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            {/* Rutas solo visibles sin estar logeado */}
+            <Route element={<PublicOnlyRoute />}>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+            </Route>
 
             {/* Rutas CON layout compartido */}
             <Route element={<MainLayout />}>
@@ -26,6 +29,7 @@ export const AppRouter = () => {
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/search/:query" element={<BooksList />} />
                 <Route path="/search/book/:query" element={<BookPage />} />
+                {/* Rutas solo visibles al estar logeado */}
                 <Route element={<ProtectedRoute />}>
                     <Route path="/review" element={<ReviewPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
