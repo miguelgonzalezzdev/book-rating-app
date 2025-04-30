@@ -4,12 +4,13 @@ import { registerUser } from "../services/registerUser";
 import { FormInputField } from "../../core/components/FormInputField";
 
 export const RegisterPage = () => {
-    const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
     const navigate = useNavigate()
+    
+    const [name, setName] = useState("")
+    const [surname, setSurname] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState("")
 
     const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault()
@@ -42,7 +43,7 @@ export const RegisterPage = () => {
         const res = await registerUser({ name, surname, email, password })
         
         if (res.success) {
-            navigate('/')
+            navigate('/profile')
         } else {
             setError(res.message || 'Error al registrarse')
         }

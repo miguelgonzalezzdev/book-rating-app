@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { loginUser } from "../services/loginUser";
+import { FormInputField } from "../../core/components/FormInputField";
 
 export const LoginPage = () => {
     const [email, setEmail] = useState("");
@@ -24,8 +25,8 @@ export const LoginPage = () => {
         e.preventDefault()
         setError('')
 
-        const res = await loginUser({email, password})
-        
+        const res = await loginUser({ email, password })
+
         if (res.success) {
             navigate('/')
         } else {
@@ -39,22 +40,24 @@ export const LoginPage = () => {
             <form onSubmit={handleSubmit} className="w-full max-w-md bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-2xl shadow-md p-8 flex flex-col gap-6">
                 <h2 className="text-2xl font-semibold text-center text-neutral-900 dark:text-neutral-50">Iniciar sesión</h2>
 
-                <input
-                    type="email"
-                    name="email"
+                <FormInputField
                     id="email"
+                    name="email"
+                    type="email"
                     placeholder="Correo electrónico"
+                    value={email}
                     onChange={handleEmail}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-50 placeholder-gray-400 dark:placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    error={!!(error && email === "")}
                 />
 
-                <input
-                    type="password"
-                    name="password"
+                <FormInputField
                     id="password"
+                    name="password"
+                    type="password"
                     placeholder="Contraseña"
+                    value={password}
                     onChange={handlePassword}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-50 placeholder-gray-400 dark:placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    error={!!(error && password === "")}
                 />
 
                 {error && (

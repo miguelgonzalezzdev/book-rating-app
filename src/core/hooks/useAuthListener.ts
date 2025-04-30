@@ -4,19 +4,19 @@ import { useAuthStore } from "../../core/store/authStore"
 
 export const useAuthListener = () => {
   const setUser = useAuthStore((state) => state.setUser)
-  const logout = useAuthStore((state) => state.logout)
+  const clearAuth = useAuthStore((state) => state.clearAuth)
 
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user?.id && session?.user?.email) {
         setUser({ id: session.user.id, email: session.user.email })
       } else {
-        logout()
+        clearAuth()
       }
     })
 
     return () => {
-        data.subscription.unsubscribe()
+      listener?.subscription?.unsubscribe()
     }
-  }, [setUser, logout])
+  }, [setUser, clearAuth])
 }
