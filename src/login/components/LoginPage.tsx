@@ -25,7 +25,7 @@ export const LoginPage = () => {
         setError('')
 
         const res = await loginUser({email, password})
-
+        
         if (res.success) {
             navigate('/')
         } else {
