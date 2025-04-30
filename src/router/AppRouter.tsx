@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router";
+import { Routes, Route, Navigate, useNavigate } from "react-router";
 import { HomePage } from "../home/components/HomePage.tsx";
 import { SearchPage } from "../search/components/SearchPage.tsx";
 import { ReviewPage } from "../review/components/ReviewPage.tsx";
@@ -8,15 +8,28 @@ import { BooksList } from "../search/components/BooksList.tsx";
 import { LoginPage } from "../login/components/LoginPage.tsx";
 import { MainLayout } from "../core/components/MainLayout.tsx";
 import { RegisterPage } from "../register/components/RegisterPage.tsx";
+import { useEffect } from "react";
+import { supabase } from "../core/supabase/supabaseClient.ts";
  
 export const AppRouter = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        supabase.auth.onAuthStateChange((_event, session) => {
+            console.log(session)
+            /*if(!session){
+                navigate("/login")
+            }*/
+        })
+    }, [])
+
     return (
         <Routes>
-            {/* Ruta sin layout (login) */}
+            {/* Ruta SIN layout */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
 
-            {/* Rutas con layout compartido */}
+            {/* Rutas CON layout compartido */}
             <Route element={<MainLayout />}>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/search" element={<SearchPage />} />

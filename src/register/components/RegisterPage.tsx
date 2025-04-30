@@ -40,7 +40,7 @@ export const RegisterPage = () => {
         setError('')
 
         const res = await registerUser({ name, surname, email, password })
-
+        
         if (res.success) {
             navigate('/')
         } else {
@@ -95,7 +95,7 @@ export const RegisterPage = () => {
                 />
 
                 {error && (
-                    <p className="text-red-600 text-sm text-center">{error}</p>
+                    <p id="registerError" className="text-red-600 text-sm text-center">{error}</p>
                 )}
 
                 <button type="submit" className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition duration-200">
