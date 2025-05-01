@@ -1,10 +1,11 @@
 import { FormInputField } from "../../core/components/FormInputField";
-import { updateUserProfile } from "../services/updateProfile";
-import { useGetUserProfileData } from "../hooks/useGetUserProfileData";
+import { updateUserProfile } from "../services/updateUserProfile";
+import { useUserProfileData } from "../hooks/useUserProfileData";
 import { toast } from 'react-hot-toast';
+import { Loader } from "../../core/components/Loader";
 
-export const ProfilePage = () => {
-    const { userId, name, setName, surname, setSurname, email, setEmail, aboutme, setAboutme, error, setError } = useGetUserProfileData()
+export function ProfilePage() {
+    const { userId, name, setName, surname, setSurname, email, setEmail, aboutme, setAboutme, error, setError, isLoading } = useUserProfileData()
 
     const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault()
@@ -43,6 +44,8 @@ export const ProfilePage = () => {
 
         toast.success('Perfil actualizado correctamente');
     }
+
+    if (isLoading) return <Loader />
 
     return (
         <div className="min-h-screen bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 flex items-center justify-center flex-col p-4">

@@ -1,0 +1,17 @@
+import { supabase } from "../../core/supabase/supabaseClient"
+
+export async function getUserProfileData (userId: string) {
+    const { data, error } = await supabase
+        .from("profiles")
+        .select("name, surname, aboutme")
+        .eq("id", userId)
+        .single()
+
+    if (error) throw new Error("No se pudo cargar el perfil")
+
+    return {
+        name: data.name || "",
+        surname: data.surname || "",
+        aboutme: data.aboutme || "",
+    }
+}

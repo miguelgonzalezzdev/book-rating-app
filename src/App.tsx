@@ -13,7 +13,7 @@ function App() {
         position="bottom-right"
         toastOptions={{
           style: {
-            background: isDark ? "#525252" : "#fff", 
+            background: isDark ? "#525252" : "#ffffff", 
             color: isDark ? "#fafafa" : "#171717",     
             border: "1px solid",
             borderColor: isDark ? "#404040" : "#e5e7eb", 

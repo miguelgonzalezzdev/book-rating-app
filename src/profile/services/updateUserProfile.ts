@@ -8,7 +8,7 @@ interface UpdateProfileInput {
     aboutme: string
 }
 
-export async function updateUserProfile({ id, name, surname, email, aboutme }: UpdateProfileInput) { console.log(id, name, surname, email, aboutme)
+export async function updateUserProfile({ id, name, surname, email, aboutme }: UpdateProfileInput) { 
     if (id=="") {
         return { success: false, message: 'ID de usuario no proporcionado' }
     }

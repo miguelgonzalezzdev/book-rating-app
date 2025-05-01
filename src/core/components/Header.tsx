@@ -3,7 +3,7 @@ import { OpenMenuIcon } from "../icons/OpenMenuIcon.tsx"
 import { CloseMenuIcon } from "../icons/CloseMenuIcon.tsx"
 import { Link } from "react-router";
 
-export const Header = () => {
+export function Header () {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const handleToggleMenu = () => {
