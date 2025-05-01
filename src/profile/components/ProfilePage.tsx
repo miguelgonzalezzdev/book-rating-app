@@ -55,14 +55,13 @@ export function ProfilePage() {
         const res = await uploadUserProfileImage({userId, file})
 
         if (!res.success) {
-            console.error(res.message)
             setError(res.message || 'Ocurrió un error inesperado')
             toast.error('Error al actualizar la imagen de perfil')
             return
         }
 
         setProfileimage(res.imageUrl || "")
-        toast.success('Perfil actualizado correctamente')
+        toast.success('Imagen actualizada correctamente')
     }
 
     if (isLoading) return <Loader />
@@ -72,11 +71,11 @@ export function ProfilePage() {
             <section className="w-full max-w-2xl bg-white dark:bg-neutral-600 rounded-2xl p-6 md:p-10 space-y-6 shadow-md border border-gray-200 dark:border-neutral-700">
                 <div className="relative flex justify-center items-start space-y-2">
                     <img
-                        src={profileimage || "placeholder_img_profile.png"}
+                        src={`${profileimage?.trim() ? profileimage : "placeholder_img_profile.png"}?t=${Date.now()}`}
                         alt="Imagen de perfil"
-                        className="w-28 h-28 rounded-full object-cover"
+                        className="w-32 h-32 rounded-full object-cover"
                     />
-                    <div className="absolute p-2 ml-35 cursor-pointer">
+                    <div className="absolute p-2 ml-40">
                         <label htmlFor="profileImageInput" className="cursor-pointer">
                             <EditIcon className="ursor-pointer" />
                         </label>

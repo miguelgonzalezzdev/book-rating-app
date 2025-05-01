@@ -38,7 +38,7 @@ export async function uploadUserProfileImage({ userId, file }: UploadUserProfile
 
     const imageUrl = publicUrlData.publicUrl
 
-    // Actualizar columna profileimage en la tabla profiles
+    // Actualizar el profileimage del usuario
     const { error: dbError } = await supabase
         .from('profiles')
         .update({ profileimage: imageUrl })

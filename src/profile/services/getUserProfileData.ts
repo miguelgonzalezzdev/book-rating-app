@@ -3,7 +3,7 @@ import { supabase } from "../../core/supabase/supabaseClient"
 export async function getUserProfileData (userId: string) {
     const { data, error } = await supabase
         .from("profiles")
-        .select("name, surname, aboutme,profileimage")
+        .select("name, surname, aboutme, profileimage")
         .eq("id", userId)
         .single()
 

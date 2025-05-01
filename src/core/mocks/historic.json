@@ -1,13 +1,14 @@
 {
   "historical": [
     {
-      "id": 1,
-      "type": "review",
-      "actionText": "ha publicado una reseña",
-      "dateTime": "2025-04-25 09:10:30",
+      "id": 2,
+      "type": "like",
+      "actionText": "le ha dado like a una reseña",
+      "dateTime": "2025-04-27 18:30:00",
       "user": {
-        "userName": "Chimpansini Bananini",
-        "imgProfile": ""
+        "userId": "78c9fa83-6b33-4828-9203-927fe9ef70ca",
+        "userName": "Miguel González García",
+        "imgProfile": "https://yibmtdezauftldaoiljp.supabase.co/storage/v1/object/public/profileimages/78c9fa83-6b33-4828-9203-927fe9ef70ca.jpeg"
       },
       "review": {
         "idReview": 34,
@@ -17,53 +18,20 @@
       }
     },
     {
-      "id": 2,
-      "type": "like",
-      "actionText": "le ha dado like a una reseña",
-      "dateTime": "2025-04-24 10:30:00",
-      "user": {
-        "userName": "Bombini Gusini",
-        "imgProfile": "",
-        "actionType": "like"
-      },
-      "review": {
-        "idReview": 12,
-        "imgReview": "",
-        "text": "Don Quijote de la mancha, un libro que es mas duro que cagar ladrillos. No se lo recomiendo...",
-        "dateTimeReview": "2025-04-24 10:30:00"
-      }
-    },
-    {
-      "id": 3,
+      "id": 1,
       "type": "review",
       "actionText": "ha publicado una reseña",
-      "dateTime": "2025-04-24 10:30:00",
+      "dateTime": "2025-04-25 09:10:30",
       "user": {
-        "userName": "Tralalelo Tralala",
-        "imgProfile": ""
+        "userId": "bbc56d16-6206-42dc-ab93-8ac516bd8fb0",
+        "userName": "Raquel Pancorbo Carrascosa",
+        "imgProfile": "https://yibmtdezauftldaoiljp.supabase.co/storage/v1/object/public/profileimages/bbc56d16-6206-42dc-ab93-8ac516bd8fb0.jpeg"
       },
       "review": {
-        "idReview": 10,
+        "idReview": 34,
         "imgReview": "",
-        "text": "Don Quijote de la mancha, un libro que es mas duro que cagar ladrillos. No se lo recomiendo...",
-        "dateTimeReview": "2025-04-24 10:30:00"
-      }
-    },
-    {
-      "id": 4,
-      "type": "like",
-      "actionText": "le ha dado like a una reseña",
-      "dateTime": "2025-04-20 20:30:00",
-      "user": {
-        "userName": "Tum tum tum Sahur",
-        "imgProfile": "",
-        "actionType": "like"
-      },
-      "review": {
-        "idReview": 12,
-        "imgReview": "",
-        "text": "Tum tum tum tum tum tum tum tum tum tum tum tum tum tum tum SAAAAAHUUUUUUR...",
-        "dateTimeReview": "2025-04-20 20:30:00"
+        "text": "Los tres cerditos es mi cuento preferido y estas son las cosas que me gustan de él...",
+        "dateTimeReview": "2025-04-25 09:10:30"
       }
     }
   ]

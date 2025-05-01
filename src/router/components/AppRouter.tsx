@@ -10,6 +10,7 @@ import { MainLayout } from "../../core/components/MainLayout.tsx"
 import { RegisterPage } from "../../register/components/RegisterPage.tsx"
 import { ProtectedRoute } from "./ProtectedRoute.tsx"
 import { PublicOnlyRoute } from "./PublicOnlyRoute.tsx"
+import { PublicProfilePage } from "../../profile/components/PublicProfilePage.tsx"
 
 export const AppRouter = () => {
     
@@ -31,6 +32,7 @@ export const AppRouter = () => {
                 <Route element={<ProtectedRoute />}>
                     <Route path="/review" element={<ReviewPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/profile/:userId" element={<PublicProfilePage />} />
                 </Route>
             </Route>
 

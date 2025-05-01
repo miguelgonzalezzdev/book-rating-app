@@ -2,13 +2,15 @@ import { useState, useEffect } from "react"
 import { useAuthStore } from "../../core/store/authStore"
 import { getUserProfileData } from "../services/getUserProfileData" 
 
-export function useUserProfileData () {
+interface UploadUserProfileImage {
+    userId: string
+}
+
+export function usePublicUserProfileData ({userId}: UploadUserProfileImage) {
     const user = useAuthStore((state) => state.user)
 
-    const [userId, setUserId] = useState("")
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
-    const [email, setEmail] = useState("")
     const [aboutme, setAboutme] = useState("")
     const [profileimage, setProfileimage] = useState("")
     const [error, setError] = useState("")
@@ -21,13 +23,16 @@ export function useUserProfileData () {
                 setIsLoading(false)
                 return
             }
-            
-            try {
-                // Sacar el id y email del estado global de usuario logueado
-                setUserId(user.id)
-                setEmail(user.email)
 
-                const profile = await getUserProfileData(user.id)
+            if (!userId || userId === "") {
+                setError("ID de usuario no proporcionado")
+                setIsLoading(false)
+                return
+            }
+
+            try {
+
+                const profile = await getUserProfileData(userId)
 
                 setName(profile.name)
                 setSurname(profile.surname)
@@ -45,10 +50,8 @@ export function useUserProfileData () {
     }, [])
 
     return {
-        userId,
         name, setName,
         surname, setSurname,
-        email, setEmail,
         aboutme, setAboutme,
         profileimage, setProfileimage,
         error, setError,

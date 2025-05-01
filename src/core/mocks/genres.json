@@ -2,82 +2,82 @@
   "genres": [
     {
       "id": 1,
-      "name": "Ficción",
+      "name": "Fantasía",
       "color": "#E63946"
     },
     {
       "id": 2,
-      "name": "No ficción",
+      "name": "Aventura",
       "color": "#457B9D"
     },
     {
       "id": 3,
-      "name": "Poesía",
+      "name": "Ciencia ficción",
       "color": "#A663CC"
     },
     {
       "id": 4,
-      "name": "Drama",
-      "color": "#8D0801"
+      "name": "Misterio",
+      "color": "#3C6E71"
     },
     {
       "id": 5,
-      "name": "Fantasía",
+      "name": "Humor",
       "color": "#6D597A"
     },
     {
       "id": 6,
-      "name": "Ciencia ficción",
+      "name": "Realismo",
       "color": "#4D908E"
     },
     {
       "id": 7,
-      "name": "Terror",
-      "color": "#252958"
+      "name": "Romance juvenil",
+      "color": "#5A5E9A"
     },
     {
       "id": 8,
-      "name": "Misterio",
-      "color": "#2E4057"
+      "name": "Histórico",
+      "color": "#465A75"
     },
     {
       "id": 9,
-      "name": "Thriller",
+      "name": "Mitología",
       "color": "#A4161A"
     },
     {
       "id": 10,
-      "name": "Histórica",
+      "name": "Biografía",
       "color": "#BC6C25"
     },
     {
       "id": 11,
-      "name": "Aventura",
+      "name": "Poesía",
       "color": "#1B998B"
     },
     {
       "id": 12,
-      "name": "Distopía",
+      "name": "Teatro infantil",
       "color": "#3A86FF"
     },
     {
       "id": 14,
-      "name": "Clásicos",
+      "name": "Cómic o novela gráfica ",
       "color": "#F4A261"
     },
     {
       "id": 15,
-      "name": "Biografía",
+      "name": "Cuentos clásicos",
       "color": "#8A817C"
     },
     {
       "id": 16,
-      "name": "Romance",
+      "name": "Terror",
       "color": "#C1121F"
     },
     {
       "id": 17,
-      "name": "Cuentos",
+      "name": "Fábula",
       "color": "#735D78"
     }
   ]
