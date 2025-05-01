@@ -10,6 +10,7 @@ export function useUserProfileData () {
     const [surname, setSurname] = useState("")
     const [email, setEmail] = useState("")
     const [aboutme, setAboutme] = useState("")
+    const [profileimage, setProfileimage] = useState("")
     const [error, setError] = useState("")
     const [isLoading, setIsLoading] = useState(true)
 
@@ -32,6 +33,7 @@ export function useUserProfileData () {
                 setName(profile.name)
                 setSurname(profile.surname)
                 setAboutme(profile.aboutme)
+                setProfileimage(profile.profileimage)
             } catch {
                 setError("Ocurrió un error inesperado")
             } finally {
@@ -40,7 +42,8 @@ export function useUserProfileData () {
         }
 
         fetchData()
-    }, [user])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return {
         userId,
@@ -48,6 +51,7 @@ export function useUserProfileData () {
         surname, setSurname,
         email, setEmail,
         aboutme, setAboutme,
+        profileimage, setProfileimage,
         error, setError,
         isLoading, setIsLoading
     }

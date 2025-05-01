@@ -3,9 +3,11 @@ import { updateUserProfile } from "../services/updateUserProfile";
 import { useUserProfileData } from "../hooks/useUserProfileData";
 import { toast } from 'react-hot-toast';
 import { Loader } from "../../core/components/Loader";
+import { EditIcon } from "../../core/icons/EditIcon";
+import { uploadUserProfileImage } from "../services/uploadUserProfileImage";
 
 export function ProfilePage() {
-    const { userId, name, setName, surname, setSurname, email, setEmail, aboutme, setAboutme, error, setError, isLoading } = useUserProfileData()
+    const { userId, name, setName, surname, setSurname, email, setEmail, aboutme, setAboutme, profileimage, setProfileimage, error, setError, isLoading } = useUserProfileData()
 
     const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault()
@@ -40,9 +42,27 @@ export function ProfilePage() {
         if (!res.success) {
             setError(res.message || 'Ocurrió un error inesperado')
             toast.error('Error al actualizar el perfil');
-        } 
+            return
+        }
 
         toast.success('Perfil actualizado correctamente');
+    }
+
+    const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0]
+        if (!file) return
+
+        const res = await uploadUserProfileImage({userId, file})
+
+        if (!res.success) {
+            console.error(res.message)
+            setError(res.message || 'Ocurrió un error inesperado')
+            toast.error('Error al actualizar la imagen de perfil')
+            return
+        }
+
+        setProfileimage(res.imageUrl || "")
+        toast.success('Perfil actualizado correctamente')
     }
 
     if (isLoading) return <Loader />
@@ -50,17 +70,29 @@ export function ProfilePage() {
     return (
         <div className="min-h-screen bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 flex items-center justify-center flex-col p-4">
             <section className="w-full max-w-2xl bg-white dark:bg-neutral-600 rounded-2xl p-6 md:p-10 space-y-6 shadow-md border border-gray-200 dark:border-neutral-700">
-                <div className="flex flex-col items-center space-y-2">
+                <div className="relative flex justify-center items-start space-y-2">
                     <img
-                        src="placeholder_img_profile.png"
-                        alt="Perfil"
-                        className="w-24 h-24 rounded-full object-cover"
+                        src={profileimage || "placeholder_img_profile.png"}
+                        alt="Imagen de perfil"
+                        className="w-28 h-28 rounded-full object-cover"
                     />
+                    <div className="absolute p-2 ml-35 cursor-pointer">
+                        <label htmlFor="profileImageInput" className="cursor-pointer">
+                            <EditIcon className="ursor-pointer" />
+                        </label>
+                        <input
+                            id="profileImageInput"
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleImageChange}
+                        />
+                    </div>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-sm text-neutral-700 dark:text-neutral-300 mb-1">Nombre</label>
+                        <label className="block text-sm text-neutral-700 dark:text-neutral-300 mb-1 font-semibold">Nombre</label>
                         <FormInputField
                             id="name"
                             name="name"
@@ -73,7 +105,7 @@ export function ProfilePage() {
                     </div>
 
                     <div>
-                        <label className="block text-sm text-neutral-700 dark:text-neutral-300 mb-1">Apellidos</label>
+                        <label className="block text-sm text-neutral-700 dark:text-neutral-300 mb-1 font-semibold">Apellidos</label>
                         <FormInputField
                             id="surname"
                             name="surname"
@@ -86,7 +118,7 @@ export function ProfilePage() {
                     </div>
 
                     <div>
-                        <label className="block text-sm text-neutral-700 dark:text-neutral-300 mb-1">Email</label>
+                        <label className="block text-sm text-neutral-700 dark:text-neutral-300 mb-1 font-semibold">Email</label>
                         <FormInputField
                             id="email"
                             name="email"
@@ -99,7 +131,7 @@ export function ProfilePage() {
                     </div>
 
                     <div>
-                        <label className="block text-sm text-neutral-700 dark:text-neutral-300 mb-1">Sobre mí</label>
+                        <label className="block text-sm text-neutral-700 dark:text-neutral-300 mb-1 font-semibold">Sobre mí</label>
                         <textarea
                             rows={5}
                             className="w-full px-3 py-2 rounded-lg bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-50 focus:outline-none resize-none"
