@@ -1,6 +1,7 @@
 import { FormInputField } from "../../core/components/FormInputField";
 import { updateUserProfile } from "../services/updateProfile";
 import { useGetUserProfileData } from "../hooks/useGetUserProfileData";
+import { toast } from 'react-hot-toast';
 
 export const ProfilePage = () => {
     const { userId, name, setName, surname, setSurname, email, setEmail, aboutme, setAboutme, error, setError } = useGetUserProfileData()
@@ -37,7 +38,10 @@ export const ProfilePage = () => {
 
         if (!res.success) {
             setError(res.message || 'Ocurrió un error inesperado')
+            toast.error('Error al actualizar el perfil');
         } 
+
+        toast.success('Perfil actualizado correctamente');
     }
 
     return (
@@ -49,7 +53,6 @@ export const ProfilePage = () => {
                         alt="Perfil"
                         className="w-24 h-24 rounded-full object-cover"
                     />
-                    <h1 className="text-xl font-semibold">Perfil de Usuario</h1>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
