@@ -6,7 +6,7 @@ interface Review {
 }
 
 interface User {
-    userId: number;
+    userId: string;
     userName: string;
     imgProfile: string;
 }

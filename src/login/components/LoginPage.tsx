@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { loginUser } from "../services/loginUser";
 import { FormInputField } from "../../core/components/FormInputField";
+import { FormButton } from "../../core/components/FormButton";
+import { FormLabel } from "../../core/components/FormLabel";
 
 export const LoginPage = () => {
     const [email, setEmail] = useState("");
@@ -40,7 +42,9 @@ export const LoginPage = () => {
             <form onSubmit={handleSubmit} className="w-full max-w-md bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-2xl shadow-md p-8 flex flex-col gap-6">
                 <h2 className="text-2xl font-semibold text-center text-neutral-900 dark:text-neutral-50">Iniciar sesión</h2>
 
-                <FormInputField
+                <div>
+                    <FormLabel text="Correo electrónico" htmlFor="email" />
+                    <FormInputField
                     id="email"
                     name="email"
                     type="email"
@@ -49,24 +53,26 @@ export const LoginPage = () => {
                     onChange={handleEmail}
                     error={!!(error && email === "")}
                 />
+                </div>
 
-                <FormInputField
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Contraseña"
-                    value={password}
-                    onChange={handlePassword}
-                    error={!!(error && password === "")}
-                />
+                <div>
+                    <FormLabel text="Contraseña" htmlFor="password" />
+                    <FormInputField
+                        id="password"
+                        name="password"
+                        type="password"
+                        placeholder="Contraseña"
+                        value={password}
+                        onChange={handlePassword}
+                        error={!!(error && password === "")}
+                    />
+                </div>
 
                 {error && (
                     <p id="loginError" className="text-red-600 text-sm text-center">{error}</p>
                 )}
 
-                <button className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition duration-200">
-                    Entrar
-                </button>
+                <FormButton text="Entrar" />
 
                 <p className="text-sm text-center text-neutral-500 dark:text-neutral-400">
                     ¿No tienes cuenta? <Link to="/register" className="text-blue-600 hover:underline">Regístrate</Link>

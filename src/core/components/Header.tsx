@@ -17,7 +17,7 @@ export function Header () {
     return (
         <header className="bg-neutral-200 dark:bg-neutral-700 p-2 sticky top-0 z-900">
             <div className="container mx-auto flex justify-between items-center">
-                <Link  to="/" className="text-neutral-900 dark:text-neutral-50 text-2xl font-bold text-center px-2 cursor-pointer">BiblioClase</Link >
+                <Link  to="/" className="font-serif text-neutral-900 dark:text-neutral-50 text-2xl font-bold text-center cursor-pointer">BiblioClase</Link >
 
                 {/* Menú móvil */}
                 <button onClick={handleToggleMenu} className="lg:hidden px-2 focus:outline-none">

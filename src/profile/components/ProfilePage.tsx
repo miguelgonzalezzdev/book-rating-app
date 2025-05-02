@@ -5,6 +5,8 @@ import { toast } from 'react-hot-toast';
 import { Loader } from "../../core/components/Loader";
 import { EditIcon } from "../../core/icons/EditIcon";
 import { uploadUserProfileImage } from "../services/uploadUserProfileImage";
+import { FormButton } from "../../core/components/FormButton";
+import { FormLabel } from "../../core/components/FormLabel";
 
 export function ProfilePage() {
     const { userId, name, setName, surname, setSurname, email, setEmail, aboutme, setAboutme, profileimage, setProfileimage, error, setError, isLoading } = useUserProfileData()
@@ -91,7 +93,7 @@ export function ProfilePage() {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-sm text-neutral-700 dark:text-neutral-300 mb-1 font-semibold">Nombre</label>
+                    <FormLabel text="Nombre" htmlFor="name" />
                         <FormInputField
                             id="name"
                             name="name"
@@ -104,7 +106,7 @@ export function ProfilePage() {
                     </div>
 
                     <div>
-                        <label className="block text-sm text-neutral-700 dark:text-neutral-300 mb-1 font-semibold">Apellidos</label>
+                        <FormLabel text="Apellidos" htmlFor="surname" />
                         <FormInputField
                             id="surname"
                             name="surname"
@@ -117,7 +119,7 @@ export function ProfilePage() {
                     </div>
 
                     <div>
-                        <label className="block text-sm text-neutral-700 dark:text-neutral-300 mb-1 font-semibold">Email</label>
+                        <FormLabel text="Correo electrónico" htmlFor="email" />
                         <FormInputField
                             id="email"
                             name="email"
@@ -143,10 +145,8 @@ export function ProfilePage() {
                     {error && (
                         <p id="profileError" className="text-red-600 text-sm text-center">{error}</p>
                     )}
-
-                    <button type="submit" className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition duration-200">
-                        Guardar cambios
-                    </button>
+                    
+                    <FormButton text="Guardar cambios" />
                 </form>
             </section>
         </div>
