@@ -7,9 +7,14 @@ import { EditIcon } from "../../core/icons/EditIcon";
 import { uploadUserProfileImage } from "../services/uploadUserProfileImage";
 import { FormButton } from "../../core/components/FormButton";
 import { FormLabel } from "../../core/components/FormLabel";
+import { useState } from "react";
+import { ConfirmModal } from "../../core/components/ConfirmModal";
+import { useAuthStore } from "../../core/store/authStore";
 
 export function ProfilePage() {
     const { userId, name, setName, surname, setSurname, email, setEmail, aboutme, setAboutme, profileimage, setProfileimage, error, setError, isLoading } = useUserProfileData()
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const logout = useAuthStore((state) => state.logout)
 
     const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault()
@@ -54,7 +59,7 @@ export function ProfilePage() {
         const file = event.target.files?.[0]
         if (!file) return
 
-        const res = await uploadUserProfileImage({userId, file})
+        const res = await uploadUserProfileImage({ userId, file })
 
         if (!res.success) {
             setError(res.message || 'Ocurrió un error inesperado')
@@ -65,6 +70,11 @@ export function ProfilePage() {
         setProfileimage(res.imageUrl || "")
         toast.success('Imagen actualizada correctamente')
     }
+
+    const handleLogout = () => {
+        setShowConfirmModal(true);
+    }
+
 
     if (isLoading) return <Loader />
 
@@ -93,7 +103,7 @@ export function ProfilePage() {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                    <FormLabel text="Nombre" htmlFor="name" />
+                        <FormLabel text="Nombre" htmlFor="name" />
                         <FormInputField
                             id="name"
                             name="name"
@@ -145,10 +155,26 @@ export function ProfilePage() {
                     {error && (
                         <p id="profileError" className="text-red-600 text-sm text-center">{error}</p>
                     )}
-                    
+
                     <FormButton text="Guardar cambios" />
+
+                    <div className="pt-4 border-t border-neutral-300 dark:border-neutral-500 flex justify-center">
+                        <button onClick={handleLogout} type="button" className="text-md font-semibold text-red-700 dark:text-red-400 saturate-150 hover:underline">
+                            Cerrar sesión
+                        </button>
+                    </div>
                 </form>
             </section>
+
+            <ConfirmModal
+                isOpen={showConfirmModal}
+                title="¿Cerrar sesión?"
+                message="¿Estás seguro de que quieres cerrar sesión? Tendrás que volver a iniciar sesión para continuar."
+                onConfirm={() => logout()}
+                onCancel={() => setShowConfirmModal(false)}
+                confirmText="Cerrar sesión"
+                cancelText="Cancelar"
+            />
         </div>
     )
 }
