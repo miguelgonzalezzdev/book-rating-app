@@ -2,6 +2,7 @@ import { useState } from "react";
 import { OpenMenuIcon } from "../icons/OpenMenuIcon.tsx"
 import { CloseMenuIcon } from "../icons/CloseMenuIcon.tsx"
 import { Link } from "react-router";
+import { Logo } from "./Logo.tsx";
 
 export function Header () {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -17,8 +18,10 @@ export function Header () {
     return (
         <header className="bg-neutral-200 dark:bg-neutral-700 p-2 sticky top-0 z-900">
             <div className="container mx-auto flex justify-between items-center">
-                <Link  to="/" className="font-serif text-neutral-900 dark:text-neutral-50 text-2xl font-bold text-center cursor-pointer">BiblioClase</Link >
-
+                <Link  to="/" >
+                    <Logo className="max-h-8"/>
+                </Link >
+                
                 {/* Menú móvil */}
                 <button onClick={handleToggleMenu} className="lg:hidden px-2 focus:outline-none">
                     { isMenuOpen 

@@ -4,6 +4,7 @@ import { loginUser } from "../services/loginUser";
 import { FormInputField } from "../../core/components/FormInputField";
 import { FormButton } from "../../core/components/FormButton";
 import { FormLabel } from "../../core/components/FormLabel";
+import { Logo } from "../../core/components/Logo";
 
 export const LoginPage = () => {
     const [email, setEmail] = useState("");
@@ -38,21 +39,23 @@ export const LoginPage = () => {
 
     return (
         <main className="flex-grow flex flex-col items-center justify-center m-10 lg:m-20 gap-10 lg:gap-20">
-            <Link to="/" className="text-neutral-900 dark:text-neutral-50 text-5xl font-bold text-center px-2 cursor-pointer">BiblioClase</Link>
+            <Link to="/">
+                <Logo className="max-h-26" />
+            </Link>
             <form onSubmit={handleSubmit} className="w-full max-w-md bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-2xl shadow-md p-8 flex flex-col gap-6">
                 <h2 className="text-2xl font-semibold text-center text-neutral-900 dark:text-neutral-50">Iniciar sesión</h2>
 
                 <div>
                     <FormLabel text="Correo electrónico" htmlFor="email" />
                     <FormInputField
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="Correo electrónico"
-                    value={email}
-                    onChange={handleEmail}
-                    error={!!(error && email === "")}
-                />
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="Correo electrónico"
+                        value={email}
+                        onChange={handleEmail}
+                        error={!!(error && email === "")}
+                    />
                 </div>
 
                 <div>
