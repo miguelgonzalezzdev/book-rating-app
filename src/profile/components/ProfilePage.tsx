@@ -101,6 +101,11 @@ export function ProfilePage() {
                     </div>
                 </div>
 
+                <div className="flex justify-center gap-10">
+                    <p><span className="font-bold">0</span> Publicaciones</p>
+                    <p><span className="font-bold">0</span> Seguidores</p>
+                </div>
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <FormLabel text="Nombre" htmlFor="name" />
@@ -142,8 +147,10 @@ export function ProfilePage() {
                     </div>
 
                     <div>
-                        <label className="block text-sm text-neutral-700 dark:text-neutral-300 mb-1 font-semibold">Sobre mí</label>
+                        <FormLabel text="Sobre mí" htmlFor="aboutme" />
                         <textarea
+                            id="aboutme"
+                            name="aboutme"
                             rows={5}
                             className="w-full px-3 py-2 rounded-lg bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-50 focus:outline-none resize-none"
                             placeholder="Cuéntales a todos algo sobre ti..."
