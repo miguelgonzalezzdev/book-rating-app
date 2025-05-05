@@ -10,7 +10,7 @@ import { useEffect } from "react"
 export function PublicProfilePage() {
     const currentAuthUser = useAuthStore((state) => state.user) // Usuario autenticado
     const userId = useParams<{ userId?: string }>().userId?.trim() || "" // ID del usuario a mostrar
-    const { isFollowing, setIsFollowing } = useIsFollowing({ followerId: currentAuthUser?.id || "", followingId: userId || "" })
+    const { isFollowing, setIsFollowing, isLoadingIsFollowing } = useIsFollowing({ followerId: currentAuthUser?.id || "", followingId: userId || "" })
     const { name, surname, aboutme, profileimage, posts, followers, following, error, isLoading } = usePublicUserProfileData({ userId })
     const navigate = useNavigate()
 
@@ -22,7 +22,7 @@ export function PublicProfilePage() {
         }, [userId, currentAuthUser?.id, navigate])
         
 
-    if (isLoading) return <Loader />
+    if (isLoading || isLoadingIsFollowing) return <Loader />
 
     if (error) navigate('/')
 
