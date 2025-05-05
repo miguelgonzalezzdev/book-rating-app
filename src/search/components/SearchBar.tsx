@@ -1,7 +1,7 @@
 
 export const SearchBar = () => {
     return (
-        <form className="w-3xs md:w-md  lg:w-xl mx-auto">
+        <form className="w-full  max-w-xl mx-auto">
             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-neutral-900 sr-only dark:text-neutral-50" >
                 Search
             </label>
