@@ -11,7 +11,7 @@ import { ConfirmModal } from "../../core/components/ConfirmModal";
 import { useAuthStore } from "../../core/store/authStore";
 
 export function ProfilePage() {
-    const { userId, name, setName, surname, setSurname, email, setEmail, aboutme, setAboutme, profileimage, setProfileimage, error, setError, isLoading } = useUserProfileData()
+    const { userId, name, setName, surname, setSurname, email, setEmail, aboutme, setAboutme, profileimage, setProfileimage, posts, followers, following, error, setError, isLoading } = useUserProfileData()
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const logout = useAuthStore((state) => state.logout)
 
@@ -99,12 +99,11 @@ export function ProfilePage() {
                         />
                     </div>
                 </div>
-
-                <div className="flex justify-center gap-10">
-                    <p><span className="font-bold">0</span> Publicaciones</p>
-                    <p><span className="font-bold">0</span> Seguidores</p>
+                <div className="text-md flex justify-center flex-wrap gap-4 md:gap-10">
+                    <p><span className="font-bold">{posts}</span> Publicaciones</p>
+                    <p><span className="font-bold">{followers}</span> Seguidores</p>
+                    <p><span className="font-bold">{following}</span> Siguiendo</p>
                 </div>
-
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <FormLabel text="Nombre" htmlFor="name" />
@@ -118,7 +117,6 @@ export function ProfilePage() {
                             error={!!(error && name === "")}
                         />
                     </div>
-
                     <div>
                         <FormLabel text="Apellidos" htmlFor="surname" />
                         <FormInputField
@@ -131,7 +129,6 @@ export function ProfilePage() {
                             error={!!(error && surname === "")}
                         />
                     </div>
-
                     <div>
                         <FormLabel text="Correo electrónico" htmlFor="email" />
                         <FormInputField
@@ -144,7 +141,6 @@ export function ProfilePage() {
                             error={!!(error && email === "")}
                         />
                     </div>
-
                     <div>
                         <FormLabel text="Sobre mí" htmlFor="aboutme" />
                         <textarea

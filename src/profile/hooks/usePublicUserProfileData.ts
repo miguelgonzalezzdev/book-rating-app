@@ -13,6 +13,9 @@ export function usePublicUserProfileData ({userId}: UploadUserProfileImage) {
     const [surname, setSurname] = useState("")
     const [aboutme, setAboutme] = useState("")
     const [profileimage, setProfileimage] = useState("")
+    const [posts, setPosts] = useState(0)
+    const [followers, setFollowers] = useState(0)
+    const [following, setFollowing] = useState(0)
     const [error, setError] = useState("")
     const [isLoading, setIsLoading] = useState(true)
 
@@ -38,6 +41,9 @@ export function usePublicUserProfileData ({userId}: UploadUserProfileImage) {
                 setSurname(profile.surname)
                 setAboutme(profile.aboutme)
                 setProfileimage(profile.profileimage)
+                setPosts(profile.posts)
+                setFollowers(profile.followers)
+                setFollowing(profile.following)
             } catch {
                 setError("Ocurrió un error inesperado")
             } finally {
@@ -54,6 +60,9 @@ export function usePublicUserProfileData ({userId}: UploadUserProfileImage) {
         surname, setSurname,
         aboutme, setAboutme,
         profileimage, setProfileimage,
+        posts, setPosts,
+        followers, setFollowers,
+        following, setFollowing,
         error, setError,
         isLoading, setIsLoading
     }

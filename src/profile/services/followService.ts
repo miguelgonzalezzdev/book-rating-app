@@ -16,7 +16,7 @@ export async function checkIsFollowing({ followerId, followingId }: UseIsFollowi
         .limit(1)
 
     if (error && error.code !== 'PGRST116') throw error
-    console.log('checkIsFollowing', data)
+    
     return Array.isArray(data) && data.length > 0
 }
 

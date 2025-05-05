@@ -7,7 +7,7 @@ interface GetUserProfileData {
 export async function getUserProfileData ({ userId }: GetUserProfileData) {
     const { data, error } = await supabase
         .from("profiles")
-        .select("name, surname, aboutme, profileimage")
+        .select("name, surname, aboutme, profileimage, posts_count, followers_count, following_count")
         .eq("id", userId)
         .single()
 
@@ -18,5 +18,8 @@ export async function getUserProfileData ({ userId }: GetUserProfileData) {
         surname: data.surname || "",
         aboutme: data.aboutme || "",
         profileimage: data.profileimage || "",
+        posts: data.posts_count || 0,
+        followers: data.followers_count || 0,
+        following: data.following_count || 0,
     }
 }

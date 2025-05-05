@@ -5,16 +5,22 @@ import { Loader } from "../../core/components/Loader"
 import { useAuthStore } from "../../core/store/authStore"
 import { useIsFollowing } from "../hooks/useIsFollowing"
 import { followUser, unfollowUser } from "../services/followService"
+import { useEffect } from "react"
 
 export function PublicProfilePage() {
     const currentAuthUser = useAuthStore((state) => state.user) // Usuario autenticado
     const userId = useParams<{ userId?: string }>().userId?.trim() || "" // ID del usuario a mostrar
     const { isFollowing, setIsFollowing } = useIsFollowing({ followerId: currentAuthUser?.id || "", followingId: userId || "" })
-    const { name, surname, aboutme, profileimage, error, isLoading } = usePublicUserProfileData({ userId })
+    const { name, surname, aboutme, profileimage, posts, followers, following, error, isLoading } = usePublicUserProfileData({ userId })
     const navigate = useNavigate()
 
     // Comprobar si se esta accediendo al perfil propio
-    if (currentAuthUser?.id === userId) navigate('/profile')
+    useEffect(() => {
+        if (userId && currentAuthUser?.id === userId) {
+            navigate('/profile') // o la ruta a la que quieras redirigir
+        }
+        }, [userId, currentAuthUser?.id, navigate])
+        
 
     if (isLoading) return <Loader />
 
@@ -51,9 +57,10 @@ export function PublicProfilePage() {
                     className="w-32 h-32 rounded-full object-cover"
                 />
                 <h1 className="text-xl sm:text-2xl font-semibold">{name} {surname}</h1>
-                <div className="text-md flex justify-center gap-10">
-                    <p><span className="font-bold">0</span> Publicaciones</p>
-                    <p><span className="font-bold">0</span> Seguidores</p>
+                <div className="text-md flex justify-center flex-wrap gap-4 md:gap-10">
+                    <p><span className="font-bold">{posts}</span> Publicaciones</p>
+                    <p><span className="font-bold">{followers}</span> Seguidores</p>
+                    <p><span className="font-bold">{following}</span> Siguiendo</p>
                 </div>
                 <div className="w-full my-8">
                     <p className="text-">{aboutme}</p>
