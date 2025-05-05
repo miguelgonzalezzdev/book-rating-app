@@ -15,19 +15,19 @@ export function useUserProfileData () {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        const fetchData = async () => {
-            if (!user?.id) {
-                setError("Usuario no autenticado")
-                setIsLoading(false)
-                return
-            }
-            
+        if (!user?.id) {
+            setError("Usuario no autenticado")
+            setIsLoading(false)
+            return
+        }
+
+        const fetchData = async () => { 
             try {
                 // Sacar el id y email del estado global de usuario logueado
                 setUserId(user.id)
                 setEmail(user.email)
 
-                const profile = await getUserProfileData(user.id)
+                const profile = await getUserProfileData({ userId: user.id })
 
                 setName(profile.name)
                 setSurname(profile.surname)

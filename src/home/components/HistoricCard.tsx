@@ -49,7 +49,7 @@ export const HistoricCard = ({ historic }: { historic: Historic }) => {
                     <a href={`/profile/${userId}`} className="dark:text-neutral-50 font-bold cursor-pointer">{userName}</a> {actionText}
                 </p>
             </div>
-            <div className="flex flex-row gap-6 my-4 mx-2 md:mx-10 lg:mx-20 p-3 sm:p-4 md:p-6 border border-gray-200 dark:border-neutral-500">
+            <div className="flex flex-row gap-6 my-4 mx-2 md:mx-10 lg:mx-20 p-3 sm:p-4 md:p-6 border border-gray-200 dark:border-neutral-500 cursor-pointer">
                 <img
                     src={imgReview || 'placeholder_img_book.png'}
                     className="w-24 h-24 object-cover rounded-none" />

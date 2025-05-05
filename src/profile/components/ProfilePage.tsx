@@ -1,10 +1,9 @@
 import { FormInputField } from "../../core/components/FormInputField";
-import { updateUserProfile } from "../services/updateUserProfile";
+import { updateUserProfile, uploadUserProfileImage } from "../services/updateUserProfile";
 import { useUserProfileData } from "../hooks/useUserProfileData";
 import { toast } from 'react-hot-toast';
 import { Loader } from "../../core/components/Loader";
 import { EditIcon } from "../../core/icons/EditIcon";
-import { uploadUserProfileImage } from "../services/uploadUserProfileImage";
 import { FormButton } from "../../core/components/FormButton";
 import { FormLabel } from "../../core/components/FormLabel";
 import { useState } from "react";

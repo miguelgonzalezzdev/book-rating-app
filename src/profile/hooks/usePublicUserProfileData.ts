@@ -17,22 +17,22 @@ export function usePublicUserProfileData ({userId}: UploadUserProfileImage) {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
+        if (!user?.id) {
+            setError("Usuario no autenticado")
+            setIsLoading(false)
+            return
+        }
+
+        if (!userId || userId === "") {
+            setError("ID de usuario no proporcionado")
+            setIsLoading(false)
+            return
+        }
+
         const fetchData = async () => {
-            if (!user?.id) {
-                setError("Usuario no autenticado")
-                setIsLoading(false)
-                return
-            }
-
-            if (!userId || userId === "") {
-                setError("ID de usuario no proporcionado")
-                setIsLoading(false)
-                return
-            }
-
             try {
 
-                const profile = await getUserProfileData(userId)
+                const profile = await getUserProfileData({userId})
 
                 setName(profile.name)
                 setSurname(profile.surname)

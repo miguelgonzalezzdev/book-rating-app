@@ -1,6 +1,10 @@
 import { supabase } from "../../core/supabase/supabaseClient"
 
-export async function getUserProfileData (userId: string) {
+interface GetUserProfileData {
+    userId: string
+}
+
+export async function getUserProfileData ({ userId }: GetUserProfileData) {
     const { data, error } = await supabase
         .from("profiles")
         .select("name, surname, aboutme, profileimage")
