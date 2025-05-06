@@ -1,11 +1,9 @@
 
-// src/features/genres/hooks/useGenres.ts
-
 import { useState, useEffect } from "react";
 import { getAllGenres } from "../services/getAllGenres"; 
 import { ListOfGenres } from "../../core/types"
 
-export function useGenres() {
+export function useAllGenres() {
   const [genres, setGenres] = useState<ListOfGenres>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

@@ -1,11 +1,11 @@
 //import { genres } from '../../core/mocks/genres.json'
 import { Alert } from '../../core/components/Alert'
-import { useGenres } from '../hooks/useGenres'
+import { useAllGenres } from '../hooks/useAllGenres'
 import { GenreCard } from './GenreCard'
 import { SkeletonCard } from './SkeletonCard'
 
 export const GenresList = () => {
-    const { genres, isLoading, error } = useGenres()
+    const { genres, isLoading, error } = useAllGenres()
 
     if (error) {
         return (

@@ -1,4 +1,3 @@
-// hooks/useRegisterForm.ts
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { registerUser } from "../services/registerUser";
