@@ -19,8 +19,8 @@ export function PublicProfilePage() {
         if (userId && currentAuthUser?.id === userId) {
             navigate('/profile') // o la ruta a la que quieras redirigir
         }
-        }, [userId, currentAuthUser?.id, navigate])
-        
+    }, [userId, currentAuthUser?.id, navigate])
+
 
     if (isLoading || isLoadingIsFollowing) return <Loader />
 
@@ -69,9 +69,9 @@ export function PublicProfilePage() {
                     type="button"
                     onClick={handleFollow}
                     className={`w-full max-w-40 py-3 rounded-lg shadow-sm text-white transition-all duration-300 font-semibold flex justify-center
-                                ${isFollowing 
-                                    ? 'bg-red-600 hover:bg-red-700' 
-                                    : 'bg-green-600 hover:bg-green-700'}
+                                ${isFollowing
+                            ? 'bg-red-600 hover:bg-red-700'
+                            : 'bg-green-600 hover:bg-green-700'}
                             `}
                 >
                     {isFollowing ? 'Dejar de seguir' : 'Seguir'}

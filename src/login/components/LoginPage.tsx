@@ -1,41 +1,19 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router";
-import { loginUser } from "../services/loginUser";
+import { Link } from "react-router";
 import { FormInputField } from "../../core/components/FormInputField";
 import { FormButton } from "../../core/components/FormButton";
 import { FormLabel } from "../../core/components/FormLabel";
 import { Logo } from "../../core/components/Logo";
+import { useLoginForm } from "../hooks/useLoginForm";
 
 export const LoginPage = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const navigate = useNavigate()
-
-    const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault()
-        const newEmail = event.target.value
-        setEmail(newEmail)
-    }
-
-    const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault()
-        const newPassword = event.target.value
-        setPassword(newPassword)
-    }
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        setError('')
-
-        const res = await loginUser({ email, password })
-
-        if (res.success) {
-            navigate('/')
-        } else {
-            setError(res.message || 'Error al iniciar sesión')
-        }
-    }
+    const {
+        email,
+        password,
+        error,
+        handleEmail,
+        handlePassword,
+        handleSubmit,
+    } = useLoginForm();
 
     return (
         <main className="flex-grow flex flex-col items-center justify-center m-10 lg:m-20 gap-10 lg:gap-20">
