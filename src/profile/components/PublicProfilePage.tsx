@@ -1,11 +1,11 @@
 import toast from "react-hot-toast"
 import { useNavigate, useParams } from "react-router"
 import { usePublicUserProfileData } from "../hooks/usePublicUserProfileData"
-import { Loader } from "../../core/components/Loader"
 import { useAuthStore } from "../../core/store/authStore"
 import { useIsFollowing } from "../hooks/useIsFollowing"
 import { followUser, unfollowUser } from "../services/followService"
 import { useEffect } from "react"
+import { SkeletonPublicProfile } from "./SkeletonPublicProfile"
 
 export function PublicProfilePage() {
     const currentAuthUser = useAuthStore((state) => state.user) // Usuario autenticado
@@ -22,7 +22,7 @@ export function PublicProfilePage() {
     }, [userId, currentAuthUser?.id, navigate])
 
 
-    if (isLoading || isLoadingIsFollowing) return <Loader />
+    if (isLoading || isLoadingIsFollowing) return <SkeletonPublicProfile />
 
     if (error) navigate('/')
 

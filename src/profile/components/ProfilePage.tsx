@@ -2,13 +2,13 @@ import { FormInputField } from "../../core/components/FormInputField";
 import { updateUserProfile, uploadUserProfileImage } from "../services/updateUserProfile";
 import { useUserProfileData } from "../hooks/useUserProfileData";
 import { toast } from 'react-hot-toast';
-import { Loader } from "../../core/components/Loader";
 import { EditIcon } from "../../core/icons/EditIcon";
 import { FormButton } from "../../core/components/FormButton";
 import { FormLabel } from "../../core/components/FormLabel";
 import { useState } from "react";
 import { ConfirmModal } from "../../core/components/ConfirmModal";
 import { useAuthStore } from "../../core/store/authStore";
+import { SkeletonProfile } from "./SkeletonProfile";
 
 export function ProfilePage() {
     const { userId, name, setName, surname, setSurname, email, setEmail, aboutme, setAboutme, profileimage, setProfileimage, posts, followers, following, error, setError, isLoading } = useUserProfileData()
@@ -75,7 +75,7 @@ export function ProfilePage() {
     }
 
 
-    if (isLoading) return <Loader />
+    if (isLoading) return <SkeletonProfile />
 
     return (
         <div className="min-h-screen bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 flex items-center justify-center flex-col p-4">

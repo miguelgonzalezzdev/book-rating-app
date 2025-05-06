@@ -11,6 +11,7 @@ export function useGenres() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    setIsLoading(true)
     const fetchGenres = async () => {
       try {
         const data = await getAllGenres();
