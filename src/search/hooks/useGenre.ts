@@ -1,9 +1,10 @@
 
 import { useState, useEffect } from "react";
 import { getGenre } from "../services/getGenre";
+import { GenreId } from "../../core/types";
 
 interface UseGenresProps {
-    genreId: number;
+    genreId: GenreId;
 }
 
 export function useGenre({ genreId }: UseGenresProps) {

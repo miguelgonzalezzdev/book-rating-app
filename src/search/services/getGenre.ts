@@ -1,7 +1,8 @@
 import { supabase } from "../../core/supabase/supabaseClient"
+import { GenreId } from "../../core/types"
 
 interface GetGenreProps {
-    genreId: number
+    genreId: GenreId
 }
 
 export async function getGenre ({ genreId }: GetGenreProps) {
