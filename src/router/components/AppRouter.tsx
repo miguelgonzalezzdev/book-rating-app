@@ -13,7 +13,6 @@ import { PublicOnlyRoute } from "./PublicOnlyRoute.tsx"
 import { PublicProfilePage } from "../../profile/components/PublicProfilePage.tsx"
 
 export const AppRouter = () => {
-    
     return (
         <Routes>
             {/* Rutas solo visibles sin estar logeado */}

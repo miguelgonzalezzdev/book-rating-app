@@ -1,16 +1,25 @@
+import { useNavigate } from "react-router";
 import { Star } from "../../core/components/Star";
+import { BookAuthor, BookId, BookImageUrl, BookRating, BookTitle } from "../../core/types";
 
 interface BookListItemProps {
-    title: string;
-    author: string;
-    rating: number;
-    imageUrl?: string;
+    bookId: BookId;
+    title: BookTitle;
+    author: BookAuthor;
+    rating: BookRating;
+    imageUrl?: BookImageUrl;
 }
 
-export function BookListItem({ title, author, rating, imageUrl }: BookListItemProps) {
+export function BookListItem({ bookId, title, author, rating, imageUrl }: BookListItemProps) {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/search/book/${bookId}`);
+    }
+
     return (
-        <li className="flex justify-start gap-6 p-4 border-b border-neutral-300 dark:border-neutral-700 cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-700">
-            <div className="w-16 aspect-[3/4] overflow-hidden">
+        <li onClick={handleClick} className="flex justify-start gap-6 p-4 border-b border-neutral-300 dark:border-neutral-700 cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-700">
+            <div className="w-12 md:w-16 aspect-[3/4] overflow-hidden">
                 <img
                     src={`${imageUrl?.trim() ? imageUrl : "../placeholder_img_book.png"}?t=${Date.now()}`}
                     alt="Imagen del libro"

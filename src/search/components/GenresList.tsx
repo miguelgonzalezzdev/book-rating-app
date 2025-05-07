@@ -1,6 +1,6 @@
 //import { genres } from '../../core/mocks/genres.json'
 import { Alert } from '../../core/components/Alert'
-import { useAllGenres } from '../hooks/useAllGenres'
+import { useAllGenres } from '../hooks/useGenre'
 import { GenreCard } from './GenreCard'
 import { SkeletonCard } from './SkeletonCard'
 

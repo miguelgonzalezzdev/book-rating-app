@@ -19,3 +19,12 @@ export async function getGenre ({ genreId }: GetGenreProps) {
         color: data.color || "",
     }
 }
+
+export async function getAllGenres() {
+    const { data, error } = await supabase.from('genres')
+        .select('*')
+        .order('name', { ascending: true });
+        
+    if (error) throw error;
+    return data;
+}

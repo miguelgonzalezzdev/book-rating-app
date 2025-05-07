@@ -21,4 +21,36 @@ export type GenreName = Genre["name"]
 export type GenreColor = Genre["color"]
 //***** END Tipos para GENRES *****//
 
+//***** START Tipos para BOOK *****//
+export interface BookDetails {
+    id: number
+    title: string;
+    author: string;
+    year: string;
+    isbn: string;
+    publisher: string;
+    description: string;
+    genreId1: number;
+    genreId2: number;
+    genreId3: number;
+    imageUrl: string;
+    bookUrl: string;
+    rating: number;
+}
+export interface Book {
+    id: BookId;
+    title: BookTitle;
+    author: BookAuthor;
+    rating: BookRating;
+    imageUrl: BookImageUrl;
+}
+
+export type ListOfBooks = Book[]
+export type BookId = Book["id"]
+export type BookTitle = Book["title"]
+export type BookAuthor = Book["author"]
+export type BookImageUrl = Book["imageUrl"]
+export type BookRating = Book["rating"]
+//***** END Tipos para GENRES *****//
+
 export type AlertType = typeof ALERT_TYPES[keyof typeof ALERT_TYPES];
