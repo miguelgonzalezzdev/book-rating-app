@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from "react-router"
 import { useGenre } from "../hooks/useGenre"
-import { Loader } from "../../core/components/Loader"
 import { useEffect } from "react"
 import { Alert } from "../../core/components/Alert"
 import { BookListItem } from "./BookListItem"
 import { useAllBooksByGenre } from "../hooks/useBooks"
+import { SkeletonBooksList } from "./SkeletonBooksList"
 
 export const BooksList = () => {
   const { query } = useParams()
@@ -19,8 +19,6 @@ export const BooksList = () => {
     }
   }, [genreIdNumber, navigate])
 
-  if (isLoading || isLoadingBooks) return <Loader />
-
   if (error || errorBooks) {
     return (
       <div className="m-10">
@@ -30,6 +28,12 @@ export const BooksList = () => {
           message="Hubo un error al buscar. Inténtelo de nuevo más tarde."
         />
       </div>
+    )
+  }
+
+  if (isLoading || isLoadingBooks) {
+    return (
+      <SkeletonBooksList />
     )
   }
 
@@ -58,7 +62,7 @@ export const BooksList = () => {
           ))
         ) : (
           <li className="mt-8 text-lg text-center text-neutral-700 dark:text-neutral-300">
-            No se han encontrado libros.
+            No se han encontrado libros
           </li>
         )}
       </ul>
