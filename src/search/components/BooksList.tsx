@@ -3,6 +3,7 @@ import { useGenre } from "../hooks/useGenre"
 import { Loader } from "../../core/components/Loader"
 import { useEffect } from "react"
 import { Alert } from "../../core/components/Alert"
+import { BookListItem } from "./BookListItem"
 
 export const BooksList = () => {
   const { query } = useParams()
@@ -37,75 +38,14 @@ export const BooksList = () => {
           {genre}
         </h1>
         <div
-          className="w-full h-45 flex items-center justify-start shadow-lgz-0 [mask-image:linear-gradient(to_bottom,black,transparent)]"
+          className="w-full h-55 flex items-center justify-start shadow-lgz-0 [mask-image:linear-gradient(to_bottom,black,transparent)]"
           style={{ backgroundColor: color }}
         />
       </div>
-      <div className="overflow-x-auto mx-6 relative z-10">
-        <table className="min-w-full text-left">
-          <thead>
-            <tr className="border-b border-neutral-300 dark:border-neutral-700">
-              <th className="py-3 px-2 text-lg font-semibold text-neutral-900 dark:text-neutral-50">
-                #
-              </th>
-              <th className="py-3 px-2 text-lg font-semibold text-neutral-900 dark:text-neutral-50">
-                Título
-              </th>
-              <th className="py-3 px-2 text-lg font-semibold text-neutral-900 dark:text-neutral-50">
-                Autor
-              </th>
-              <th className="py-3 px-2 text-lg font-semibold text-neutral-900 dark:text-neutral-50">
-                Calificación
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="py-4 px-2 text-neutral-900 dark:text-neutral-50">
-                <div className="w-16 aspect-[3/4]">
-                  <img
-                    src="../placeholder_img_book.png"
-                    alt="Imagen del libro"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </td>
-              <td className="py-4 px-2 text-neutral-900 dark:text-neutral-50">Libro 1</td>
-              <td className="py-4 px-2 text-neutral-700 dark:text-neutral-300">Autor 1</td>
-              <td className="py-4 px-2 text-neutral-700 dark:text-neutral-300">4.5</td>
-            </tr>
-            <tr >
-              <td className="py-4 px-2 text-neutral-900 dark:text-neutral-50">
-                <div className="w-16 aspect-[3/4]">
-                  <img
-                    src="../placeholder_img_book.png"
-                    alt="Imagen del libro"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </td>
-              <td className="py-4 px-2 text-neutral-900 dark:text-neutral-50">Libro 2</td>
-              <td className="py-4 px-2 text-neutral-700 dark:text-neutral-300">Autor 2</td>
-              <td className="py-4 px-2 text-neutral-700 dark:text-neutral-300">3.8</td>
-            </tr>
-            {/* Agregar más filas aquí */}
-          </tbody>
-        </table>
-      </div>
+      <ul className="grid mx-6">
+        <BookListItem title="Los tres cerditos" author="La vaca saturno" rating={4} />
+        <BookListItem title="Mi picha en tu boquita" author="Naboman" rating={4} />
+      </ul>
     </section >
   )
 }
-/*
-<ul className="grid gap-4 mx-6">
-        <li
-          className="bg-white dark:bg-neutral-600 rounded-2xl shadow p-4"
-        >
-          <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-50">
-            Titulo
-          </h2>
-          <p className="text-neutral-700 dark:text-neutral-300">
-            Autor
-          </p>
-        </li>
-      </ul>
-*/

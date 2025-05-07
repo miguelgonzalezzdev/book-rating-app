@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Light Mode Colors:
+/* LIGHT MODE COLORS:
     bg-neutral-50     Fondo general: blanco suave
     bg-neutral-200    Secciones secundarias 
     bg-white          Tarjetas o contenedores 
@@ -15,7 +15,7 @@
 
 
 
-/* Dark Mode Colors:
+/* DARK MODE COLORS:
     dark:bg-neutral-800   Fondo general: casi negro 
     dark:bg-neutral-700   Secciones secundarias 
     dark:bg-neutral-600   Tarjetas o contenedores 
