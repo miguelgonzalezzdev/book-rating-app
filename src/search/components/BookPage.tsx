@@ -3,12 +3,26 @@ import { useParams } from "react-router"
 import { Star } from "../../core/components/Star"
 import { useBook } from "../hooks/useBooks"
 import { GenreTag } from "./GenreTag"
+import { Alert } from "../../core/components/Alert"
+import { SkeletonBookPage } from "./SkeletonBookPage"
 
 export const BookPage = () => {
   const { query } = useParams()
   const bookId = Number(query)
-  const { title, author, year, isbn, publisher, description, imageUrl, genreid1, genreid2, genreid3, rating } = useBook({ bookId })
+  const { title, author, year, isbn, publisher, description, imageUrl, genreid1, genreid2, genreid3, rating, isLoading, error } = useBook({ bookId })
   const genres = [genreid1, genreid2, genreid3].filter((id) => id != null && id !== 0);
+
+  if(isLoading) return <SkeletonBookPage />
+
+  if (error) {
+    return (
+      <Alert
+        type="error"
+        title="Error"
+        message="Hubo un error al cargar el libro. Inténtelo de nuevo más tarde."
+      />
+    )
+  }
 
   return (
     <section className="bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 min-h-screen p-6 md:p-16">
