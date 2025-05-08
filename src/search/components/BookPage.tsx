@@ -1,14 +1,17 @@
 //import { useParams } from "react-router"
+import { useParams } from "react-router"
 import { Star } from "../../core/components/Star"
+import { useBook } from "../hooks/useBooks"
+import { GenreTag } from "./GenreTag"
 
 export const BookPage = () => {
-  //const { query } = useParams()
-
-  const imageUrl = ""
-  const genres = ["genero", "genero", "genero"]
+  const { query } = useParams()
+  const bookId = Number(query)
+  const { title, author, year, isbn, publisher, description, imageUrl, genreid1, genreid2, genreid3, rating } = useBook({ bookId })
+  const genres = [genreid1, genreid2, genreid3].filter((id) => id != null && id !== 0);
 
   return (
-    <section className="bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 min-h-screen p-6 md:p-10">
+    <section className="bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 min-h-screen p-6 md:p-16">
       <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-20">
         <div className="flex flex-col items-center justify-start gap-4">
           <div className="w-56 aspect-[3/4] shadow-xl rounded-lg overflow-hidden">
@@ -30,40 +33,41 @@ export const BookPage = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-6">
-          <div className="text-sm space-y-2">
-            <h1 className="text-5xl font-bold">{"Title"}</h1>
-            <p className="text-2xl font-semibold text-neutral-700 dark:text-neutral-300">
-              {"Author"} · {"year"}
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-2 justify-center items-center text-center md:items-start md:justify-start md:text-left">
+            <h1 className="text-4xl font-bold">{title}</h1>
+            <p className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
+              {author}
             </p>
+            <div className="flex items-center gap-1">
+              {[...Array(rating)].map((_, index) => (
+                <Star
+                  key={index}
+                  style={`size-8 ${index < 4 ? 'text-yellow-500' : 'text-gray-300'}`}
+                />
+              ))}
+            </div>
           </div>
-          <div className="flex items-center gap-1">
-            {[...Array(5)].map((_, index) => (
-              <Star
-                key={index}
-                style={`size-8 ${index < 4 ? 'text-yellow-500' : 'text-gray-300'}`}
-              />
+          <div className="flex flex-wrap gap-2">
+            {genres.map((id) => (
+              <GenreTag key={id} genreId={id} />
             ))}
           </div>
-          <div className="text-lg space-y-1">
-            <p>
-              <span className="font-semibold">Géneros:</span>{" "}
-              {genres.map((id) => (
-                <span key={id} className="inline-block mx-1 px-2 py-1 bg-neutral-200 dark:bg-neutral-700 rounded text-xs">
-                  {id}
-                </span>
-              ))}
-            </p>
-            <p>
-              <span className="font-semibold">Editorial:</span> {"publisher"}
-            </p>
-            <p>
-              <span className="font-semibold">ISBN:</span> {"isbn"}
-            </p>
-          </div>
           <div>
-            <h2 className="text-xl font-semibold mb-2">Descripción</h2>
-            <p className="max-w-lg text-lg text-neutral-700 dark:text-neutral-300 whitespace-pre-line break-words">{"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}</p>
+            <h2 className="text-xl font-semibold mb-2">Resumen</h2>
+            <p className="max-w-lg text-md text-neutral-700 dark:text-neutral-300 whitespace-pre-line break-words">{description}</p>
+          </div>
+          <div className="text-md space-y-2 text-neutral-700 dark:text-neutral-300">
+            <h2 className="text-xl font-semibold text-neutral-900 dark:text-neutral-50">Información</h2>
+            <p>
+              <span className="font-semibold">Editorial:</span> {publisher}
+            </p>
+            <p>
+              <span className="font-semibold">ISBN:</span> {isbn}
+            </p>
+            <p>
+              <span className="font-semibold">Publicado:</span> {year}
+            </p>
           </div>
         </div>
       </div>

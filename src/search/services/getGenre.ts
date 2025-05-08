@@ -6,6 +6,8 @@ interface GetGenreProps {
 }
 
 export async function getGenre ({ genreId }: GetGenreProps) {
+    if(!genreId || genreId==0) throw new Error("Error al obtener el id del género")
+    
     const { data, error } = await supabase
         .from("genres")
         .select("name, color")

@@ -1,11 +1,13 @@
 import { supabase } from "../../core/supabase/supabaseClient"
-import { Book, BookDetails, BookId, GenreId } from "../../core/types"
+import { Book, BookId, GenreId } from "../../core/types"
 
 interface GetBookProps {
     bookId: BookId
 }
 
-export async function getBook({ bookId }: GetBookProps): Promise<BookDetails> {
+export async function getBook({ bookId }: GetBookProps) {
+    if(!bookId || bookId==0) throw new Error("Error al obtener el id del libro")
+
     const { data, error } = await supabase
         .from('books')
         .select('id, title, author, year, isbn, publisher, description, genreid1, genreid2, genreid3, imageurl, bookurl, rating')
@@ -38,6 +40,8 @@ interface GetBooksByGenreProps {
 }
 
 export async function getBooksByGenre({ genreId }: GetBooksByGenreProps): Promise<Book[]> {
+    if(!genreId || genreId==0) throw new Error("Error al obtener el id del género")
+
     const { data, error } = await supabase
         .from('books')
         .select('id, title, author, rating, imageurl')
