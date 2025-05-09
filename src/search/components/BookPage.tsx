@@ -8,7 +8,7 @@ import { SkeletonBookPage } from "./SkeletonBookPage"
 
 export const BookPage = () => {
   const { query } = useParams()
-  const { title, author, year, isbn, publisher, description, imageUrl, genreid1, genreid2, genreid3, rating, isLoading, error } = useBook({ bookId:query })
+  const { title, author, year, isbn, publisher, description, imageUrl, genreid1, genreid2, genreid3, rating, pageCount, isLoading, error } = useBook({ bookId:query })
   const genres = [genreid1, genreid2, genreid3].filter((id) => id != null && id !== 0);
 
   if(isLoading) return <SkeletonBookPage />
@@ -80,6 +80,9 @@ export const BookPage = () => {
             </p>
             <p>
               <span className="font-semibold">Publicado:</span> {year}
+            </p>
+            <p>
+              <span className="font-semibold">Páginas:</span> {pageCount}
             </p>
           </div>
         </div>

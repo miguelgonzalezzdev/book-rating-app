@@ -36,6 +36,7 @@ export interface BookDetails {
     imageUrl: string;
     bookUrl: string;
     rating: number;
+    page_count: number;
 }
 export interface Book {
     id: BookId;

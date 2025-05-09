@@ -19,6 +19,7 @@ export function useBook({ bookId }: UseBookProps) {
     const [imageUrl, setImageUrl] = useState("");
     const [bookUrl, setBookUrl] = useState("");
     const [rating, setRating] = useState(0);
+    const [pageCount, setPageCount] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -27,18 +28,19 @@ export function useBook({ bookId }: UseBookProps) {
         const fetchBooks = async () => {
             try {
                 const data = await getBook({ bookId });
-                setTitle(data.title);
-                setAuthor(data.author);
-                setYear(data.year);
-                setIsbn(data.isbn);
-                setPublisher(data.publisher);
-                setDescription(data.description);
-                setGenreid1(data.genreId1);
-                setGenreid2(data.genreId2);
-                setGenreid3(data.genreId3);
-                setImageUrl(data.imageUrl);
-                setBookUrl(data.bookUrl);
-                setRating(data.rating);
+                setTitle(data.title)
+                setAuthor(data.author)
+                setYear(data.year)
+                setIsbn(data.isbn)
+                setPublisher(data.publisher)
+                setDescription(data.description)
+                setGenreid1(data.genreId1)
+                setGenreid2(data.genreId2)
+                setGenreid3(data.genreId3)
+                setImageUrl(data.imageUrl)
+                setBookUrl(data.bookUrl)
+                setRating(data.rating)
+                setPageCount(data.page_count)
             } catch (err) {
                 setError((err as Error).message);
             } finally {
@@ -48,7 +50,7 @@ export function useBook({ bookId }: UseBookProps) {
         fetchBooks();
     }, [bookId]);
 
-    return { title, author, year, isbn, publisher, description, genreid1, genreid2, genreid3, imageUrl, bookUrl, rating, isLoading, error };
+    return { title, author, year, isbn, publisher, description, genreid1, genreid2, genreid3, imageUrl, bookUrl, rating, pageCount, isLoading, error };
 }
 
 interface UseAllBooksByGenreProps {

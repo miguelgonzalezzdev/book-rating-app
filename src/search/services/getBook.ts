@@ -10,7 +10,7 @@ export async function getBook({ bookId }: GetBookProps) {
 
     const { data, error } = await supabase
         .from('books')
-        .select('id, title, author, year, isbn, publisher, description, genreid1, genreid2, genreid3, imageurl, bookurl, rating')
+        .select('id, title, author, year, isbn, publisher, description, genreid1, genreid2, genreid3, imageurl, bookurl, rating, page_count')
         .eq('id', bookId)
         .single()
 
@@ -32,6 +32,7 @@ export async function getBook({ bookId }: GetBookProps) {
         imageUrl: data.imageurl || "",
         bookUrl: data.bookurl || "",
         rating: data.rating || "",
+        page_count: data.page_count || 0,
     }
 }
 
