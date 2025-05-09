@@ -6,7 +6,7 @@ interface GetBookProps {
 }
 
 export async function getBook({ bookId }: GetBookProps) {
-    if(!bookId || bookId=="") throw new Error("Error al obtener el id del libro")
+    if (!bookId || bookId == "") throw new Error("Error al obtener el id del libro")
 
     const { data, error } = await supabase
         .from('books')
@@ -14,9 +14,9 @@ export async function getBook({ bookId }: GetBookProps) {
         .eq('id', bookId)
         .single()
 
-    if (error) throw new Error(error.message);
+    if (error) throw new Error(error.message)
 
-    if (!data) throw new Error("No se encontraron libros");
+    if (!data) throw new Error("No se encontraron libros")
 
     return {
         id: data.id || "",
@@ -41,14 +41,14 @@ interface GetBooksByGenreProps {
 }
 
 export async function getBooksByGenre({ genreId }: GetBooksByGenreProps): Promise<Book[]> {
-    if(!genreId || genreId==0) throw new Error("Error al obtener el id del género")
+    if (!genreId || genreId == 0) throw new Error("Error al obtener el id del género")
 
     const { data, error } = await supabase
         .from('books')
         .select('id, title, author, rating, imageurl')
         .or(`genreid1.eq.${genreId},genreid2.eq.${genreId},genreid3.eq.${genreId}`);
 
-    if (error) throw new Error(error.message);
+    if (error) throw new Error(error.message)
 
     return data.map(book => ({
         id: book.id,
@@ -57,4 +57,30 @@ export async function getBooksByGenre({ genreId }: GetBooksByGenreProps): Promis
         rating: book.rating,
         imageUrl: book.imageurl,
     }));
+}
+
+interface SearchBooksProps {
+    search: string
+}
+
+export async function searchBooks({ search }: SearchBooksProps): Promise<Book[]> {
+    if (search.trim() === '') return []
+
+    const { data, error } = await supabase
+        .from('books')
+        .select('id, title, author, rating, imageurl')
+        .or(`title.ilike.%${search}%,author.ilike.%${search}%`)
+        .order('title', { ascending: true })
+
+    if (error) {
+        if (error) throw new Error(error.message)
+    }
+
+    return data.map(book => ({
+        id: book.id,
+        title: book.title,
+        author: book.author,
+        rating: book.rating,
+        imageUrl: book.imageurl,
+    })) ?? []
 }

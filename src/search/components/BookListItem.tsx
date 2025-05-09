@@ -18,7 +18,7 @@ export function BookListItem({ bookId, title, author, rating, imageUrl }: BookLi
     }
 
     return (
-        <li onClick={handleClick} className="flex justify-start gap-6 p-4 border-b border-neutral-300 dark:border-neutral-700 cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-700">
+        <li onMouseDown={handleClick} className="flex justify-start gap-6 p-4 border-b border-neutral-300 dark:border-neutral-700 cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-700">
             <div className="w-12 md:w-16 aspect-[3/4] overflow-hidden">
                 <img
                     src={`${imageUrl?.trim() ? imageUrl : "../placeholder_img_book.png"}?t=${Date.now()}`}

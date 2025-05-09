@@ -1,4 +1,7 @@
-import { useState } from "react"
+import debounce from "just-debounce-it";
+import { useState, useCallback } from "react"
+import { useSearch } from "../hooks/useSearch";
+import { SearchBarItem } from "./SearchBarItem";
 
 export const SearchBar = () => {
     const initialResults = [
@@ -12,22 +15,34 @@ export const SearchBar = () => {
 
     const [search, setSearch] = useState("");
     const [showResults, setShowResults] = useState(false);
-    const [results, setResults] = useState<string[]>([]);
+    const { results, getResults, isLoading } = useSearch({ search })
+    const [searchHistory, setSearchHistory] = useState<string[]>([]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const debouncedGetResults = useCallback(
+        debounce((search: string) => {
+            getResults({ search })
+            setShowResults(true)
+        }, 300)
+        , [getResults])
 
     const handleClick = () => {
         setShowResults(true)
-        setResults(initialResults)
+        setSearchHistory(initialResults)
     }
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault()
         const newSearch = event.target.value
         setSearch(newSearch)
+        setShowResults(false)
+        debouncedGetResults(newSearch)
     }
 
     const handleBlur = () => {
-        setShowResults(false)
-    };
+        setTimeout(() => {
+            setShowResults(false)
+        }, 100)
+    }
 
     return (
         <div className="w-full max-w-xl mx-auto relative">
@@ -55,19 +70,20 @@ export const SearchBar = () => {
 
             {showResults && (
                 <div className="absolute top-full left-0 w-full max-h-100 overflow-y-auto mt-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-lg shadow-lg z-50">
-                    <p className="p-3 font-bold">Busquedas recientes</p>
+                    {searchHistory && !search && <p className="p-3 font-bold">Busquedas recientes</p>}
                     <ul className="divide-y divide-neutral-200 dark:divide-neutral-600">
-                        {results
-                            .filter((r) => r.toLowerCase().includes(search.toLowerCase()))
-                            .map((result, i) => (
-                                <li key={i} className="p-3 hover:bg-neutral-100 dark:hover:bg-neutral-600 cursor-pointer">
-                                    {result}
-                                </li>
-                            ))}
+                        {searchHistory && !search && searchHistory.map((result, i) => (
+                            <li key={i} className="p-3 hover:bg-neutral-100 dark:hover:bg-neutral-600 cursor-pointer">
+                                {result}
+                            </li>
+                        ))}
+
+                        {results && !isLoading && results.map((book => (
+                            <SearchBarItem key={book.id} bookId={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
+                        )))}
                     </ul>
                 </div>
             )}
         </div>
     )
 }
-
