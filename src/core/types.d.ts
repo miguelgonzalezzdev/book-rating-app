@@ -23,7 +23,7 @@ export type GenreColor = Genre["color"]
 
 //***** START Tipos para BOOK *****//
 export interface BookDetails {
-    id: number
+    id: string
     title: string;
     author: string;
     year: string;

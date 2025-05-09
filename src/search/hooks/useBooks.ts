@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Book, BookId } from "../../core/types";
+import { Book, BookId, GenreId } from "../../core/types";
 import { getBook, getBooksByGenre } from "../services/getBook";
 
 interface UseBookProps {
@@ -52,7 +52,7 @@ export function useBook({ bookId }: UseBookProps) {
 }
 
 interface UseAllBooksByGenreProps {
-    genreId: BookId;
+    genreId: GenreId;
 }
 
 export function useAllBooksByGenre({ genreId }: UseAllBooksByGenreProps) {

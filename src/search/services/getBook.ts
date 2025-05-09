@@ -6,7 +6,7 @@ interface GetBookProps {
 }
 
 export async function getBook({ bookId }: GetBookProps) {
-    if(!bookId || bookId==0) throw new Error("Error al obtener el id del libro")
+    if(!bookId || bookId=="") throw new Error("Error al obtener el id del libro")
 
     const { data, error } = await supabase
         .from('books')
@@ -19,7 +19,7 @@ export async function getBook({ bookId }: GetBookProps) {
     if (!data) throw new Error("No se encontraron libros");
 
     return {
-        id: data.id || 0,
+        id: data.id || "",
         title: data.title || "",
         author: data.author || "",
         year: data.year || "",

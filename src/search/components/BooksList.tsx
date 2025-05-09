@@ -61,8 +61,8 @@ export const BooksList = () => {
             />
           ))
         ) : (
-          <li className="mt-8 text-lg text-center text-neutral-700 dark:text-neutral-300">
-            No se han encontrado libros
+          <li className="mt-10 text-lg md:text-xl text-center text-neutral-700 dark:text-neutral-300">
+            No se han encontrado resultados
           </li>
         )}
       </ul>
