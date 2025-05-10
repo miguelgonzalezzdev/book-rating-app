@@ -9,7 +9,7 @@ interface RegisterBookSearchProps {
 export async function registerBookSearch({ userId, bookId }: RegisterBookSearchProps) {
     const { error } = await supabase
         .from('search_history')
-        .insert([{ user_id: userId, book_id: bookId }])
+        .upsert([{ user_id: userId, book_id: bookId }], { onConflict: 'user_id,book_id' })
 
     if (error) {
         throw new Error("No se pudo registrar la búsqueda.")

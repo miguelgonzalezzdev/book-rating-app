@@ -34,7 +34,7 @@ export const SearchBar = () => {
             setShowResults(false)
         }, 150)
     }
-
+    
     return (
         <div className="w-full max-w-xl mx-auto relative">
             <div className="w-full" >
@@ -66,6 +66,8 @@ export const SearchBar = () => {
                         {searchHistory && !search && searchHistory.map(book => (
                              <SearchBarItem key={book.id} bookId={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
                         ))}
+
+                        {search && results.length==0 && !isLoading && <p className="p-3">Sin resultados</p>}
 
                         {results && !isLoading && results.map((book => (
                             <SearchBarItem key={book.id} bookId={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
