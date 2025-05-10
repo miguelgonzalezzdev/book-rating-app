@@ -2,21 +2,13 @@ import debounce from "just-debounce-it";
 import { useState, useCallback } from "react"
 import { useSearch } from "../hooks/useSearch";
 import { SearchBarItem } from "./SearchBarItem";
+import { useSearchHistory } from "../hooks/useSearchHistory";
 
 export const SearchBar = () => {
-    const initialResults = [
-        "Cien años de soledad",
-        "El principito",
-        "1984",
-        "Don Quijote de la Mancha",
-        "Los tres cerditos",
-        "Harry Potter"
-    ]
-
     const [search, setSearch] = useState("");
     const [showResults, setShowResults] = useState(false);
     const { results, getResults, isLoading } = useSearch({ search })
-    const [searchHistory, setSearchHistory] = useState<string[]>([]);
+    const {searchHistory} = useSearchHistory();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedGetResults = useCallback(
@@ -28,7 +20,6 @@ export const SearchBar = () => {
 
     const handleClick = () => {
         setShowResults(true)
-        setSearchHistory(initialResults)
     }
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +32,7 @@ export const SearchBar = () => {
     const handleBlur = () => {
         setTimeout(() => {
             setShowResults(false)
-        }, 100)
+        }, 150)
     }
 
     return (
@@ -72,10 +63,8 @@ export const SearchBar = () => {
                 <div className="absolute top-full left-0 w-full max-h-100 overflow-y-auto mt-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-lg shadow-lg z-50">
                     {searchHistory && !search && <p className="p-3 font-bold">Busquedas recientes</p>}
                     <ul className="divide-y divide-neutral-200 dark:divide-neutral-600">
-                        {searchHistory && !search && searchHistory.map((result, i) => (
-                            <li key={i} className="p-3 hover:bg-neutral-100 dark:hover:bg-neutral-600 cursor-pointer">
-                                {result}
-                            </li>
+                        {searchHistory && !search && searchHistory.map(book => (
+                             <SearchBarItem key={book.id} bookId={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
                         ))}
 
                         {results && !isLoading && results.map((book => (
@@ -87,3 +76,8 @@ export const SearchBar = () => {
         </div>
     )
 }
+
+
+/*
+
+*/

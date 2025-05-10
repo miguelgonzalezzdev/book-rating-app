@@ -47,11 +47,11 @@ export interface Book {
 }
 
 export type ListOfBooks = Book[]
-export type BookId = Book["id"]
-export type BookTitle = Book["title"]
-export type BookAuthor = Book["author"]
-export type BookImageUrl = Book["imageUrl"]
-export type BookRating = Book["rating"]
+export type BookId = BookDetails["id"]
+export type BookTitle = BookDetails["title"]
+export type BookAuthor = BookDetails["author"]
+export type BookImageUrl = BookDetails["imageUrl"]
+export type BookRating = BookDetails["rating"]
 //***** END Tipos para GENRES *****//
 
 export type AlertType = typeof ALERT_TYPES[keyof typeof ALERT_TYPES];

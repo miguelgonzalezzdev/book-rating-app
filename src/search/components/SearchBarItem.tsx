@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import { BookAuthor, BookId, BookImageUrl, BookTitle } from "../../core/types";
+import { useRegisterBookSearch } from "../hooks/useSearch";
 
 interface SearchBarItemProps {
     bookId: BookId;
@@ -9,9 +10,11 @@ interface SearchBarItemProps {
 }
 
 export function SearchBarItem({ bookId, title, author, imageUrl }: SearchBarItemProps) {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+    const { register } = useRegisterBookSearch({ bookId })
 
-    const handleClick = () => {
+    const handleClick = async () => {
+        await register()
         navigate(`/search/book/${bookId}`);
     }
 
