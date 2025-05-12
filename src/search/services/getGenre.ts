@@ -10,7 +10,7 @@ export async function getGenre ({ genreId }: GetGenreProps) {
     
     const { data, error } = await supabase
         .from("genres")
-        .select("name, color")
+        .select("name, color, icon")
         .eq("id", genreId)
         .single()
 
@@ -19,6 +19,7 @@ export async function getGenre ({ genreId }: GetGenreProps) {
     return {
         name: data.name || "",
         color: data.color || "",
+        icon: data.icon || "",
     }
 }
 

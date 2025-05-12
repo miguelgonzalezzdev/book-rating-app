@@ -14,11 +14,13 @@ export interface Genre {
     id: number
     name: string
     color: string
+    icon: string
 }
 export type ListOfGenres = Genre[]
 export type GenreId = Genre["id"]
 export type GenreName = Genre["name"]
 export type GenreColor = Genre["color"]
+export type GenreIcon= Genre["icon"]
 //***** END Tipos para GENRES *****//
 
 //***** START Tipos para BOOK *****//
@@ -55,3 +57,9 @@ export type BookRating = BookDetails["rating"]
 //***** END Tipos para GENRES *****//
 
 export type AlertType = typeof ALERT_TYPES[keyof typeof ALERT_TYPES];
+
+export interface IconComponentProps {
+  width?: number;
+  height?: number;
+  className?: string;
+}

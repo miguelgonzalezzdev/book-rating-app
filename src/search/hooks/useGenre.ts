@@ -11,6 +11,7 @@ interface UseGenresProps {
 export function useGenre({ genreId }: UseGenresProps) {
     const [genre, setGenre] = useState("");
     const [color, setColor] = useState("");
+    const [icon, setIcon] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -21,6 +22,7 @@ export function useGenre({ genreId }: UseGenresProps) {
                 const data = await getGenre({genreId});
                 setGenre(data.name);
                 setColor(data.color);
+                setIcon(data.icon);
             } catch (err) {
                 setError((err as Error).message);
             } finally {
@@ -30,7 +32,7 @@ export function useGenre({ genreId }: UseGenresProps) {
         fetchGenres();
     }, [genreId]);
 
-    return { genre, color, isLoading, error };
+    return { genre, color, icon, isLoading, error };
 }
 
 export function useAllGenres() {

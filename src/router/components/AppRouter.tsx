@@ -27,6 +27,7 @@ export const AppRouter = () => {
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/search/:query" element={<BooksList />} />
                 <Route path="/search/book/:query" element={<BookPage />} />
+                
                 {/* Rutas solo visibles al estar logeado */}
                 <Route element={<ProtectedRoute />}>
                     <Route path="/review" element={<ReviewPage />} />
