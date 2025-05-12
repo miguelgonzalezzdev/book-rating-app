@@ -9,10 +9,20 @@ interface RegisterBookSearchProps {
 export async function registerBookSearch({ userId, bookId }: RegisterBookSearchProps) {
     const { error } = await supabase
         .from('search_history')
-        .upsert([{ user_id: userId, book_id: bookId }], { onConflict: 'user_id,book_id' })
+        .upsert(
+            [{
+                user_id: userId,
+                book_id: bookId,
+                searched_at: new Date().toISOString()
+            }],
+            {
+                onConflict: 'user_id,book_id',
+                ignoreDuplicates: false 
+            }
+        );
 
     if (error) {
-        throw new Error("No se pudo registrar la búsqueda.")
+        throw new Error("No se pudo registrar la búsqueda.");
     }
 }
 
