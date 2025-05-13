@@ -34,5 +34,5 @@ export function ConfirmModal  ({ isOpen, title, message, onConfirm, onCancel, co
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
