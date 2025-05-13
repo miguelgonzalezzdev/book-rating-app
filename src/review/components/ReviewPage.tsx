@@ -1,19 +1,15 @@
-import { useNavigate } from "react-router";
-import { SearchListIcon } from "../../core/icons/SearchListIcon";
-import { SquareNewIcon } from "../../core/icons/SquareNewIcon";
-import { GenericModal } from "../../core/components/GenericModal";
-import { useState } from "react";
+import { useNavigate } from "react-router"
+import { SearchListIcon } from "../../core/icons/SearchListIcon"
+import { SquareNewIcon } from "../../core/icons/SquareNewIcon"
+import { useState } from "react"
+import { BookSearchModal } from "./BookSearchModal"
 
 export function ReviewPage () {
     const navigate = useNavigate()
     const [showModal, setShowModal] = useState(false);
-    let bookSelected = 0
 
     const handleSelectExistingBook = () => {
-        console.log(bookSelected)
-        bookSelected = 1
         setShowModal(true)
-        //navigate("/review/"+bookSelected)
     }
 
     const handleSelectNewBook = () => {
@@ -42,9 +38,8 @@ export function ReviewPage () {
                 </div>
             </section>
 
-            <GenericModal isOpen={showModal} onClose={() => setShowModal(false)}>
-                <h1>PRUEBAS</h1>
-            </GenericModal>
+            
+            <BookSearchModal isOpen={showModal} onClose={() => setShowModal(false)} />
         </div>
     )
 }

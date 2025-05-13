@@ -12,7 +12,7 @@ export function ConfirmModal  ({ isOpen, title, message, onConfirm, onCancel, co
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 backdrop-brightness-35 flex items-center justify-center z-50">
+        <div className="fixed inset-0 backdrop-brightness-35 backdrop-blur-xs flex items-center justify-center z-50">
             <div className="bg-white dark:bg-neutral-600 rounded-2xl m-4 p-6 w-full max-w-sm md:max-w-md shadow-lg text-center border border-gray-200 dark:border-neutral-700">
                 <h2 className="text-xl font-semibold text-neutral-900 dark:text-neutral-50 mb-4">{title}</h2>
                 <p className="text-md text-neutral-900 dark:dark:text-neutral-50 mb-6">
