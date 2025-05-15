@@ -51,7 +51,7 @@ export const useReview = ({ bookId }: UseReviewProps) => {
         setError("")
 
         const res = await registerReview({ bookId, bookName, authorName, rating, reviewText, imageFile })
-
+        
         setIsLoading(false)
         if (res.success) {
             navigate("/profile");
