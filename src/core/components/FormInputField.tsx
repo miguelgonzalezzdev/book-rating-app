@@ -6,7 +6,7 @@ interface FormInputField {
     placeholder: string
     value: string
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-    error: boolean
+    error?: boolean
 }
 
 export function FormInputField({ id, name, type = "text", placeholder, value, onChange, error }: FormInputField) {
