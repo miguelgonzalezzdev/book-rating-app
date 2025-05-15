@@ -1,6 +1,6 @@
 import { supabase } from "../../core/supabase/supabaseClient"
 
-interface RegisterInput {
+interface RegisterReviewForNewBookProps {
     bookId?: string
     bookName: string
     authorName: string
@@ -19,7 +19,7 @@ interface InsertReviewData {
     book_id?: string
 }
 
-export async function registerReview({ bookId = "", bookName, authorName, rating, reviewText, imageFile }: RegisterInput) {
+export async function registerReviewForNewBook({ bookId = "", bookName, authorName, rating, reviewText, imageFile }: RegisterReviewForNewBookProps) {
 
     // Validar que los campos no esten vacios
     if (!bookName || !authorName || !rating || !reviewText || !imageFile) {
@@ -77,6 +77,55 @@ export async function registerReview({ bookId = "", bookName, authorName, rating
         .insert(insertData);
 
     if (insertError) {
+        return { success: false, message: 'Error guardar la reseña', error: insertError }
+    }
+
+    return { success: true }
+}
+
+interface RegisterReviewForExistingBookProps {
+    bookId?: string
+    bookName: string
+    authorName: string
+    rating: number
+    reviewText: string
+    imageUrl: string
+}
+
+
+export async function registerReviewForExistingBook({ bookId = "", bookName, authorName, rating, reviewText, imageUrl }: RegisterReviewForExistingBookProps) {
+
+    // Validar que los campos no esten vacios
+    if (!bookName || !authorName || !rating || !reviewText || !imageUrl) {
+        return { success: false, message: 'Todos los campos son obligatorios' }
+    }
+
+    // Obtener el id del usuario autenticado
+    const { data } = await supabase.auth.getUser();
+    const uuid_UserId = data?.user?.id;
+
+    if (!uuid_UserId) {
+        return { success: false, message: 'Usuario no autenticado' }
+    }
+
+    // Preparar los datos del insert
+    const insertData: InsertReviewData = {
+        book_id: bookId,
+        user_id: uuid_UserId,
+        tittle: bookName,
+        author: authorName,
+        rating,
+        text: reviewText,
+        imageurl: imageUrl
+    }
+
+    // Insertar la review
+    const { error: insertError } = await supabase
+        .from('reviews')
+        .insert(insertData);
+
+    if (insertError) {
+        console.log(insertError)
         return { success: false, message: 'Error guardar la reseña', error: insertError }
     }
 

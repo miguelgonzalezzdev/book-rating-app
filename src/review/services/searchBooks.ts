@@ -26,3 +26,26 @@ export async function getBooksForSelect({ search }: SearchBooksProps): Promise<B
         imageUrl: book.imageurl,
     })) ?? []
 }
+
+interface GetBookSelectedByIdProps {
+    bookId: string
+}
+
+export async function getBookSelectedById({ bookId }: GetBookSelectedByIdProps) {
+    if (!bookId || bookId == "") return { success: false, message: 'Sin ID del libro' }
+
+    const { data, error } = await supabase
+        .from('books')
+        .select('id, title, author, imageurl')
+        .eq('id', bookId)
+        .single()
+
+    if (!data || error) return { success: false, message: 'Error al obtener los datos del libros' }
+
+    return {
+        id: data.id || "",
+        title: data.title || "",
+        author: data.author || "",
+        imageUrl: data.imageurl || "",
+    }
+}

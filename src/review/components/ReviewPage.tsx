@@ -13,12 +13,14 @@ export function ReviewPage() {
         setShowModalSearch(true)
     }
 
-    const handleBookSelected = () => {
+    const handleBookSelected = ({ newBooKSeleted }: {newBooKSeleted: string}) => {
+        setBookSeleted(newBooKSeleted)
         setShowModalSearch(false)
         setShowModalReview(true)
     }
 
     const handleSelectNewBook = () => {
+        setBookSeleted("")
         setShowModalReview(true)
     }
 
@@ -44,8 +46,8 @@ export function ReviewPage() {
                 </div>
             </section>
 
-            <BookSearchModal isOpen={showModalSearch} onClose={() => setShowModalSearch(false)} />
-            <ReviewModal isOpen={showModalReview} bookId={bookSeleted} onClose={() => setShowModalReview(false)} />
+            <BookSearchModal isOpen={showModalSearch} onClick={handleBookSelected} onClose={() => setShowModalSearch(false)} />
+            <ReviewModal key={bookSeleted} isOpen={showModalReview} bookId={bookSeleted} onClose={() => setShowModalReview(false)} />
         </div>
     )
 }

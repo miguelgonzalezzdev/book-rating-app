@@ -5,11 +5,12 @@ import debounce from "just-debounce-it";
 import { CloseIcon } from "../../core/icons/CloseIcon";
 
 interface BookSearchModalProps {
-    isOpen: boolean;
-    onClose: () => void;
+    isOpen: boolean
+    onClick: (args: { newBooKSeleted: string }) => void;
+    onClose: () => void
 }
 
-export function BookSearchModal({ isOpen, onClose }: BookSearchModalProps) {
+export function BookSearchModal({ isOpen, onClick, onClose }: BookSearchModalProps) {
     const [search, setSearch] = useState("")
     const [showResults, setShowResults] = useState(false)
     const { results, getResults, isLoading } = useBookSearchSelect({ search })
@@ -89,6 +90,7 @@ export function BookSearchModal({ isOpen, onClose }: BookSearchModalProps) {
                                 title={book.title}
                                 author={book.author}
                                 imageUrl={book.imageUrl}
+                                onClick={onClick}
                             />
                         ))}
                     </div>

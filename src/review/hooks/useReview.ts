@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { registerReview } from "../services/review";
+import { useEffect, useState } from "react";
+import { registerReviewForExistingBook, registerReviewForNewBook } from "../services/review";
 import { useNavigate } from "react-router";
+import { getBookSelectedById } from "../services/searchBooks";
 
-interface UseReviewProps{
+interface UseReviewProps {
     bookId?: string;
 }
 
@@ -13,9 +14,29 @@ export const useReview = ({ bookId }: UseReviewProps) => {
     const [reviewText, setReviewText] = useState('')
     const [imageUrl, setImageUrl] = useState('')
     const [imageFile, setImageFile] = useState<File | null>(null)
+    const [isFetching, setIsFetching] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
     const navigate = useNavigate()
+
+    // Obtener datos del libro si hay bookId
+    useEffect(() => {
+        const fetchBookData = async () => {
+            if (!bookId) return
+
+            setIsFetching(true)
+
+            const data = await getBookSelectedById({ bookId })
+
+            setBookName(data.title || '')
+            setAuthorName(data.author || '')
+            setImageUrl(data.imageUrl || '')
+
+            setIsFetching(false)
+        }
+
+        fetchBookData()
+    }, [bookId])
 
     const handleBookName = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault()
@@ -47,16 +68,26 @@ export const useReview = ({ bookId }: UseReviewProps) => {
     }
 
     const handleSubmitReview = async () => {
-        setIsLoading(true)
-        setError("")
+        try {
+            setIsLoading(true)
+            setError("")
 
-        const res = await registerReview({ bookId, bookName, authorName, rating, reviewText, imageFile })
-        
-        setIsLoading(false)
-        if (res.success) {
-            navigate("/profile");
-        } else {
-            setError(res.message || "Error al guardar la reseña");
+            let res
+
+            if (bookId?.trim()) {
+                res = await registerReviewForExistingBook({ bookId, bookName, authorName, rating, reviewText, imageUrl })
+            } else {
+                res = await registerReviewForNewBook({ bookName, authorName, rating, reviewText, imageFile })
+            }
+
+            if (res.success) {
+                navigate("/profile");
+            }
+            
+        } catch (err) {
+            setError(err instanceof Error ? err.message : String(err));
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -67,6 +98,7 @@ export const useReview = ({ bookId }: UseReviewProps) => {
         setRating,
         reviewText,
         imageUrl,
+        isFetching,
         isLoading,
         error,
         handleBookName,

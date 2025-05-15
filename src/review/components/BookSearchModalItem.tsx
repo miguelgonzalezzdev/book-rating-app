@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router";
 import { BookAuthor, BookId, BookImageUrl, BookTitle } from "../../core/types"
 
 interface BookSearchModalItemProps {
@@ -6,17 +5,13 @@ interface BookSearchModalItemProps {
     title: BookTitle;
     author: BookAuthor;
     imageUrl: BookImageUrl
+    onClick: (args: { newBooKSeleted: string }) => void
 }
 
-export function BookSearchModalItem({ bookId, title, author, imageUrl }: BookSearchModalItemProps) {
-    const navigate = useNavigate()
-
-    const handleClick = () => {
-        navigate("/review/"+bookId)
-    }
+export function BookSearchModalItem({ bookId, title, author, imageUrl, onClick }: BookSearchModalItemProps) {
 
     return (
-        <li onClick={handleClick} className="p-3 hover:bg-neutral-100 dark:hover:bg-neutral-600 cursor-pointer flex justify-start items-center gap-3">
+        <li onClick={() => onClick({ newBooKSeleted: bookId })} className="p-3 hover:bg-neutral-100 dark:hover:bg-neutral-600 cursor-pointer flex justify-start items-center gap-3">
             <div className="w-8 aspect-[3/4] overflow-hidden">
                 <img
                     src={`${imageUrl?.trim() ? imageUrl : "../placeholder_img_book.png"}?t=${Date.now()}`}
