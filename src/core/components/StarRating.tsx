@@ -2,23 +2,31 @@ import { useState } from 'react'
 
 interface StarRatingProps {
     initialRating?: number;
-    onChange: (rating: number) => void;  // Función para manejar el cambio del rating
+    onChange?: (rating: number) => void;  // Función para manejar el cambio del rating
+    disabled?: boolean; // Propiedad para deshabilitar el hover
+    className?: string; 
 }
 
-export function StarRating({ initialRating = 0, onChange }: StarRatingProps) {
+export function StarRating({ initialRating = 0, onChange, disabled = false, className = "w-8 h-8" }: StarRatingProps) {
     const [rating, setRating] = useState<number>(initialRating)
 
     const handleMouseOver = (index: number) => {
+        if (disabled) return 
+
         setRating(index + 1)
     }
 
     const handleMouseOut = () => {
+        if (disabled) return
+        
         setRating(initialRating)
     }
 
     const handleClick = (index: number) => {
+        if (disabled) return 
+
         setRating(index + 1)
-        onChange(index + 1) // Pasamos el rating seleccionado al componente padre
+        if (onChange) onChange(index + 1) // Pasamos el rating seleccionado al componente padre
     }
 
     const renderStars = () => {
@@ -30,7 +38,7 @@ export function StarRating({ initialRating = 0, onChange }: StarRatingProps) {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className={`w-8 h-8 cursor-pointer ${i < rating ? 'text-yellow-500' : 'text-gray-300'} transition duration-200 ease-in-out hover:scale-110 `}
+                    className={`${className} ${i < rating ? 'text-yellow-500' : 'text-gray-300'} transition duration-200 ease-in-out ${disabled ? '' : 'cursor-pointer hover:scale-110'}`}
                     onClick={() => handleClick(i)}
                     onMouseOver={() => handleMouseOver(i)}
                     onMouseOut={handleMouseOut}>

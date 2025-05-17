@@ -9,6 +9,7 @@ import { useState } from "react";
 import { ConfirmModal } from "../../core/components/ConfirmModal";
 import { useAuthStore } from "../../core/store/authStore";
 import { SkeletonProfile } from "./SkeletonProfile";
+import { ReviewsList } from "./ReviewsList";
 
 export function ProfilePage() {
     const { userId, name, setName, surname, setSurname, email, setEmail, aboutme, setAboutme, profileimage, setProfileimage, posts, followers, following, error, setError, isLoading } = useUserProfileData()
@@ -78,7 +79,7 @@ export function ProfilePage() {
     if (isLoading) return <SkeletonProfile />
 
     return (
-        <div className="min-h-screen bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 flex items-center justify-center flex-col p-4">
+        <div className="min-h-screen bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 flex items-center justify-center flex-col gap-10 px-4 py-10">
             <section className="w-full max-w-2xl bg-white dark:bg-neutral-600 rounded-2xl p-6 md:p-10 space-y-6 shadow-lg border border-gray-200 dark:border-neutral-700">
                 <div className="relative flex justify-center items-start space-y-2">
                     <img
@@ -166,6 +167,10 @@ export function ProfilePage() {
                         </button>
                     </div>
                 </form>
+            </section>
+
+            <section className="px-10">
+                <ReviewsList userId={userId} />
             </section>
 
             <ConfirmModal

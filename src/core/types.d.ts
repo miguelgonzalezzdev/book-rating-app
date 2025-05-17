@@ -56,6 +56,22 @@ export type BookImageUrl = BookDetails["imageUrl"]
 export type BookRating = BookDetails["rating"]
 //***** END Tipos para GENRES *****//
 
+//***** START Tipos para REVIEW *****//
+export interface Review {
+    id: string
+    user_id: string
+    book_id: string | null
+    rating: number
+    text: string
+    title: string
+    author: string
+    likes: number
+    imageurl: string
+    updated_at: string
+}
+export type ListOfReviews = Review[]
+//***** END Tipos para REVIEW *****//
+
 export type AlertType = typeof ALERT_TYPES[keyof typeof ALERT_TYPES];
 
 export interface IconComponentProps {

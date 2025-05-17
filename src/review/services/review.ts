@@ -1,7 +1,8 @@
 import { supabase } from "../../core/supabase/supabaseClient"
+import { BookId, UserId } from "../../core/types"
 
 interface RegisterReviewForNewBookProps {
-    bookId?: string
+    bookId?: BookId
     bookName: string
     authorName: string
     rating: number
@@ -10,8 +11,8 @@ interface RegisterReviewForNewBookProps {
 }
 
 interface InsertReviewData {
-    user_id: string
-    tittle: string
+    user_id: UserId
+    title: string
     author: string
     rating: number
     text: string
@@ -59,7 +60,7 @@ export async function registerReviewForNewBook({ bookId = "", bookName, authorNa
     // Preparar los datos del insert
     const insertData: InsertReviewData = {
         user_id: uuid_UserId,
-        tittle: bookName,
+        title: bookName,
         author: authorName,
         rating,
         text: reviewText,
@@ -84,7 +85,7 @@ export async function registerReviewForNewBook({ bookId = "", bookName, authorNa
 }
 
 interface RegisterReviewForExistingBookProps {
-    bookId?: string
+    bookId?: BookId
     bookName: string
     authorName: string
     rating: number
@@ -112,7 +113,7 @@ export async function registerReviewForExistingBook({ bookId = "", bookName, aut
     const insertData: InsertReviewData = {
         book_id: bookId,
         user_id: uuid_UserId,
-        tittle: bookName,
+        title: bookName,
         author: authorName,
         rating,
         text: reviewText,
