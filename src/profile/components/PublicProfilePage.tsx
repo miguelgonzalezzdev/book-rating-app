@@ -58,12 +58,12 @@ export function PublicProfilePage() {
                     className="w-32 h-32 rounded-full object-cover"
                 />
                 <h1 className="text-xl sm:text-2xl font-semibold">{name} {surname}</h1>
-                <div className="text-md flex justify-center flex-wrap gap-4 md:gap-10">
+                <div className="text-md flex justify-center text-center flex-col md:flex-row gap-4 md:gap-10">
                     <p><span className="font-bold">{posts}</span> Publicaciones</p>
                     <p><span className="font-bold">{followers}</span> Seguidores</p>
                     <p><span className="font-bold">{following}</span> Siguiendo</p>
                 </div>
-                <div className="w-full my-8">
+                <div className="w-full md:my-8">
                     <p className="text-">{aboutme}</p>
                 </div>
                 <button
@@ -78,7 +78,7 @@ export function PublicProfilePage() {
                     {isFollowing ? 'Dejar de seguir' : 'Seguir'}
                 </button>
             </section>
-            <section className="px-10">
+            <section className="w-full md:px-10">
                 <ReviewsList userId={userId} />
             </section>
         </div>

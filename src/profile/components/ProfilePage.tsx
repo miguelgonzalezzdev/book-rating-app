@@ -79,7 +79,7 @@ export function ProfilePage() {
     if (isLoading) return <SkeletonProfile />
 
     return (
-        <div className="min-h-screen bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 flex items-center justify-center flex-col gap-10 px-4 py-10">
+        <div className="min-h-screen w-full bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 flex items-center justify-center flex-col gap-10 px-4 py-10">
             <section className="w-full max-w-2xl bg-white dark:bg-neutral-600 rounded-2xl p-6 md:p-10 space-y-6 shadow-lg border border-gray-200 dark:border-neutral-700">
                 <div className="relative flex justify-center items-start space-y-2">
                     <img
@@ -100,7 +100,7 @@ export function ProfilePage() {
                         />
                     </div>
                 </div>
-                <div className="text-md flex justify-center flex-wrap gap-4 md:gap-10">
+                <div className="text-md flex justify-center text-center flex-col md:flex-row gap-4 md:gap-10">
                     <p><span className="font-bold">{posts}</span> Publicaciones</p>
                     <p><span className="font-bold">{followers}</span> Seguidores</p>
                     <p><span className="font-bold">{following}</span> Siguiendo</p>
@@ -169,7 +169,7 @@ export function ProfilePage() {
                 </form>
             </section>
 
-            <section className="px-10">
+            <section className="px-10 w-full">
                 <ReviewsList userId={userId} />
             </section>
 

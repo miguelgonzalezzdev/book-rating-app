@@ -4,11 +4,12 @@ import { getUserReviews } from "../services/userReviews"
 
 export function useUserReviews({ userId }: { userId: UserId }) {
     const [reviews, setReviews] = useState<ListOfReviews>()
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
         const fetchReviews = async () => {
+            setIsLoading(true)
             try {
                 const response = await getUserReviews({ userId })
                 if (response.success) {
@@ -22,7 +23,7 @@ export function useUserReviews({ userId }: { userId: UserId }) {
                 setIsLoading(false)
             }
         }
-
+        
         fetchReviews()
     }, [userId])
 
