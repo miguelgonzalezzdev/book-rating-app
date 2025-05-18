@@ -1,4 +1,5 @@
 import { supabase } from "../../core/supabase/supabaseClient"
+import imageCompression from 'browser-image-compression'
 
 interface UpdateProfileInput {
     id: string
@@ -60,14 +61,21 @@ export async function uploadUserProfileImage({ userId, file }: UploadUserProfile
         return { success: false, message: 'Imagen no proporcionada' }
     }
 
-    const fileExt = file.name.split('.').pop() // Obtener la extensión del archivo
-    const fileName = `${userId}.${fileExt}`   // Generar un nombre de archivo único
+    const compressOptions = {
+      maxSizeMB: 1, // tamaño máximo en MB
+      maxWidthOrHeight: 1920, // redimensionar si es necesario
+      useWebWorker: true,
+      fileType: 'image/webp',
+    }
+
+    const compressedFile = await imageCompression(file, compressOptions)
+    const fileName = `${userId}.webp`   // Generar un nombre de archivo único
 
     // Subir imagen a supabase storage
     const { error: uploadError } = await supabase
         .storage
         .from('profileimages') 
-        .upload(fileName, file, { upsert: true })
+        .upload(fileName, compressedFile, { upsert: true })
 
     if (uploadError) {
         return { success: false, message: 'Error al subir la imagen', error: uploadError }

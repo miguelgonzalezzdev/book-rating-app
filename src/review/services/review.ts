@@ -1,5 +1,6 @@
 import { supabase } from "../../core/supabase/supabaseClient"
 import { BookId, UserId } from "../../core/types"
+import imageCompression from 'browser-image-compression'
 
 interface RegisterReviewForNewBookProps {
     bookId?: BookId
@@ -35,15 +36,22 @@ export async function registerReviewForNewBook({ bookId = "", bookName, authorNa
         return { success: false, message: 'Usuario no autenticado' }
     }
 
-    const fileExt = imageFile.name.split('.').pop();
-    const fileName = `${crypto.randomUUID()}.${fileExt}`;
+    const compressOptions = {
+      maxSizeMB: 1, // tamaño máximo en MB
+      maxWidthOrHeight: 1920, // redimensionar si es necesario
+      useWebWorker: true,
+      fileType: 'image/webp',
+    }
+
+    const compressedFile = await imageCompression(imageFile, compressOptions)
+    const fileName = `${crypto.randomUUID()}.webp`
 
     const { error: uploadError } = await supabase.storage
         .from('review-images')
-        .upload(fileName, imageFile, { upsert: true });
+        .upload(fileName, compressedFile, { upsert: true })
 
     if (uploadError) {
-        return { success: false, message: 'Error al subir la imagen', error: uploadError };
+        return { success: false, message: 'Error al subir la imagen', error: uploadError }
     }
 
     // Obtener URL publica de la imagen subida
