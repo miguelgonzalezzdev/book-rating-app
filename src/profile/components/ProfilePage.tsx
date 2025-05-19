@@ -169,7 +169,7 @@ export function ProfilePage() {
                 </form>
             </section>
 
-            <section className="px-10 w-full">
+            <section className="md:px-10 w-full">
                 <ReviewsList userId={userId} />
             </section>
 

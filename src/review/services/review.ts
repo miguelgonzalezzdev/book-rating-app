@@ -134,7 +134,6 @@ export async function registerReviewForExistingBook({ bookId = "", bookName, aut
         .insert(insertData);
 
     if (insertError) {
-        console.log(insertError)
         return { success: false, message: 'Error guardar la reseña', error: insertError }
     }
 

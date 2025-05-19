@@ -4,6 +4,8 @@ import { StarRating } from '../../core/components/StarRating';
 import { PhotoPlusIcon } from '../../core/icons/PhotoPlusIcon';
 import { useReview } from '../hooks/useReview';
 import { ReviewModalSkeleton } from './ReviewModalSkeleton';
+import { toast } from 'react-hot-toast';
+import { Loader } from '../../core/components/Loader';
 
 interface ConfirmModalProps {
     isOpen: boolean;
@@ -12,9 +14,17 @@ interface ConfirmModalProps {
 }
 
 export function ReviewModal({ isOpen, bookId = "", onClose }: ConfirmModalProps) {
-    const { bookName, authorName, rating, setRating, reviewText, imageUrl, isFetching, handleBookName, handleAuthorName, handleReviewText, handleImageSelected, handleSubmitReview } = useReview({ bookId })
+    const { bookName, authorName, rating, setRating, reviewText, imageUrl, isFetching, isLoading, error, handleBookName, handleAuthorName, handleReviewText, handleImageSelected, handleSubmitReview } = useReview({ bookId })
+
+    if (!isOpen) return null
 
     if (isFetching) return <ReviewModalSkeleton />
+
+    if (error!="") {
+        toast.error('Error al registrar la reseña');
+    }
+
+    if(isLoading) return <Loader />
 
     return (
         <div className={`mt-12 fixed inset-0 backdrop-brightness-35 backdrop-blur-xs flex items-center justify-center z-50 px-2 ${!isOpen ? 'hidden' : ''}`}>
@@ -34,8 +44,6 @@ export function ReviewModal({ isOpen, bookId = "", onClose }: ConfirmModalProps)
                                         className="w-full h-full object-cover"
                                     />
                                 </div>
-
-                                
                             </div>
                         )}
 
@@ -115,7 +123,9 @@ export function ReviewModal({ isOpen, bookId = "", onClose }: ConfirmModalProps)
                             placeholder="Escribe tu reseña aquí..."
                         />
                     </div>
-
+                    {error && (
+                        <p className="text-red-500 text-md text-center">{error}</p>
+                    )}
                     <div className="flex items-center justify-center gap-4">
                         <button type="button" onClick={onClose} className="px-4 py-2 rounded-lg bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-50 hover:bg-neutral-300 dark:hover:bg-neutral-500 transition font-semibold">
                             Cancelar

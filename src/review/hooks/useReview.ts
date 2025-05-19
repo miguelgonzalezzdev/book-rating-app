@@ -39,24 +39,28 @@ export const useReview = ({ bookId }: UseReviewProps) => {
     }, [bookId])
 
     const handleBookName = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setError("")
         event.preventDefault()
         const newBookName = event.target.value
         setBookName(newBookName)
     }
 
     const handleAuthorName = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setError("")
         event.preventDefault()
         const newAuthorName = event.target.value
         setAuthorName(newAuthorName)
     }
 
     const handleReviewText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setError("")
         event.preventDefault()
         const newReviewText = event.target.value
         setReviewText(newReviewText)
     }
 
     const handleImageSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setError("")
         const file = e.target.files?.[0]
         if (!file) return
 
@@ -68,6 +72,11 @@ export const useReview = ({ bookId }: UseReviewProps) => {
     }
 
     const handleSubmitReview = async () => {
+        if (!bookName.trim() || !authorName.trim() || !rating || !reviewText.trim()) {
+            setError("Todos los campos son obligatorios")
+            return
+        }
+
         try {
             setIsLoading(true)
             setError("")
@@ -83,7 +92,12 @@ export const useReview = ({ bookId }: UseReviewProps) => {
             if (res.success) {
                 navigate("/profile");
             }
-            
+
+            if (!res.success) {
+                setError(res.message || 'Ocurrió un error inesperado')
+                return
+            }
+
         } catch (err) {
             setError(err instanceof Error ? err.message : String(err));
         } finally {

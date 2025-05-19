@@ -29,10 +29,10 @@ export function ReviewCard({ review }: { review: Review }) {
                 <p className="text-md text-neutral-700 dark:text-neutral-300">Calificación: </p>
                 <StarRating initialRating={review.rating} disabled={true} className="w-5 h-5" />
             </div>
-            <p className="text-md text-neutral-900 dark:text-neutral-50 line-clamp-4">
+            <p className="text-md text-neutral-900 dark:text-neutral-50 overflow-hidden break-words">
                 {review.text}
             </p>
-            <p onClick={handleClick} className={`text-md text-neutral-700 dark:text-neutral-300 italic ${review.book_id ? 'cursor-pointer' : 'cursor-default'}`}>{review.book_id ? "Libro disponible en Biblioclase" : "Libro no disponible en Biblioclase"}</p>
+            <p onClick={handleClick} className={`mt-auto text-md text-neutral-700 dark:text-neutral-300 italic ${review.book_id ? 'cursor-pointer' : 'cursor-default'}`}>{review.book_id ? "Libro disponible en Biblioclase" : "Libro no disponible en Biblioclase"}</p>
         </div>
     )
 }
