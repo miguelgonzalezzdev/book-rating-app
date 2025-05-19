@@ -22,7 +22,7 @@ export function ReviewsList({ userId }: { userId: UserId }) {
             <Alert
                 type="error"
                 title="Error"
-                message="Hubo un error al cargar los géneros. Inténtelo de nuevo más tarde."
+                message="Hubo un error al cargar las reseñas. Inténtelo de nuevo más tarde."
             />
         )
     }

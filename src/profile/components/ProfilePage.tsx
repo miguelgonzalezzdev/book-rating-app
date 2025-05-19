@@ -83,7 +83,7 @@ export function ProfilePage() {
             <section className="w-full max-w-2xl bg-white dark:bg-neutral-600 rounded-2xl p-6 md:p-10 space-y-6 shadow-lg border border-gray-200 dark:border-neutral-700">
                 <div className="relative flex justify-center items-start space-y-2">
                     <img
-                        src={`${profileimage?.trim() ? profileimage : "placeholder_img_profile.png"}?t=${Date.now()}`}
+                        src={`${profileimage?.trim() ? profileimage : "placeholder_img_profile.webp"}?t=${Date.now()}`}
                         alt="Imagen de perfil"
                         className="w-32 h-32 rounded-full object-cover"
                     />

@@ -14,7 +14,7 @@ export function BookSearchModalItem({ bookId, title, author, imageUrl, onClick }
         <li onClick={() => onClick({ newBooKSeleted: bookId })} className="p-3 hover:bg-neutral-100 dark:hover:bg-neutral-600 cursor-pointer flex justify-start items-center gap-3">
             <div className="w-8 aspect-[3/4] overflow-hidden">
                 <img
-                    src={`${imageUrl?.trim() ? imageUrl : "../placeholder_img_book.png"}?t=${Date.now()}`}
+                    src={`${imageUrl?.trim() ? imageUrl : "../placeholder_img_book.webp"}?t=${Date.now()}`}
                     alt="Imagen del libro"
                     className="w-full h-full object-cover"
                 />

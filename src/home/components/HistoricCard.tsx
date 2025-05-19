@@ -47,7 +47,7 @@ export const HistoricCard = ({ historic }: { historic: Historic }) => {
             <div className="flex items-center gap-3 mb-auto min-w-0">
                 <div onClick={handleClick} className="cursor-pointer">
                     <img
-                        src={imgProfile || 'placeholder_img_profile.png'}
+                        src={imgProfile || 'placeholder_img_profile.webp'}
                         alt={`${userName} profile`}
                         className="w-10 h-10 rounded-full object-cover shrink-0"
                     />
@@ -58,7 +58,7 @@ export const HistoricCard = ({ historic }: { historic: Historic }) => {
             </div>
             <div className="flex flex-row gap-6 my-4 mx-2 md:mx-10 lg:mx-20 p-3 sm:p-4 md:p-6 border border-gray-200 dark:border-neutral-500 cursor-pointer">
                 <img
-                    src={imgReview || 'placeholder_img_book.png'}
+                    src={imgReview || 'placeholder_img_book.webp'}
                     className="w-24 h-24 object-cover rounded-none" />
                 <p className="w-full text-md dark:text-neutral-50 line-clamp-3">{text}</p>
             </div>

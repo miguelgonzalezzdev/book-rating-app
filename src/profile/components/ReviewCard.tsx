@@ -15,7 +15,7 @@ export function ReviewCard({ review }: { review: Review }) {
             <div className="w-full flex justify-start gap-4">
                 <div onClick={handleClick} className={`w-14 md:w-20 aspect-[3/4] overflow-hidden border-neutral-300 dark:border-neutral-500 ${review.book_id ? 'cursor-pointer' : 'cursor-defaul'}`}>
                     <img
-                        src={review.imageurl || 'placeholder_img_book.png'}
+                        src={review.imageurl || 'placeholder_img_book.webp'}
                         alt="Book cover"
                         className="w-full h-full object-cover"
                     />

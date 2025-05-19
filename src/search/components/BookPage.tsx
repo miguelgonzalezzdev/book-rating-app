@@ -1,17 +1,17 @@
 //import { useParams } from "react-router"
 import { useParams } from "react-router"
-import { Star } from "../../core/components/Star"
 import { useBook } from "../hooks/useBooks"
 import { GenreTag } from "./GenreTag"
 import { Alert } from "../../core/components/Alert"
 import { SkeletonBookPage } from "./SkeletonBookPage"
+import { StarRating } from "../../core/components/StarRating"
 
 export const BookPage = () => {
   const { query } = useParams()
-  const { title, author, year, isbn, publisher, description, imageUrl, genreid1, genreid2, genreid3, rating, pageCount, isLoading, error } = useBook({ bookId:query || "" })
+  const { title, author, year, isbn, publisher, description, imageUrl, genreid1, genreid2, genreid3, rating, pageCount, isLoading, error } = useBook({ bookId: query || "" })
   const genres = [genreid1, genreid2, genreid3].filter((id) => id != null && id !== 0);
 
-  if(isLoading) return <SkeletonBookPage />
+  if (isLoading) return <SkeletonBookPage />
 
   if (error || !query) {
     return (
@@ -29,7 +29,7 @@ export const BookPage = () => {
         <div className="flex flex-col items-center justify-start gap-4">
           <div className="w-56 aspect-[3/4] shadow-xl rounded-lg overflow-hidden">
             <img
-              src={`${imageUrl?.trim() ? imageUrl : "../../placeholder_img_book.png"}`}
+              src={`${imageUrl?.trim() ? imageUrl : "../../placeholder_img_book.webp"}`}
               alt={`Portada`}
               className="w-full h-full object-cover"
             />
@@ -53,12 +53,7 @@ export const BookPage = () => {
               {author}
             </p>
             <div className="flex items-center gap-1">
-              {[...Array(rating)].map((_, index) => (
-                <Star
-                  key={index}
-                  style={`size-8 ${index < 4 ? 'text-yellow-500' : 'text-gray-300'}`}
-                />
-              ))}
+              <StarRating initialRating={rating} disabled={true} className="w-8 h-8" />
             </div>
           </div>
           <div className="flex flex-wrap gap-2">

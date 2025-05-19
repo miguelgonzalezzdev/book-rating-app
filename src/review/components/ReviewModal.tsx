@@ -39,7 +39,7 @@ export function ReviewModal({ isOpen, bookId = "", onClose }: ConfirmModalProps)
                                 </div>
                                 <div className="w-24 md:w-30 aspect-[3/4] overflow-hidden">
                                     <img
-                                        src={`${imageUrl?.trim() ? imageUrl : "../placeholder_img_book.png"}?t=${Date.now()}`}
+                                        src={`${imageUrl?.trim() ? imageUrl : "../placeholder_img_book.webp"}?t=${Date.now()}`}
                                         alt="Imagen del libro"
                                         className="w-full h-full object-cover"
                                     />
@@ -50,7 +50,7 @@ export function ReviewModal({ isOpen, bookId = "", onClose }: ConfirmModalProps)
                         {imageUrl && !bookId && (
                             <label htmlFor="inputImage" className="w-24 md:w-42 aspect-[3/4] overflow-hidden cursor-pointer">
                                 <img
-                                    src={imageUrl?.trim() ? imageUrl : "../placeholder_img_book.png"}
+                                    src={imageUrl?.trim() ? imageUrl : "../placeholder_img_book.webp"}
                                     alt="Imagen del libro"
                                     className="w-full h-full object-cover"
                                 />

@@ -1,27 +1,27 @@
-import { useNavigate } from "react-router";
-import { Star } from "../../core/components/Star";
-import { BookAuthor, BookId, BookImageUrl, BookRating, BookTitle } from "../../core/types";
+import { useNavigate } from "react-router"
+import { BookAuthor, BookId, BookImageUrl, BookRating, BookTitle } from "../../core/types"
+import { StarRating } from "../../core/components/StarRating"
 
 interface BookListItemProps {
-    bookId: BookId;
-    title: BookTitle;
-    author: BookAuthor;
-    rating: BookRating;
-    imageUrl?: BookImageUrl;
+    bookId: BookId
+    title: BookTitle
+    author: BookAuthor
+    rating: BookRating
+    imageUrl?: BookImageUrl
 }
 
 export function BookListItem({ bookId, title, author, rating, imageUrl }: BookListItemProps) {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const handleClick = () => {
-        navigate(`/search/book/${bookId}`);
+        navigate(`/search/book/${bookId}`)
     }
 
     return (
         <li onMouseDown={handleClick} className="flex justify-start gap-6 p-4 border-b border-neutral-300 dark:border-neutral-700 cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-700">
             <div className="w-12 md:w-16 aspect-[3/4] overflow-hidden">
                 <img
-                    src={`${imageUrl?.trim() ? imageUrl : "../placeholder_img_book.png"}?t=${Date.now()}`}
+                    src={`${imageUrl?.trim() ? imageUrl : "../placeholder_img_book.webp"}?t=${Date.now()}`}
                     alt="Imagen del libro"
                     className="w-full h-full object-cover"
                 />
@@ -34,12 +34,7 @@ export function BookListItem({ bookId, title, author, rating, imageUrl }: BookLi
                     {author}
                 </p>
                 <p className="mt-2 flex justify-start">
-                    {[...Array(5)].map((_, index) => (
-                        <Star
-                            key={index}
-                            style={`size-5 ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
-                        />
-                    ))}
+                    <StarRating initialRating={rating} disabled={true} className="w-5 h-5" />
                 </p>
             </div>
         </li>
