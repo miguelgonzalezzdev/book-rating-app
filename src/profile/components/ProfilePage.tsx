@@ -9,7 +9,7 @@ import { useState } from "react";
 import { ConfirmModal } from "../../core/components/ConfirmModal";
 import { useAuthStore } from "../../core/store/authStore";
 import { SkeletonProfile } from "./SkeletonProfile";
-import { ReviewsList } from "./ReviewsList";
+import { UserReviewsList } from "./UserReviewsList";
 
 export function ProfilePage() {
     const { userId, name, setName, surname, setSurname, email, setEmail, aboutme, setAboutme, profileimage, setProfileimage, posts, followers, following, error, setError, isLoading } = useUserProfileData()
@@ -170,7 +170,7 @@ export function ProfilePage() {
             </section>
 
             <section className="md:px-10 w-full">
-                <ReviewsList userId={userId} />
+                <UserReviewsList userId={userId} />
             </section>
 
             <ConfirmModal

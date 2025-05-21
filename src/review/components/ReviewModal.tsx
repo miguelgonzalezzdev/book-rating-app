@@ -6,6 +6,7 @@ import { useReview } from '../hooks/useReview';
 import { ReviewModalSkeleton } from './ReviewModalSkeleton';
 import { toast } from 'react-hot-toast';
 import { Loader } from '../../core/components/Loader';
+import { useEffect } from 'react';
 
 interface ConfirmModalProps {
     isOpen: boolean;
@@ -16,15 +17,29 @@ interface ConfirmModalProps {
 export function ReviewModal({ isOpen, bookId = "", onClose }: ConfirmModalProps) {
     const { bookName, authorName, rating, setRating, reviewText, imageUrl, isFetching, isLoading, error, handleBookName, handleAuthorName, handleReviewText, handleImageSelected, handleSubmitReview } = useReview({ bookId })
 
+    // Controlar el scroll del body al abrir el modal
+    useEffect(() => {
+        if (isOpen) {
+            document.body.classList.add('overflow-hidden');
+        } else {
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        return () => {
+            // Limpieza por si el componente se desmonta
+            document.body.classList.remove('overflow-hidden');
+        };
+    }, [isOpen])
+
     if (!isOpen) return null
 
     if (isFetching) return <ReviewModalSkeleton />
 
-    if (error!="") {
+    if (error != "") {
         toast.error('Error al registrar la reseña');
     }
 
-    if(isLoading) return <Loader />
+    if (isLoading) return <Loader />
 
     return (
         <div className={`mt-12 fixed inset-0 backdrop-brightness-35 backdrop-blur-xs flex items-center justify-center z-50 px-2 ${!isOpen ? 'hidden' : ''}`}>
@@ -130,7 +145,7 @@ export function ReviewModal({ isOpen, bookId = "", onClose }: ConfirmModalProps)
                         <button type="button" onClick={onClose} className="px-4 py-2 rounded-lg bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-50 hover:bg-neutral-300 dark:hover:bg-neutral-500 transition font-semibold">
                             Cancelar
                         </button>
-                        <button type="button" onClick={handleSubmitReview} className="px-4 py-2 rounded-lg bg-blue-600 text-white dark:bg-blue-700 font-semibold">
+                        <button type="button" onClick={handleSubmitReview} className="px-4 py-2 rounded-lg bg-blue-600 text-white dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-800 font-semibold">
                             Guardar
                         </button>
                     </div>

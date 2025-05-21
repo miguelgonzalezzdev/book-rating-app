@@ -6,7 +6,7 @@ import { useIsFollowing } from "../hooks/useIsFollowing"
 import { followUser, unfollowUser } from "../services/followService"
 import { useEffect } from "react"
 import { SkeletonPublicProfile } from "./SkeletonPublicProfile"
-import { ReviewsList } from "./ReviewsList"
+import { UserReviewsList } from "./UserReviewsList"
 
 export function PublicProfilePage() {
     const currentAuthUser = useAuthStore((state) => state.user) // Usuario autenticado
@@ -79,7 +79,7 @@ export function PublicProfilePage() {
                 </button>
             </section>
             <section className="w-full md:px-10">
-                <ReviewsList userId={userId} />
+                <UserReviewsList userId={userId} />
             </section>
         </div>
     )

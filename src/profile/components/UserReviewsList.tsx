@@ -1,10 +1,10 @@
 import { Alert } from "../../core/components/Alert";
 import { UserId } from "../../core/types";
 import { useUserReviews } from "../hooks/useUserReviews";
-import { ReviewCard } from "./ReviewCard";
+import { UserReviewCard } from "./UserReviewCard";
 import { SkeletonReviewCard } from "./SkeletonReviewCard";
 
-export function ReviewsList({ userId }: { userId: UserId }) {
+export function UserReviewsList({ userId }: { userId: UserId }) {
     const { reviews, isLoading, error } = useUserReviews({ userId })
 
     if (isLoading) {
@@ -14,7 +14,7 @@ export function ReviewsList({ userId }: { userId: UserId }) {
                     <SkeletonReviewCard key={index} />
                 ))}
             </div>
-        );
+        )
     }
 
     if (error) {
@@ -30,7 +30,7 @@ export function ReviewsList({ userId }: { userId: UserId }) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {reviews?.map(review => (
-                <ReviewCard key={review.id} review={review} />
+                <UserReviewCard key={review.id} review={review} />
             ))}
         </div>
     )
