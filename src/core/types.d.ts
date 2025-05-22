@@ -70,6 +70,7 @@ export interface Review {
     updated_at: string
 }
 export type ListOfReviews = Review[]
+export type ReviewId = Review["id"]
 //***** END Tipos para REVIEW *****//
 
 export type AlertType = typeof ALERT_TYPES[keyof typeof ALERT_TYPES];

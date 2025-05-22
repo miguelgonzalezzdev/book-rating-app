@@ -5,11 +5,14 @@ import { useNavigate } from "react-router";
 import { UserReviewModal } from "./UserReviewModal";
 import { HeartIcon } from "../../core/icons/HeartIcon";
 import { useAuthStore } from "../../core/store/authStore";
+import { useLike } from "../hooks/useLike";
+import toast from "react-hot-toast";
 
 export function UserReviewCard({ review }: { review: Review }) {
     const currentAuthUser = useAuthStore((state) => state.user) // Usuario autenticado
     const navigate = useNavigate()
     const [showReviewModal, setReviewModal] = useState(false)
+    const { isLiked, handleLike, error } = useLike({ userId: currentAuthUser?.id ?? "", reviewId: review.id }) 
 
     const handleClick = () => {
         if (!review.book_id) return
@@ -22,6 +25,10 @@ export function UserReviewCard({ review }: { review: Review }) {
 
     const handleCloseReviewModal = () => {
         setReviewModal(false)
+    }
+
+    if(error){
+        toast.error('Error al actualizar el like')
     }
 
     return (
@@ -39,9 +46,18 @@ export function UserReviewCard({ review }: { review: Review }) {
                         <p onClick={handleClick} className={`text-lg font-semibold text-neutral-900 dark:text-neutral-50 ${review.book_id ? 'cursor-pointer' : 'cursor-defaul'}`}>{review.title}</p>
                         <p onClick={handleClick} className={`text-md text-neutral-700 dark:text-neutral-300 italic ${review.book_id ? 'cursor-pointer' : 'cursor-defaul'}`}>{review.author}</p>
                     </div>
-                    {currentAuthUser?.id != review.user_id && (
-                        <HeartIcon className="ml-auto w-7 h-7 text-red-500" />
-                    )}
+                    {currentAuthUser?.id !== review.user_id
+                        ?
+                        <div onClick={handleLike} className="ml-auto flex items-start justify-center gap-2 cursor-pointer">
+                            <HeartIcon className={`ml-auto w-7 h-7 transition-colors ${isLiked ? "text-red-500" : "text-neutral-400 dark:text-neutral-500"}`} filled={true}/>
+                            <p className="text-lg text-neutral-700 dark:text-neutral-300 font-semibold">{review.likes}</p>
+                        </div>
+                        :
+                        <div className="ml-auto flex items-start justify-center gap-2">
+                            <HeartIcon className="w-7 h-7 text-neutral-700 dark:text-neutral-300" />
+                            <p className="text-lg text-neutral-700 dark:text-neutral-300 font-semibold">{review.likes}</p>
+                        </div>
+                    }
                 </div>
                 <div className="w-full flex justify-start items-center text-center gap-2">
                     <p className="text-md text-neutral-700 dark:text-neutral-300">Calificación: </p>
