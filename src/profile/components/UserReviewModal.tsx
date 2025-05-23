@@ -130,7 +130,7 @@ export function UserReviewModal({ review, isOpen, onClose }: UserReviewModalProp
                                     className="py-3 px-1 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
                                 >
                                     <div className="flex items-center justify-between">
-                                        <p className="text-sm text-neutral-700 dark:text-neutral-300 font-semibold">USERNAME</p>
+                                        <p className="text-sm text-neutral-700 dark:text-neutral-300 font-semibold">{comment.username}</p>
                                         <span className="text-xs text-neutral-700 dark:text-neutral-300">
                                             {comment.updated_at}
                                         </span>

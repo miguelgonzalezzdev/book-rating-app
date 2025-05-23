@@ -14,15 +14,25 @@ export async function getCommentsByReview({ reviewId }: GetCommentsByReviewProps
     // Consultar los comentarios de la review
     const { data, error } = await supabase
         .from("review_comments")
-        .select("*")
+        .select("*, username:profiles(name,surname)")
         .eq("review_id", reviewId)
         .order("updated_at", { ascending: false })
 
     if (error) {
-        return { success: false, error: error.message }
+        return { success: false, data: [], error: error.message }
     }
 
-    return { success: true, data: data as ListOfComments }
+    if (!data) {
+        return { success: true, data: [] }
+    }
+
+    // Mapear para añadir el campo username concatenado
+    const commentsWithUsername = data.map(comment => ({
+        ...comment,
+        username: `${comment.username.name} ${comment.username.surname}`
+    }))
+
+    return { success: true, data: commentsWithUsername as ListOfComments }
 }
 
 interface AddCommentToReviewProps {
@@ -39,12 +49,17 @@ export async function addCommentToReview({ reviewId, userId, comment }: AddComme
     const { data, error: insertError } = await supabase
         .from("review_comments")
         .insert([{ user_id: userId, review_id: reviewId, text: comment }])
-        .select()
+        .select("*, username:profiles(name,surname)")
         .single()
-
+        
     if (insertError) {
         return { success: false, data: null, error: insertError.message }
     }
 
-    return { success: true, data: data, error: null }
+    const commentWithUsername = {
+        ...data,
+        username: `${data.username.name} ${data.username.surname}`
+    }
+
+    return { success: true, data: commentWithUsername, error: null }
 }
