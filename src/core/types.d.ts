@@ -73,6 +73,19 @@ export type ListOfReviews = Review[]
 export type ReviewId = Review["id"]
 //***** END Tipos para REVIEW *****//
 
+//***** START Tipos para COMMENT *****//
+export interface Comment {
+    id: string
+    review_id: string
+    user_id: string
+    text: string
+    created_at: string
+    updated_at: string
+}
+export type ListOfComments = Comment[]
+export type CommentId = Comment["id"]
+//***** END Tipos para COMMENT *****//
+
 export type AlertType = typeof ALERT_TYPES[keyof typeof ALERT_TYPES];
 
 export interface IconComponentProps {

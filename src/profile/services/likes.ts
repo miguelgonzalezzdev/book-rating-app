@@ -64,15 +64,3 @@ export async function toggleReviewLike({ userId, reviewId }: ToggleReviewLikePro
 
     return { success: true, liked: true, error: null }
 }
-
-/*export async function likeReview(userId: string, reviewId: string) {
-  const { error: insertError } = await supabase
-    .from("review_likes")
-    .insert([{ user_id: userId, review_id: reviewId }])
-
-  if (insertError) {
-    return { success: false, message: "Error registrar el like", error: insertError }
-  }
-
-  return { success: true, message: "Like guardado correctamente", error: null }
-}*/

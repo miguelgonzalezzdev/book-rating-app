@@ -49,7 +49,7 @@ export function UserReviewCard({ review }: { review: Review }) {
                     {currentAuthUser?.id !== review.user_id
                         ?
                         <div onClick={handleLike} className="ml-auto flex items-start justify-center gap-2 cursor-pointer">
-                            <HeartIcon className={`ml-auto w-7 h-7 transition-colors ${isLiked ? "text-red-500" : "text-neutral-400 dark:text-neutral-500"}`} filled={true}/>
+                            <HeartIcon className={`ml-auto w-7 h-7 transition-colors duration-300 ease-in-out ${isLiked ? "text-red-500" : "text-neutral-400 dark:text-neutral-500"}`} filled={true}/>
                             <p className="text-lg text-neutral-700 dark:text-neutral-300 font-semibold">{review.likes}</p>
                         </div>
                         :

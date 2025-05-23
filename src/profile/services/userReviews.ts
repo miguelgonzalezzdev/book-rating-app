@@ -1,7 +1,6 @@
 import { supabase } from "../../core/supabase/supabaseClient"
 import { ListOfReviews, UserId } from "../../core/types";
 
-
 export async function getUserReviews({ userId }: { userId: UserId }): Promise<{ success: boolean; data?: ListOfReviews; error?: string }> {
 
     if (!userId) {
