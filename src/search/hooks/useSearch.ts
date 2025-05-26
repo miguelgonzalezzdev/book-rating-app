@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { searchBooks } from '../services/getBook';
+import { searchBooks } from '../services/books';
 import { Book, BookId } from '../../core/types';
 import { useAuthStore } from '../../core/store/authStore';
 import { registerBookSearch } from '../services/search';

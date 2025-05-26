@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react"
 import { ListOfReviews, UserId } from "../../core/types"
-import { getUserReviews } from "../services/userReviews"
+import { getUserReviews } from "../services/reviews"
 
-export function useUserReviews({ userId }: { userId: UserId }) {
+interface UseUserReviewsProps {
+    userId: UserId
+}
+
+export function useUserReviews({ userId }: UseUserReviewsProps) {
     const [reviews, setReviews] = useState<ListOfReviews>()
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)

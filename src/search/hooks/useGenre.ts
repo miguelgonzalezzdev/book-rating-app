@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { getGenre,getAllGenres } from "../services/getGenre"
+import { getGenre,getAllGenres } from "../services/genres"
 import { ListOfGenres } from "../../core/types"
 import { GenreId } from "../../core/types";
 

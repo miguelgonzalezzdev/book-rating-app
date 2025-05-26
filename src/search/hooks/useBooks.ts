@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Book, BookId, GenreId } from "../../core/types";
-import { getBook, getBooksByGenre } from "../services/getBook";
+import { getBook, getBooksByGenre } from "../services/books";
 
 interface UseBookProps {
     bookId: BookId;

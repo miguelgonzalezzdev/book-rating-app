@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useAuthStore } from "../../core/store/authStore"
-import { getUserProfileData, updateUserProfile, uploadUserProfileImage } from "../services/profileData"
+import { getUserProfileData, updateUserProfile, uploadUserProfileImage } from "../services/profile"
 import toast from "react-hot-toast"
 
 export function useUserProfileData() {

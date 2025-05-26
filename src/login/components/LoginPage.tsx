@@ -1,9 +1,9 @@
-import { Link } from "react-router";
-import { FormInputField } from "../../core/components/FormInputField";
-import { FormButton } from "../../core/components/FormButton";
-import { FormLabel } from "../../core/components/FormLabel";
-import { Logo } from "../../core/components/Logo";
-import { useLoginForm } from "../hooks/useLoginForm";
+import { Link } from "react-router"
+import { FormInputField } from "../../core/components/FormInputField"
+import { FormButton } from "../../core/components/FormButton"
+import { FormLabel } from "../../core/components/FormLabel"
+import { Logo } from "../../core/components/Logo"
+import { useLoginForm } from "../hooks/useLoginForm"
 
 export const LoginPage = () => {
     const {
@@ -13,7 +13,7 @@ export const LoginPage = () => {
         handleEmail,
         handlePassword,
         handleSubmit,
-    } = useLoginForm();
+    } = useLoginForm()
 
     return (
         <main className="flex-grow flex flex-col items-center justify-center m-10 lg:m-20 gap-10 lg:gap-20">

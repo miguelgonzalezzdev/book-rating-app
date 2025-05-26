@@ -1,11 +1,11 @@
 import { supabase } from "../../core/supabase/supabaseClient"
 
-interface LoginInput {
+interface LoginUserProps {
     email: string
     password: string
 }
 
-export async function loginUser({ email, password }: LoginInput) {
+export async function loginUser({ email, password }: LoginUserProps) {
     // Validar que los campos no esten vacios
     if(!email || !password) {
         return { success: false, message: 'Todos los campos son obligatorios' }

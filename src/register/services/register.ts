@@ -1,13 +1,13 @@
 import { supabase } from "../../core/supabase/supabaseClient"
 
-interface RegisterInput {
+interface RegisterUserProps {
     name: string
     surname: string
     email: string
     password: string
 }
 
-export async function registerUser({ name, surname, email, password }: RegisterInput) {
+export async function registerUser({ name, surname, email, password }: RegisterUserProps) {
     // Validar que los campos no esten vacios
     if(!name || !surname || !email || !password) {
         return { success: false, message: 'Todos los campos son obligatorios' }
