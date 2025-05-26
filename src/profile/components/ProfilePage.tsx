@@ -1,5 +1,4 @@
 import { FormInputField } from "../../core/components/FormInputField";
-import { updateUserProfile, uploadUserProfileImage } from "../services/updateUserProfile";
 import { useUserProfileData } from "../hooks/useUserProfileData";
 import { toast } from 'react-hot-toast';
 import { EditIcon } from "../../core/icons/EditIcon";
@@ -12,71 +11,19 @@ import { SkeletonProfile } from "./SkeletonProfile";
 import { UserReviewsList } from "./UserReviewsList";
 
 export function ProfilePage() {
-    const { userId, name, setName, surname, setSurname, email, setEmail, aboutme, setAboutme, profileimage, setProfileimage, posts, followers, following, error, setError, isLoading } = useUserProfileData()
+    const { userId, name, surname, email, aboutme, profileimage, posts, followers, following, handleName, handleSurname, handleEmail, handleAboutme, handleSubmit, handleImageChange, error, isLoading } = useUserProfileData()
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const logout = useAuthStore((state) => state.logout)
-
-    const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault()
-        const newName = event.target.value
-        setName(newName)
-    }
-
-    const handleSurname = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault()
-        const newSurname = event.target.value
-        setSurname(newSurname)
-    }
-
-    const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault()
-        const newEmail = event.target.value
-        setEmail(newEmail)
-    }
-
-    const handleAboutme = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        event.preventDefault()
-        const aboutme = event.target.value
-        setAboutme(aboutme)
-    }
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        setError('')
-
-        const res = await updateUserProfile({ id: userId, name, surname, email, aboutme })
-
-        if (!res.success) {
-            setError(res.message || 'Ocurrió un error inesperado')
-            toast.error('Error al actualizar el perfil');
-            return
-        }
-
-        toast.success('Perfil actualizado correctamente');
-    }
-
-    const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0]
-        if (!file) return
-
-        const res = await uploadUserProfileImage({ userId, file })
-
-        if (!res.success) {
-            setError(res.message || 'Ocurrió un error inesperado')
-            toast.error('Error al actualizar la imagen de perfil')
-            return
-        }
-
-        setProfileimage(res.imageUrl || "")
-        toast.success('Imagen actualizada correctamente')
-    }
 
     const handleLogout = () => {
         setShowConfirmModal(true);
     }
 
-
     if (isLoading) return <SkeletonProfile />
+
+    if (error) {
+        toast.error("Ocurrió un error. Por favor, inténtalo de nuevo más tarde.");
+    }
 
     return (
         <div className="min-h-screen w-full bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 flex items-center justify-center flex-col gap-10 px-4 py-10">

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react"
 import { useAuthStore } from "../../core/store/authStore"
-import { getUserProfileData } from "../services/getUserProfileData" 
+import { getUserProfileData, updateUserProfile, uploadUserProfileImage } from "../services/profileData"
+import toast from "react-hot-toast"
 
-export function useUserProfileData () {
+export function useUserProfileData() {
     const user = useAuthStore((state) => state.user)
 
     const [userId, setUserId] = useState("")
@@ -24,7 +25,7 @@ export function useUserProfileData () {
             return
         }
 
-        const fetchData = async () => { 
+        const fetchData = async () => {
             try {
                 // Sacar el id y email del estado global de usuario logueado
                 setUserId(user.id)
@@ -47,8 +48,61 @@ export function useUserProfileData () {
         }
 
         fetchData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault()
+        const newName = event.target.value
+        setName(newName)
+    }
+
+    const handleSurname = (event: React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault()
+        const newSurname = event.target.value
+        setSurname(newSurname)
+    }
+
+    const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault()
+        const newEmail = event.target.value
+        setEmail(newEmail)
+    }
+
+    const handleAboutme = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        event.preventDefault()
+        const aboutme = event.target.value
+        setAboutme(aboutme)
+    }
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setError('')
+
+        const res = await updateUserProfile({ id: userId, name, surname, email, aboutme })
+
+        if (!res.success) {
+            setError(res.message || 'Ocurrió un error inesperado')
+            return
+        }
+
+        toast.success('Perfil actualizado correctamente')
+    }
+
+    const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0]
+        if (!file) return
+
+        const res = await uploadUserProfileImage({ userId, file })
+
+        if (!res.success) {
+            setError(res.message || 'Ocurrió un error inesperado')
+            return
+        }
+
+        setProfileimage(res.imageUrl || "")
+        toast.success('Imagen actualizada correctamente')
+    }
 
     return {
         userId,
@@ -61,6 +115,12 @@ export function useUserProfileData () {
         followers, setFollowers,
         following, setFollowing,
         error, setError,
-        isLoading, setIsLoading
+        isLoading, setIsLoading,
+        handleName,
+        handleSurname,
+        handleEmail,
+        handleAboutme,
+        handleSubmit,
+        handleImageChange,
     }
 }

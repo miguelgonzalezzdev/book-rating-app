@@ -1,7 +1,31 @@
 import { supabase } from "../../core/supabase/supabaseClient"
 import imageCompression from 'browser-image-compression'
 
-interface UpdateProfileInput {
+interface GetUserProfileDataProps {
+    userId: string
+}
+
+export async function getUserProfileData ({ userId }: GetUserProfileDataProps) {
+    const { data, error } = await supabase
+        .from("profiles")
+        .select("name, surname, aboutme, profileimage, posts_count, followers_count, following_count")
+        .eq("id", userId)
+        .single()
+
+    if (error) throw new Error("No se pudo cargar el perfil")
+
+    return {
+        name: data.name || "",
+        surname: data.surname || "",
+        aboutme: data.aboutme || "",
+        profileimage: data.profileimage || "",
+        posts: data.posts_count || 0,
+        followers: data.followers_count || 0,
+        following: data.following_count || 0,
+    }
+}
+
+interface UpdateUserProfileProps {
     id: string
     name: string
     surname: string
@@ -9,7 +33,7 @@ interface UpdateProfileInput {
     aboutme: string
 }
 
-export async function updateUserProfile({ id, name, surname, email, aboutme }: UpdateProfileInput) { 
+export async function updateUserProfile({ id, name, surname, email, aboutme }: UpdateUserProfileProps) { 
     if (id=="") {
         return { success: false, message: 'ID de usuario no proporcionado' }
     }
@@ -47,12 +71,12 @@ export async function updateUserProfile({ id, name, surname, email, aboutme }: U
     return { success: true, message: 'Perfil actualizado correctamente' }
 }
 
-interface UploadUserProfileImage {
+interface UploadUserProfileImageProps {
     userId: string
     file: File
 }
 
-export async function uploadUserProfileImage({ userId, file }: UploadUserProfileImage) {
+export async function uploadUserProfileImage({ userId, file }: UploadUserProfileImageProps) {
     if (!userId) {
         return { success: false, message: 'ID de usuario no proporcionado' }
     }

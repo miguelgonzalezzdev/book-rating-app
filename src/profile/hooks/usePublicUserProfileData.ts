@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useAuthStore } from "../../core/store/authStore"
-import { getUserProfileData } from "../services/getUserProfileData" 
+import { getUserProfileData } from "../services/profileData" 
 
 interface UploadUserProfileImage {
     userId: string
