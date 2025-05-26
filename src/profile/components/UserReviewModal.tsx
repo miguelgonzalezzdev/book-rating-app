@@ -7,6 +7,7 @@ import { useAuthStore } from "../../core/store/authStore";
 import { useLike } from "../hooks/useLike";
 import toast from "react-hot-toast";
 import { useComments } from "../hooks/useComment";
+import { CommentsList } from "./CommentsList";
 
 interface UserReviewModalProps {
     review: Review;
@@ -63,7 +64,7 @@ export function UserReviewModal({ review, isOpen, onClose }: UserReviewModalProp
         toast.error('Error al actualizar el like')
     }
 
-    if(errorInsertComment){
+    if (errorInsertComment) {
         toast.error('Error al registrar el comentario')
     }
 
@@ -118,28 +119,13 @@ export function UserReviewModal({ review, isOpen, onClose }: UserReviewModalProp
                         </div>
                     </div>
 
-                    <div className="flex flex-col divide-y divide-neutral-300 dark:divide-neutral-500 max-h-30 md:max-h-50 overflow-y-auto p-1 [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)]">
-                        {isFetching ? (
-                            <p className="text-sm text-neutral-500 dark:text-neutral-400">Cargando comentarios...</p>
-                        ) : comments.length === 0 ? (
-                            <p className="text-sm text-neutral-500 dark:text-neutral-400">Aún no hay comentarios.</p>
-                        ) : (
-                            comments.map((comment, index) => (
-                                <div
-                                    key={index}
-                                    className="py-3 px-1 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
-                                >
-                                    <div className="flex items-center justify-between">
-                                        <p className="text-sm text-neutral-700 dark:text-neutral-300 font-semibold">{comment.username}</p>
-                                        <span className="text-xs text-neutral-700 dark:text-neutral-300">
-                                            {comment.updated_at}
-                                        </span>
-                                    </div>
-                                    <p className="text-sm text-neutral-900 dark:text-neutral-50 mt-1">{comment.text}</p>
-                                </div>
-                            ))
-                        )}
-                    </div>
+                    {isFetching ? (
+                        <p className="text-sm text-neutral-500 dark:text-neutral-400">Cargando comentarios...</p>
+                    ) : comments.length === 0 ? (
+                        <p className="text-sm text-neutral-500 dark:text-neutral-400">Aún no hay comentarios.</p>
+                    ) : (
+                        <CommentsList comments={comments} />
+                    )}
 
                     {currentAuthUser?.id != review.user_id && (
                         <>
