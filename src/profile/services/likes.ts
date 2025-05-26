@@ -12,10 +12,10 @@ export async function getReviewLikeByUser({userId, reviewId}: GetReviewLikeByUse
         .select("id")
         .eq("user_id", userId)
         .eq("review_id", reviewId)
-        .single()
+        .maybeSingle()
 
     if (checkError && checkError.code !== "PGRST116") {
-        return { success: false, liked: false, message: "Error registrar el like", error: checkError }
+        return { success: false, liked: false, message: "Error al consultar el like", error: checkError }
     }
 
     return { success: true, liked: !!data, message: "", error: null }
@@ -33,7 +33,7 @@ export async function toggleReviewLike({ userId, reviewId }: ToggleReviewLikePro
         .select("id")
         .eq("user_id", userId)
         .eq("review_id", reviewId)
-        .single()
+        .maybeSingle()
 
     if (checkError && checkError.code !== "PGRST116") {
         return { success: false, liked: false, error: "Error comprobando el like" }
