@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ListOfComments, ReviewId, UserId } from "../../core/types";
-import { addCommentToReview, getCommentsByReview } from "../services/useComments";
+import { addCommentToReview, getCommentsByReview } from "../services/comments";
 
 interface UseCommentsProps {
     reviewId: ReviewId

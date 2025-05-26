@@ -2,8 +2,7 @@ import toast from "react-hot-toast"
 import { useNavigate, useParams } from "react-router"
 import { usePublicUserProfileData } from "../hooks/usePublicUserProfileData"
 import { useAuthStore } from "../../core/store/authStore"
-import { useIsFollowing } from "../hooks/useIsFollowing"
-import { followUser, unfollowUser } from "../services/followService"
+import { useFollow } from "../hooks/useIsFollowing"
 import { useEffect } from "react"
 import { SkeletonPublicProfile } from "./SkeletonPublicProfile"
 import { UserReviewsList } from "./UserReviewsList"
@@ -11,42 +10,25 @@ import { UserReviewsList } from "./UserReviewsList"
 export function PublicProfilePage() {
     const currentAuthUser = useAuthStore((state) => state.user) // Usuario autenticado
     const userId = useParams<{ userId?: string }>().userId?.trim() || "" // ID del usuario a mostrar
-    const { isFollowing, setIsFollowing, isLoadingIsFollowing } = useIsFollowing({ followerId: currentAuthUser?.id || "", followingId: userId || "" })
+    const { isFollowing, handleToggleFollow, isLoading: isLoadingFollow, error: errorFollow } = useFollow({ followerId: currentAuthUser?.id || "", followingId: userId || "" })
     const { name, surname, aboutme, profileimage, posts, followers, following, error, isLoading } = usePublicUserProfileData({ userId })
     const navigate = useNavigate()
 
     // Comprobar si se esta accediendo al perfil propio
     useEffect(() => {
         if (userId && currentAuthUser?.id === userId) {
-            navigate('/profile') // o la ruta a la que quieras redirigir
+            navigate('/profile') 
         }
     }, [userId, currentAuthUser?.id, navigate])
 
-
-    if (isLoading || isLoadingIsFollowing) return <SkeletonPublicProfile />
+    if (isLoading || isLoadingFollow) return <SkeletonPublicProfile />
 
     if (error) navigate('/')
 
-    const handleFollow = async () => {
-        if (isFollowing) {
-            const res = await unfollowUser({ followerId: currentAuthUser?.id || "", followingId: userId || "" })
-
-            if (res.error) {
-                toast.error('Error al realizar la acción');
-                return
-            }
-
-            setIsFollowing(false)
-        } else {
-            const res = await followUser({ followerId: currentAuthUser?.id || "", followingId: userId || "" })
-
-            if (res.error) {
-                toast.error('Error al realizar la acción');
-                return
-            }
-
-            setIsFollowing(true)
-        }
+    // Si hay un error al seguir o dejar de seguir
+    if (errorFollow && errorFollow!="") {
+        toast.error(errorFollow)
+        return
     }
 
     return (
@@ -68,7 +50,7 @@ export function PublicProfilePage() {
                 </div>
                 <button
                     type="button"
-                    onClick={handleFollow}
+                    onClick={handleToggleFollow}
                     className={`w-full max-w-40 py-3 rounded-lg shadow-sm text-white transition-all duration-300 font-semibold flex justify-center
                                 ${isFollowing
                             ? 'bg-red-600 hover:bg-red-700'

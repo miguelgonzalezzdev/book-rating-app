@@ -1,39 +1,71 @@
-import { useEffect, useState } from "react";
-import { useAuthStore } from "../../core/store/authStore";
-import { checkIsFollowing } from "../services/followService";
+import { useEffect, useState } from "react"
+import { useAuthStore } from "../../core/store/authStore"
+import { checkIsFollowing, followUser, unfollowUser } from "../services/follow"
 
-interface UseIsFollowing {
-    followerId: string; // ID de la persona que sigue
-    followingId: string; // ID de la persona seguida
+interface UseFollowProps {
+    followerId: string // ID de la persona que sigue
+    followingId: string // ID de la persona seguida
 }
 
-export function useIsFollowing({ followerId, followingId }: UseIsFollowing) {
-    const user = useAuthStore((state) => state.user)
+export function useFollow({ followerId, followingId }: UseFollowProps) {
+    const currentUser = useAuthStore((state) => state.user)
     const [isFollowing, setIsFollowing] = useState(false)
-    const [isLoadingIsFollowing, setIsLoadingIsFollowing] = useState(false)
+    const [isLoading, setLoading] = useState(false)
+    const [error, setError] = useState("")
 
     useEffect(() => {
-        if (!user?.id || !followerId || !followingId) return;
-        
-        setIsLoadingIsFollowing(true)
+        if (!currentUser?.id || !followerId || !followingId) return
 
         const fetchData = async () => {
+            setLoading(true)
             try {
-                const data = await checkIsFollowing({followerId,followingId})
-                setIsFollowing(data)
+                const data = await checkIsFollowing({ followerId, followingId })
+
+                if (data.error) {
+                    setError("Error al comprobar el seguimiento")
+                    return
+                }
+
+                setIsFollowing(data.follow)
             } catch {
                 setIsFollowing(false)
+                setError("Error al comprobar el seguimiento")
             } finally {
-                setIsLoadingIsFollowing(false)
+                setLoading(false)
             }
         }
 
-        fetchData()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+        fetchData();
+    }, [currentUser?.id, followerId, followingId])
 
-    return { 
-        isFollowing, setIsFollowing,
-        isLoadingIsFollowing, setIsLoadingIsFollowing
-     }
+    // Funcion para manejar si se sigue o se deja de seguir a un usuario
+    const handleToggleFollow = async () => {
+        if (!currentUser?.id) return
+
+        setLoading(true)
+
+        try {
+            const res = isFollowing
+                ? await unfollowUser({ followerId: currentUser.id, followingId })
+                : await followUser({ followerId: currentUser.id, followingId })
+
+            if (res.error) {
+                setError("Error al realizar la acción")
+                return
+            }
+
+            setIsFollowing((prev) => !prev)
+        } catch {
+            setError("Error al realizar la acción")
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    return {
+        isFollowing,
+        handleToggleFollow,
+        isLoading,
+        error,
+    }
 }
