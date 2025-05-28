@@ -8,7 +8,7 @@ Biblioclase es una aplicación diseñada para fomentar el hábito de la lectura 
 
 - ✍️ Publicación de reseñas y opiniones
 
-- 🤝 Interacción con amigos lectores
+- 🤝 Interacción entre usuarios
 
 - 🌟 Entorno diseñado especialmente para niños
 
@@ -21,6 +21,8 @@ Biblioclase es una aplicación diseñada para fomentar el hábito de la lectura 
     - React Router
 
 - TypeScript
+
+- Supabase
 
 - Tailwind CSS
 
