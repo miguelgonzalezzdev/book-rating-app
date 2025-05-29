@@ -1,5 +1,5 @@
 import { supabase } from "../../core/supabase/supabaseClient";
-import { ListOfComments, ReviewId, UserId } from "../../core/types";
+import { CommentId, ListOfComments, ReviewId, UserId } from "../../core/types";
 
 interface GetCommentsByReviewProps {
     reviewId: ReviewId
@@ -51,7 +51,7 @@ export async function addCommentToReview({ reviewId, userId, comment }: AddComme
         .insert([{ user_id: userId, review_id: reviewId, text: comment }])
         .select("*, username:profiles(name,surname)")
         .single()
-        
+
     if (insertError) {
         return { success: false, data: null, error: insertError.message }
     }
@@ -62,4 +62,28 @@ export async function addCommentToReview({ reviewId, userId, comment }: AddComme
     }
 
     return { success: true, data: commentWithUsername, error: null }
+}
+
+interface DeleteCommentFromReviewProps {
+    commentId: CommentId
+    userId: UserId
+}
+
+
+export async function deleteCommentFromReview({ commentId, userId }: DeleteCommentFromReviewProps) {
+    if (!commentId || !userId) {
+        return { success: false, error: "Faltan datos requeridos" }
+    }
+
+    const { error: deleteError  } = await supabase
+        .from("review_comments")
+        .delete()
+        .eq("id", commentId)
+        .eq("user_id", userId);
+
+    if (deleteError) {
+        return { success: false, error: deleteError.message };
+    }
+
+    return { success: true, error: null };
 }

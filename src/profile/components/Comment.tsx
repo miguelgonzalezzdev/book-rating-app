@@ -1,11 +1,16 @@
 import { useNavigate } from "react-router";
 import type { Comment, UserId } from "../../core/types";
+import { useAuthStore } from "../../core/store/authStore";
+import { useComments } from "../hooks/useComment";
+import { DeleteIcon } from "../../core/icons/DeleteIcon";
 
 interface CommentProps {
     comment: Comment
 }
 
 export function Comment({ comment }: CommentProps) {
+    const currentAuthUser = useAuthStore((state) => state.user)
+    const { handleDeleteComment } = useComments({ reviewId: comment.review_id, userId: currentAuthUser?.id ?? "" })
     const navigate = useNavigate()
 
     const handleClick = ({ userId }: { userId: UserId }) => {
@@ -19,6 +24,11 @@ export function Comment({ comment }: CommentProps) {
                 <span className="text-xs text-neutral-700 dark:text-neutral-300">
                     {comment.updated_at}
                 </span>
+                {comment.user_id === currentAuthUser?.id && (
+                    <button onClick={() => handleDeleteComment({ commentId: comment.id })} className="text-red-700 dark:text-red-400 hover:scale-110 transition-transform">
+                        <DeleteIcon />
+                    </button>
+                )}
             </div>
             <p className="text-sm text-neutral-900 dark:text-neutral-50 mt-1">{comment.text}</p>
         </div>

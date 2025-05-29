@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { ListOfComments, ReviewId, UserId } from "../../core/types";
-import { addCommentToReview, getCommentsByReview } from "../services/comments";
+import { CommentId, ListOfComments, ReviewId, UserId } from "../../core/types";
+import { addCommentToReview, deleteCommentFromReview, getCommentsByReview } from "../services/comments";
 
 interface UseCommentsProps {
     reviewId: ReviewId
@@ -69,6 +69,32 @@ export function useComments({ reviewId, userId }: UseCommentsProps) {
         }
     }
 
+    const deleteComment = async ({ commentId }: { commentId: CommentId }) => {
+        if (!userId || !reviewId || !commentId) {
+            setError("Error al realizar la acción")
+            return
+        }
+
+        setIsSubmitting(true)
+
+        try {
+
+            const data = await deleteCommentFromReview({ commentId, userId })
+
+            if (!data.success) {
+                setError(data.error ?? "Error al eliminar el comentario")
+                return
+            }
+
+            setComments(comments => comments.filter(comment => comment.id !== commentId))
+
+        } catch (err) {
+            setError(err instanceof Error ? err.message : String(err))
+        } finally {
+            setIsSubmitting(false)
+        }
+    }
+
     // Manejar el texto escrito en el textarea del comentario
     const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const comment = event.target.value
@@ -83,6 +109,11 @@ export function useComments({ reviewId, userId }: UseCommentsProps) {
         setNewComment("")
     }
 
+    // Manejar el borrado de un comentario
+    const handleDeleteComment = ({ commentId }: { commentId: CommentId }) => {
+        deleteComment({commentId})
+    }
+
     return {
         comments,
         newComment,
@@ -90,6 +121,7 @@ export function useComments({ reviewId, userId }: UseCommentsProps) {
         isSubmitting,
         error,
         handleCommentChange,
-        handleSubmitComment
+        handleSubmitComment,
+        handleDeleteComment
     }
 }
