@@ -6,7 +6,6 @@ import { HeartIcon } from "../../core/icons/HeartIcon";
 import { useAuthStore } from "../../core/store/authStore";
 import { useLike } from "../hooks/useLike";
 import toast from "react-hot-toast";
-import { useComments } from "../hooks/useComment";
 import { CommentsList } from "./CommentsList";
 
 interface UserReviewModalProps {
@@ -18,7 +17,6 @@ interface UserReviewModalProps {
 export function UserReviewModal({ review, isOpen, onClose }: UserReviewModalProps) {
     const currentAuthUser = useAuthStore((state) => state.user) // Usuario autenticado
     const { isLiked, handleLike, error: errorLike } = useLike({ userId: currentAuthUser?.id ?? "", reviewId: review.id })
-    const { newComment, error: errorInsertComment, handleCommentChange, handleSubmitComment } = useComments({ reviewId: review.id, userId: currentAuthUser?.id ?? "" })
     const navigate = useNavigate()
     const modalRef = useRef<HTMLDivElement>(null)
 
@@ -62,10 +60,6 @@ export function UserReviewModal({ review, isOpen, onClose }: UserReviewModalProp
 
     if (errorLike) {
         toast.error('Error al actualizar el like')
-    }
-
-    if (errorInsertComment) {
-        toast.error('Error al registrar el comentario')
     }
 
     return (
@@ -119,18 +113,8 @@ export function UserReviewModal({ review, isOpen, onClose }: UserReviewModalProp
                         </div>
                     </div>
 
-                    <CommentsList reviewId={review.id} userId={currentAuthUser?.id ?? ""} />
+                    <CommentsList reviewId={review.id} userId={currentAuthUser?.id ?? ""} reviewAuthorId={review.author} />
 
-                    {currentAuthUser?.id != review.user_id && (
-                        <>
-                            <form onSubmit={(e) => { e.preventDefault(); handleSubmitComment() }} className="flex flex-col gap-2">
-                                <textarea value={newComment} onChange={handleCommentChange} className="w-full px-4 py-3 rounded-lg min-h-10 sm:min-h-20 md:min-h-30 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-50 placeholder-gray-400 dark:placeholder-neutral-400 focus:outline-none border border-neutral-300 dark:border-transparent" placeholder="Escribe un comentario..." />
-                                <button onClick={handleSubmitComment} type="button" className="self-end px-4 py-1 rounded-md bg-green-600 dark:bg-green-700 text-white text-sm font-semibold hover:bg-green-700 dark:hover:bg-green-800 transition-colors">
-                                    Enviar
-                                </button>
-                            </form>
-                        </>
-                    )}
                 </div>
 
                 <div className="mt-auto flex items-center justify-center">

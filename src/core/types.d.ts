@@ -76,8 +76,8 @@ export type ReviewId = Review["id"]
 //***** START Tipos para COMMENT *****//
 export interface Comment {
     id: string
-    review_id: string
-    user_id: string
+    review_id: ReviewId
+    user_id: UserId
     username: string
     text: string
     created_at: string
