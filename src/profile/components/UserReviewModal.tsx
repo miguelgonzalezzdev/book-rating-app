@@ -18,7 +18,7 @@ interface UserReviewModalProps {
 export function UserReviewModal({ review, isOpen, onClose }: UserReviewModalProps) {
     const currentAuthUser = useAuthStore((state) => state.user) // Usuario autenticado
     const { isLiked, handleLike, error: errorLike } = useLike({ userId: currentAuthUser?.id ?? "", reviewId: review.id })
-    const { comments, newComment, isFetching, error: errorInsertComment, handleCommentChange, handleSubmitComment } = useComments({ reviewId: review.id, userId: currentAuthUser?.id ?? "" })
+    const { newComment, error: errorInsertComment, handleCommentChange, handleSubmitComment } = useComments({ reviewId: review.id, userId: currentAuthUser?.id ?? "" })
     const navigate = useNavigate()
     const modalRef = useRef<HTMLDivElement>(null)
 
@@ -119,13 +119,7 @@ export function UserReviewModal({ review, isOpen, onClose }: UserReviewModalProp
                         </div>
                     </div>
 
-                    {isFetching ? (
-                        <p className="text-sm text-neutral-500 dark:text-neutral-400">Cargando comentarios...</p>
-                    ) : comments.length === 0 ? (
-                        <p className="text-sm text-neutral-500 dark:text-neutral-400">Aún no hay comentarios.</p>
-                    ) : (
-                        <CommentsList comments={comments} />
-                    )}
+                    <CommentsList reviewId={review.id} userId={currentAuthUser?.id ?? ""} />
 
                     {currentAuthUser?.id != review.user_id && (
                         <>
