@@ -6,7 +6,7 @@ import { HeartIcon } from "../../core/icons/HeartIcon";
 import { useAuthStore } from "../../core/store/authStore";
 import { useLike } from "../hooks/useLike";
 import toast from "react-hot-toast";
-import { CommentsList } from "./CommentsList";
+import { CommentsSection } from "./CommentsSection";
 
 interface UserReviewModalProps {
     review: Review;
@@ -113,7 +113,7 @@ export function UserReviewModal({ review, isOpen, onClose }: UserReviewModalProp
                         </div>
                     </div>
 
-                    <CommentsList reviewId={review.id} userId={currentAuthUser?.id ?? ""} reviewAuthorId={review.author} />
+                    <CommentsSection reviewId={review.id} userId={currentAuthUser?.id ?? ""} reviewAuthorId={review.author} />
 
                 </div>
 
