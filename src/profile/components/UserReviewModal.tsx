@@ -113,7 +113,7 @@ export function UserReviewModal({ review, isOpen, onClose }: UserReviewModalProp
                         </div>
                     </div>
 
-                    <CommentsSection reviewId={review.id} userId={currentAuthUser?.id ?? ""} reviewAuthorId={review.author} />
+                    <CommentsSection reviewId={review.id} userId={currentAuthUser?.id ?? ""} userReviewId={review.user_id} />
 
                 </div>
 

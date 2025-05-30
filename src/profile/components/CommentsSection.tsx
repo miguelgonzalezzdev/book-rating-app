@@ -6,16 +6,16 @@ import toast from "react-hot-toast";
 interface CommentsListProps {
     reviewId: ReviewId
     userId: UserId
-    reviewAuthorId: UserId
+    userReviewId : UserId
 }
 
-export function CommentsSection({ reviewId, userId, reviewAuthorId }: CommentsListProps) {
+export function CommentsSection({ reviewId, userId, userReviewId  }: CommentsListProps) {
     const { comments, newComment, isFetching, error, handleCommentChange, handleSubmitComment, handleDeleteComment } = useComments({ reviewId, userId })
 
     if (error) {
         toast.error(error)
     }
-
+    
     return (
         <>
             {isFetching &&
@@ -32,7 +32,7 @@ export function CommentsSection({ reviewId, userId, reviewAuthorId }: CommentsLi
                 ))}
             </ul>
 
-            {userId !== reviewAuthorId && (
+            {userId != userReviewId  && (
                 <form onSubmit={(e) => { e.preventDefault(); handleSubmitComment() }} className="flex flex-col gap-2">
                     <textarea value={newComment} onChange={handleCommentChange} className="w-full px-4 py-3 rounded-lg min-h-10 sm:min-h-20 md:min-h-30 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-50 placeholder-gray-400 dark:placeholder-neutral-400 focus:outline-none border border-neutral-300 dark:border-transparent" placeholder="Escribe un comentario..." />
                     <button onClick={handleSubmitComment} type="button" className="self-end px-4 py-1 rounded-md bg-green-600 dark:bg-green-700 text-white text-sm font-semibold hover:bg-green-700 dark:hover:bg-green-800 transition-colors">
