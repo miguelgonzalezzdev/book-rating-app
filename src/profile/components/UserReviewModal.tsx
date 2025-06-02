@@ -4,19 +4,19 @@ import { StarRating } from "../../core/components/StarRating";
 import { useEffect, useRef } from "react";
 import { HeartIcon } from "../../core/icons/HeartIcon";
 import { useAuthStore } from "../../core/store/authStore";
-import { useLike } from "../hooks/useLike";
-import toast from "react-hot-toast";
 import { CommentsSection } from "./CommentsSection";
 
 interface UserReviewModalProps {
     review: Review;
-    isOpen: boolean;
-    onClose: () => void;
+    totalLikes: number
+    isLiked: boolean
+    handleLike: () => void
+    isOpen: boolean
+    onClose: () => void
 }
 
-export function UserReviewModal({ review, isOpen, onClose }: UserReviewModalProps) {
+export function UserReviewModal({ review, totalLikes, isLiked, handleLike, isOpen, onClose }: UserReviewModalProps) {
     const currentAuthUser = useAuthStore((state) => state.user) // Usuario autenticado
-    const { isLiked, handleLike, error: errorLike } = useLike({ userId: currentAuthUser?.id ?? "", reviewId: review.id })
     const navigate = useNavigate()
     const modalRef = useRef<HTMLDivElement>(null)
 
@@ -58,10 +58,6 @@ export function UserReviewModal({ review, isOpen, onClose }: UserReviewModalProp
         navigate(`/search/book/${review.book_id}`);
     }
 
-    if (errorLike) {
-        toast.error('Error al actualizar el like')
-    }
-
     return (
         <div className={`mt-12 fixed inset-0 backdrop-brightness-35 backdrop-blur-xs flex items-center justify-center z-50 px-2 overflow-y-auto ${!isOpen ? 'hidden' : ''}`}>
             <div ref={modalRef} className="w-full max-w-3xl max-h-9/10 overflow-y-auto flex flex-col gap-4 p-4 md:p-6 bg-white dark:bg-neutral-600 rounded-2xl shadow-md border border-gray-200 dark:border-neutral-700">
@@ -82,12 +78,12 @@ export function UserReviewModal({ review, isOpen, onClose }: UserReviewModalProp
                         ?
                         <div onClick={handleLike} className="ml-auto flex items-start justify-center gap-2 cursor-pointer">
                             <HeartIcon className={`ml-auto w-7 h-7 transition-colors duration-300 ease-in-out ${isLiked ? "text-red-500" : "text-neutral-400 dark:text-neutral-500"}`} filled={true} />
-                            <p className="text-lg text-neutral-700 dark:text-neutral-300 font-semibold">{review.likes}</p>
+                            <p className="text-lg text-neutral-700 dark:text-neutral-300 font-semibold">{totalLikes}</p>
                         </div>
                         :
                         <div className="ml-auto flex items-start justify-center gap-2">
                             <HeartIcon className="w-7 h-7 text-neutral-700 dark:text-neutral-300" />
-                            <p className="text-lg text-neutral-700 dark:text-neutral-300 font-semibold">{review.likes}</p>
+                            <p className="text-lg text-neutral-700 dark:text-neutral-300 font-semibold">{totalLikes}</p>
                         </div>
                     }
                 </div>

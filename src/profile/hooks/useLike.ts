@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ReviewId, UserId } from "../../core/types";
-import { getReviewLikeByUser, toggleReviewLike } from "../services/likes";
+import { getReviewLikeByUser, getReviewTotalLikes, toggleReviewLike } from "../services/likes";
 
 interface UseLikeProps {
     userId: UserId;
@@ -8,6 +8,7 @@ interface UseLikeProps {
 }
 
 export function useLike({ userId, reviewId }: UseLikeProps) {
+    const [totalLikes, setTotalLikes] = useState(0)
     const [isLiked, setIsLiked] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
@@ -25,6 +26,13 @@ export function useLike({ userId, reviewId }: UseLikeProps) {
             try {
                 const liked = await getReviewLikeByUser({userId, reviewId})
                 setIsLiked(liked.liked)
+
+                const total = await getReviewTotalLikes({reviewId})
+                setTotalLikes(total.count ?? 0)
+
+                if(liked.error || total.error){
+                     setError("Se ha producido un error.")
+                }
             } catch (err) {
                 setError(err instanceof Error ? err.message : String(err))
             } finally {
@@ -46,7 +54,7 @@ export function useLike({ userId, reviewId }: UseLikeProps) {
 
             const liked = await toggleReviewLike({userId, reviewId})
             setIsLiked(liked.liked)
-
+            setTotalLikes(prev => liked.liked === true ? prev + 1 : Math.max(prev - 1, 0))
         } catch (err) {
             setError(err instanceof Error ? err.message : String(err))
         } finally {
@@ -54,5 +62,5 @@ export function useLike({ userId, reviewId }: UseLikeProps) {
         }
     }
 
-    return { isLiked, isLoading, error, handleLike }
+    return { totalLikes, isLiked, isLoading, error, handleLike }
 }

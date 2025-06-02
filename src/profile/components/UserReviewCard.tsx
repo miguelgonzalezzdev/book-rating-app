@@ -12,7 +12,7 @@ export function UserReviewCard({ review }: { review: Review }) {
     const currentAuthUser = useAuthStore((state) => state.user) // Usuario autenticado
     const navigate = useNavigate()
     const [showReviewModal, setReviewModal] = useState(false)
-    const { isLiked, handleLike, error } = useLike({ userId: currentAuthUser?.id ?? "", reviewId: review.id }) 
+    const { totalLikes, isLiked, handleLike, error } = useLike({ userId: currentAuthUser?.id ?? "", reviewId: review.id }) 
 
     const handleClick = () => {
         if (!review.book_id) return
@@ -50,12 +50,12 @@ export function UserReviewCard({ review }: { review: Review }) {
                         ?
                         <div onClick={handleLike} className="ml-auto flex items-start justify-center gap-2 cursor-pointer">
                             <HeartIcon className={`ml-auto w-7 h-7 transition-colors duration-300 ease-in-out ${isLiked ? "text-red-500" : "text-neutral-400 dark:text-neutral-500"}`} filled={true}/>
-                            <p className="text-lg text-neutral-700 dark:text-neutral-300 font-semibold">{review.likes}</p>
+                            <p className="text-lg text-neutral-700 dark:text-neutral-300 font-semibold">{totalLikes}</p>
                         </div>
                         :
                         <div className="ml-auto flex items-start justify-center gap-2">
                             <HeartIcon className="w-7 h-7 text-neutral-700 dark:text-neutral-300" />
-                            <p className="text-lg text-neutral-700 dark:text-neutral-300 font-semibold">{review.likes}</p>
+                            <p className="text-lg text-neutral-700 dark:text-neutral-300 font-semibold">{totalLikes}</p>
                         </div>
                     }
                 </div>
@@ -73,7 +73,7 @@ export function UserReviewCard({ review }: { review: Review }) {
                     </button>
                 </div>
             </div>
-            <UserReviewModal key={review.id} isOpen={showReviewModal} review={review} onClose={handleCloseReviewModal} />
+            <UserReviewModal key={review.id} isOpen={showReviewModal} review={review} isLiked={isLiked} totalLikes={totalLikes} handleLike={handleLike} onClose={handleCloseReviewModal} />
         </>
     )
 }

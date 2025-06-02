@@ -6,7 +6,7 @@ interface GetReviewLikeByUserProps {
     reviewId: ReviewId
 }
 
-export async function getReviewLikeByUser({userId, reviewId}: GetReviewLikeByUserProps) {
+export async function getReviewLikeByUser({ userId, reviewId }: GetReviewLikeByUserProps) {
     const { data, error: checkError } = await supabase
         .from("review_likes")
         .select("id")
@@ -63,4 +63,24 @@ export async function toggleReviewLike({ userId, reviewId }: ToggleReviewLikePro
     }
 
     return { success: true, liked: true, error: null }
+}
+
+interface GetReviewTotalLikesProps {
+    reviewId: ReviewId
+}
+
+export async function getReviewTotalLikes({ reviewId }: GetReviewTotalLikesProps) {
+    const { data, error } = await supabase
+        .from("reviews")
+        .select("likes")
+        .eq("id", reviewId)
+        .maybeSingle()
+
+    if (error) {
+        return { success: false, count: 0, error: "Error al contar los likes" }
+    }
+
+    const count = data && data.likes ? data.likes : 0
+
+    return { success: true, count }
 }
