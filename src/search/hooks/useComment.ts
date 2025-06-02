@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { CommentId, ListOfComments, ReviewId, UserId } from "../../core/types";
 import { addCommentToReview, deleteCommentFromReview, getCommentsByReview } from "../services/comments";
+import { useNavigate } from "react-router";
+import { useAuthStore } from "../../core/store/authStore";
 
 interface UseCommentsProps {
     reviewId: ReviewId
@@ -8,11 +10,13 @@ interface UseCommentsProps {
 }
 
 export function useComments({ reviewId, userId }: UseCommentsProps) {
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
     const [comments, setComments] = useState<ListOfComments>([])
     const [newComment, setNewComment] = useState("")
     const [isFetching, setIsFetching] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState("")
+    const navigate = useNavigate()
 
     // Obtener los comentarios de una reseña
     useEffect(() => {
@@ -104,7 +108,13 @@ export function useComments({ reviewId, userId }: UseCommentsProps) {
 
     // Manejar el envío del comentario
     const handleSubmitComment = () => {
+        if (!isAuthenticated) {
+            navigate('/login')
+            return
+        }
+
         if (!newComment.trim()) return
+        
         addComment(newComment)
         setNewComment("")
     }

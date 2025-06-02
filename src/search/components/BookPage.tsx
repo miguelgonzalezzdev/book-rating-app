@@ -6,8 +6,10 @@ import { Alert } from "../../core/components/Alert"
 import { SkeletonBookPage } from "./SkeletonBookPage"
 import { StarRating } from "../../core/components/StarRating"
 import { BookReviewsList } from "./BookReviewsList"
+import { useAuthStore } from "../../core/store/authStore"
 
 export const BookPage = () => {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   const { query } = useParams()
   const bookId = query || ""
   const { title, author, year, isbn, publisher, description, imageUrl, genreid1, genreid2, genreid3, rating, pageCount, isLoading, error } = useBook({ bookId })
@@ -86,8 +88,20 @@ export const BookPage = () => {
           </div>
         </div>
       </section>
-      <section className="w-full md:px-10">
-        <BookReviewsList bookId={bookId} />
+      <section className="w-full  md:px-10">
+        {isAuthenticated
+          ?
+          <BookReviewsList bookId={bookId} />
+          :
+          <div className="max-w-2xl mx-auto px-4">
+            <Alert
+              type="info"
+              title="Reseñas disponibles para usuarios registrados"
+              message="Inicia sesión para descubrir lo que otros lectores opinan sobre este libro."
+            />
+          </div>
+
+        }
       </section>
     </>
   )
