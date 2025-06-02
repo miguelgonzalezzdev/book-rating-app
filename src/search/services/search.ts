@@ -1,5 +1,5 @@
 import { supabase } from "../../core/supabase/supabaseClient"
-import { Book, BookId, ListOfBooks, UserId } from "../../core/types";
+import { BookId, ListOfBooks, UserId } from "../../core/types";
 
 interface RegisterBookSearchProps {
     userId: UserId;
@@ -17,7 +17,7 @@ export async function registerBookSearch({ userId, bookId }: RegisterBookSearchP
             }],
             {
                 onConflict: 'user_id,book_id',
-                ignoreDuplicates: false 
+                ignoreDuplicates: false
             }
         );
 
@@ -28,7 +28,13 @@ export async function registerBookSearch({ userId, bookId }: RegisterBookSearchP
 
 // Tipo especifico para el formato que devuelve supabase (array de objetos)
 type BookFromSupabase = {
-    book: Book
+    book: {
+        id: BookId;
+        title: string;
+        author: string;
+        rating: number;
+        imageurl: string;
+    }
 }
 
 export async function getSearchHistory(userId: string): Promise<ListOfBooks> {
@@ -53,9 +59,6 @@ export async function getSearchHistory(userId: string): Promise<ListOfBooks> {
         title: entry.book.title || "",
         author: entry.book.author || "",
         rating: entry.book.rating || 0,
-        imageUrl: entry.book.imageUrl || "",
+        imageUrl: entry.book.imageurl || "",
     }))
 }
-
-
-

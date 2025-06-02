@@ -28,8 +28,8 @@ export const BookPage = () => {
   }
 
   return (
-    <>
-      <section className="bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 p-6 md:p-16">
+    <div className="min-h-screen w-full bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 flex items-center justify-center flex-col gap-10 px-4 py-10">
+      <section className="bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 p-4 md:p-16">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-20">
           <div className="flex flex-col items-center justify-start gap-4">
             <div className="w-56 aspect-[3/4] shadow-xl rounded-lg overflow-hidden">
@@ -88,7 +88,7 @@ export const BookPage = () => {
           </div>
         </div>
       </section>
-      <section className="w-full  md:px-10">
+      <section className="w-full md:px-10">
         {isAuthenticated
           ?
           <BookReviewsList bookId={bookId} />
@@ -103,6 +103,6 @@ export const BookPage = () => {
 
         }
       </section>
-    </>
+    </div>
   )
 }

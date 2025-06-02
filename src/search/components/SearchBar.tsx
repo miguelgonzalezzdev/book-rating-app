@@ -9,7 +9,7 @@ export const SearchBar = () => {
     const [showResults, setShowResults] = useState(false);
     const { results, getResults, isLoading } = useSearch({ search })
     const {searchHistory} = useSearchHistory();
-
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedGetResults = useCallback(
         debounce((search: string) => {
@@ -63,7 +63,7 @@ export const SearchBar = () => {
                 <div className="absolute top-full left-0 w-full max-h-100 overflow-y-auto mt-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-lg shadow-lg z-50">
                     {searchHistory && !search && <p className="p-3 font-bold">Busquedas recientes</p>}
                     <ul className="divide-y divide-neutral-200 dark:divide-neutral-600">
-                        {searchHistory && !search && searchHistory.map(book => (
+                        {searchHistory && !search && searchHistory.map(book => ( 
                              <SearchBarItem key={book.id} bookId={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
                         ))}
 

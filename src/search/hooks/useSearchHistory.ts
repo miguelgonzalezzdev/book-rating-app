@@ -17,6 +17,7 @@ export function useSearchHistory() {
                 setIsLoading(true)
                 const books = await getSearchHistory(currentAuthUser.id)
                 setSearchHistory(books)
+                
             } catch (err) {
                 setError((err as Error).message);
             } finally {

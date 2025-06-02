@@ -28,6 +28,6 @@ export async function getBookReviews({ bookId }: GetBookReviewsProps) {
             username: review.username ? `${review.username.name} ${review.username.surname}` : ""
         }))
         : [];
-        console.log(commentsWithUsername)
+        
     return { success: true, data: commentsWithUsername as ListOfReviews }
 }
