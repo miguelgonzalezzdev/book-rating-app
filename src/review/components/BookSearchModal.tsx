@@ -97,6 +97,5 @@ export function BookSearchModal({ isOpen, onClick, onClose }: BookSearchModalPro
                 )}
             </div>
         </div>
-
     )
 }

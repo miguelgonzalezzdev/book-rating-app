@@ -101,11 +101,9 @@ interface RegisterReviewForExistingBookProps {
     imageUrl: string
 }
 
-
-export async function registerReviewForExistingBook({ bookId = "", bookName, authorName, rating, reviewText, imageUrl }: RegisterReviewForExistingBookProps) {
-
+export async function registerReviewForExistingBook({ bookId, bookName, authorName, rating, reviewText, imageUrl = "" }: RegisterReviewForExistingBookProps) {
     // Validar que los campos no esten vacios
-    if (!bookName || !authorName || !rating || !reviewText || !imageUrl) {
+    if (!bookId || !bookName || !authorName || !rating || !reviewText) { 
         return { success: false, message: 'Todos los campos son obligatorios' }
     }
 

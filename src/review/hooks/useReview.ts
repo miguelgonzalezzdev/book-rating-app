@@ -27,7 +27,7 @@ export const useReview = ({ bookId }: UseReviewProps) => {
             setIsFetching(true)
 
             const data = await getBookSelectedById({ bookId })
-
+            
             setBookName(data.title || '')
             setAuthorName(data.author || '')
             setImageUrl(data.imageUrl || '')
