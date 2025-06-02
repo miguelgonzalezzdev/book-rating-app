@@ -60,6 +60,7 @@ export type BookRating = BookDetails["rating"]
 export interface Review {
     id: string
     user_id: string
+    username: string
     book_id: string | null
     rating: number
     text: string

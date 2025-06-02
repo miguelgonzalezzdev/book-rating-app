@@ -60,6 +60,9 @@ export function BookReviewCard({ review }: { review: Review }) {
                     }
                 </div>
                 <div className="w-full flex justify-start items-center text-center gap-2">
+                    <p className="text-md text-neutral-700 dark:text-neutral-300">Usuario: {review.username}</p>
+                </div>
+                <div className="w-full flex justify-start items-center text-center gap-2">
                     <p className="text-md text-neutral-700 dark:text-neutral-300">Calificación: </p>
                     <StarRating initialRating={review.rating} disabled={true} className="w-5 h-5" />
                 </div>
