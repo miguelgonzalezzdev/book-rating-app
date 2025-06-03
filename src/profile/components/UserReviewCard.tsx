@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { StarRating } from "../../core/components/StarRating";
-import { Review } from "../../core/types";
+import { Review, ReviewId } from "../../core/types";
 import { useNavigate } from "react-router";
 import { UserReviewModal } from "./UserReviewModal";
 import { HeartIcon } from "../../core/icons/HeartIcon";
@@ -8,11 +8,16 @@ import { useAuthStore } from "../../core/store/authStore";
 import { useLike } from "../hooks/useLike";
 import toast from "react-hot-toast";
 
-export function UserReviewCard({ review }: { review: Review }) {
+interface UserReviewCardProps {
+    review: Review
+    onDelete: (args: { reviewId: ReviewId }) => void
+}
+
+export function UserReviewCard({ review, onDelete }: UserReviewCardProps) {
     const currentAuthUser = useAuthStore((state) => state.user) // Usuario autenticado
     const navigate = useNavigate()
     const [showReviewModal, setReviewModal] = useState(false)
-    const { totalLikes, isLiked, handleLike, error } = useLike({ userId: currentAuthUser?.id ?? "", reviewId: review.id }) 
+    const { totalLikes, isLiked, handleLike, error } = useLike({ userId: currentAuthUser?.id ?? "", reviewId: review.id })
 
     const handleClick = () => {
         if (!review.book_id) return
@@ -27,7 +32,7 @@ export function UserReviewCard({ review }: { review: Review }) {
         setReviewModal(false)
     }
 
-    if(error){
+    if (error) {
         toast.error('Error al actualizar el like')
     }
 
@@ -49,7 +54,7 @@ export function UserReviewCard({ review }: { review: Review }) {
                     {currentAuthUser?.id !== review.user_id
                         ?
                         <div onClick={handleLike} className="ml-auto flex items-start justify-center gap-2 cursor-pointer">
-                            <HeartIcon className={`ml-auto w-7 h-7 transition-colors duration-300 ease-in-out ${isLiked ? "text-red-500" : "text-neutral-400 dark:text-neutral-500"}`} filled={true}/>
+                            <HeartIcon className={`ml-auto w-7 h-7 transition-colors duration-300 ease-in-out ${isLiked ? "text-red-500" : "text-neutral-400 dark:text-neutral-500"}`} filled={true} />
                             <p className="text-lg text-neutral-700 dark:text-neutral-300 font-semibold">{totalLikes}</p>
                         </div>
                         :
@@ -73,7 +78,7 @@ export function UserReviewCard({ review }: { review: Review }) {
                     </button>
                 </div>
             </div>
-            <UserReviewModal key={review.id} isOpen={showReviewModal} review={review} isLiked={isLiked} totalLikes={totalLikes} handleLike={handleLike} onClose={handleCloseReviewModal} />
+            <UserReviewModal key={review.id} isOpen={showReviewModal} review={review} isLiked={isLiked} totalLikes={totalLikes} handleLike={handleLike} onDelete={onDelete} onClose={handleCloseReviewModal} />
         </>
     )
 }

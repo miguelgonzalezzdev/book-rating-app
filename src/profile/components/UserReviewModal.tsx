@@ -1,24 +1,28 @@
 import { useNavigate } from "react-router";
-import { Review } from "../../core/types";
+import { Review, ReviewId } from "../../core/types";
 import { StarRating } from "../../core/components/StarRating";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HeartIcon } from "../../core/icons/HeartIcon";
 import { useAuthStore } from "../../core/store/authStore";
 import { CommentsSection } from "./CommentsSection";
+import { ConfirmModal } from "../../core/components/ConfirmModal";
 
 interface UserReviewModalProps {
     review: Review;
     totalLikes: number
     isLiked: boolean
     handleLike: () => void
+    onDelete: (args: { reviewId: ReviewId }) => void
     isOpen: boolean
     onClose: () => void
 }
 
-export function UserReviewModal({ review, totalLikes, isLiked, handleLike, isOpen, onClose }: UserReviewModalProps) {
+export function UserReviewModal({ review, totalLikes, isLiked, handleLike, onDelete, isOpen, onClose }: UserReviewModalProps) {
     const currentAuthUser = useAuthStore((state) => state.user) // Usuario autenticado
     const navigate = useNavigate()
     const modalRef = useRef<HTMLDivElement>(null)
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const confirmModalRef = useRef<HTMLDivElement>(null)
 
     // Controlar el scroll del body al abrir la modal
     useEffect(() => {
@@ -37,7 +41,11 @@ export function UserReviewModal({ review, totalLikes, isLiked, handleLike, isOpe
     // Salir de la modal al hacer clic fuera de ella
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+            const target = event.target as Node
+            const clickedOutsideMainModal = modalRef.current && !modalRef.current.contains(target)
+            const clickedOutsideConfirmModal = confirmModalRef.current && !confirmModalRef.current.contains(target)
+
+            if (clickedOutsideMainModal && clickedOutsideConfirmModal) {
                 onClose();
             }
         }
@@ -51,12 +59,16 @@ export function UserReviewModal({ review, totalLikes, isLiked, handleLike, isOpe
         };
     }, [isOpen, onClose])
 
-    if (!isOpen) return null
-
     const handleBookRedirect = () => {
         if (!review.book_id) return
         navigate(`/search/book/${review.book_id}`);
     }
+
+    const handleClickDeleteReview = () => {
+        setShowConfirmModal(true);
+    }
+
+    if (!isOpen) return null
 
     return (
         <div className={`mt-12 fixed inset-0 backdrop-brightness-35 backdrop-blur-xs flex items-center justify-center z-50 px-2 overflow-y-auto ${!isOpen ? 'hidden' : ''}`}>
@@ -113,12 +125,28 @@ export function UserReviewModal({ review, totalLikes, isLiked, handleLike, isOpe
 
                 </div>
 
-                <div className="mt-auto flex items-center justify-center">
-                    <button onClick={onClose} type="button" className="px-4 py-2 rounded-lg bg-blue-600 text-white dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-800 font-semibold">
+                <div className="mt-auto flex items-center justify-center gap-4">
+                    <button onClick={onClose} type="button" className="px-4 py-2 rounded-lg bg-blue-600 text-white dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-800 font-semibold shadow-sm">
                         Cerrar
                     </button>
+                    {currentAuthUser?.id === review.user_id &&
+                        <button onClick={handleClickDeleteReview} type="button" className="px-4 py-2 rounded-lg text-white bg-red-600 hover:bg-red-700 font-semibold shadow-sm">
+                            Borrar
+                        </button>
+                    }
                 </div>
             </div>
+
+            <ConfirmModal
+                ref={confirmModalRef}
+                isOpen={showConfirmModal}
+                title="¿Borrar reseña?"
+                message="¿Estás seguro de que quieres borrar esta reseña? Una vez eliminada, no podrás recuperarla."
+                onConfirm={() => onDelete({ reviewId: review.id })}
+                onCancel={() => setShowConfirmModal(false)}
+                confirmText="Borrar"
+                cancelText="Cancelar"
+            />
         </div>
     )
 }

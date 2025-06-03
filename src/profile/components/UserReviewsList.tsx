@@ -5,7 +5,7 @@ import { UserReviewCard } from "./UserReviewCard";
 import { SkeletonReviewCard } from "./SkeletonReviewCard";
 
 export function UserReviewsList({ userId }: { userId: UserId }) {
-    const { reviews, isLoading, error } = useUserReviews({ userId })
+    const { reviews, handleDeleteReview, isLoading, error } = useUserReviews({ userId })
 
     if (isLoading) {
         return (
@@ -30,7 +30,7 @@ export function UserReviewsList({ userId }: { userId: UserId }) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {reviews?.map(review => (
-                <UserReviewCard key={review.id} review={review} />
+                <UserReviewCard key={review.id} review={review} onDelete={handleDeleteReview} />
             ))}
         </div>
     )

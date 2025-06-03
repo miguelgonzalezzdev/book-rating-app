@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { ListOfReviews, UserId } from "../../core/types"
-import { getUserReviews } from "../services/reviews"
+import { ListOfReviews, ReviewId, UserId } from "../../core/types"
+import { deleteUserReview, getUserReviews } from "../services/reviews"
 
 interface UseUserReviewsProps {
     userId: UserId
@@ -27,9 +27,41 @@ export function useUserReviews({ userId }: UseUserReviewsProps) {
                 setIsLoading(false)
             }
         }
-        
+
         fetchReviews()
     }, [userId])
 
-    return { reviews, isLoading, error }
+    const deleteReview = async ({ reviewId }: { reviewId: ReviewId }) => {
+        if (!reviewId) {
+            setError("Error al realizar la acción")
+            return
+        }
+
+        setIsLoading(true)
+
+        try {
+
+            const data = await deleteUserReview({ reviewId, userId });
+
+            if (!data.success) {
+                setError("Error al eliminar la reseña. Inténtalo más tarde.")
+                return
+            }
+
+            setReviews(reviews => reviews?.filter(review => review.id !== reviewId))
+
+        } catch (err) {
+            setError(err instanceof Error ? err.message : String(err))
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const handleDeleteReview = ({ reviewId }: { reviewId: ReviewId }) => {
+        if (!reviewId) return
+
+        deleteReview({ reviewId })
+    }
+
+    return { reviews, handleDeleteReview, isLoading, error }
 }
