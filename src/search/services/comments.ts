@@ -61,6 +61,22 @@ export async function addCommentToReview({ reviewId, userId, comment }: AddComme
         username: `${data.username.name} ${data.username.surname}`
     }
 
+    const newCommentId = data.id
+
+    // Registrar la accion realizado en el historico
+    const { error: historicError } = await supabase
+        .from('historic')
+        .insert({
+            user_id: userId,
+            action_type_id: 3, // 3 = tipo comment
+            target_id: newCommentId,
+            review_id: reviewId
+        })
+
+    if (historicError) {
+        return { success: true, data: commentWithUsername, error: historicError.message }
+    }
+
     return { success: true, data: commentWithUsername, error: null }
 }
 
