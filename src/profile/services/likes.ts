@@ -54,12 +54,30 @@ export async function toggleReviewLike({ userId, reviewId }: ToggleReviewLikePro
     }
 
     // Si no existe el like, insertarlo
-    const { error: insertError } = await supabase
+    const { data: insertedLike, error: insertError } = await supabase
         .from("review_likes")
         .insert([{ user_id: userId, review_id: reviewId }])
+        .select('id')
+        .single()
 
     if (insertError) {
         return { success: false, liked: false, error: "Error al registrar el like" }
+    }
+
+    const newLikeId = insertedLike.id
+
+    // Registrar la accion realizada en el historico
+    const { error: historicError } = await supabase
+        .from('historic')
+        .insert({
+            user_id: userId,
+            action_type_id: 2, // 2 = tipo review
+            target_id: newLikeId,
+            review_id: reviewId
+        })
+
+    if (historicError) {
+        return { success: false, liked: true, error: 'Error al registrar la acción' };
     }
 
     return { success: true, liked: true, error: null }

@@ -91,7 +91,7 @@ export async function registerReviewForNewBook({ bookId = "", bookName, authorNa
         return { success: false, message: 'Error guardar la reseña', error: insertError }
     }
 
-    const newReviewId = insertedReviews.id;
+    const newReviewId = insertedReviews.id
 
     // Registrar la accion realizado en el historico
     const { error: historicError } = await supabase
@@ -101,10 +101,10 @@ export async function registerReviewForNewBook({ bookId = "", bookName, authorNa
             action_type_id: 1, // 1 = tipo review
             target_id: newReviewId,
             review_id: newReviewId
-        });
+        })
 
     if (historicError) {
-        return { success: false, message: 'Error al registrar la acción', error: historicError };
+        return { success: false, message: 'Error al registrar la acción', error: historicError }
     }
 
     return { success: true }
@@ -155,7 +155,7 @@ export async function registerReviewForExistingBook({ bookId, bookName, authorNa
         return { success: false, message: 'Error guardar la reseña', error: insertError }
     }
 
-    const newReviewId = insertedReviews.id;
+    const newReviewId = insertedReviews.id
 
     // Registrar la accion realizado en el historico
     const { error: historicError } = await supabase
@@ -165,10 +165,10 @@ export async function registerReviewForExistingBook({ bookId, bookName, authorNa
             action_type_id: 1, // 1 = tipo review
             target_id: newReviewId,
             review_id: newReviewId
-        });
+        })
 
     if (historicError) {
-        return { success: false, message: 'Error al registrar la acción', error: historicError };
+        return { success: false, message: 'Error al registrar la acción', error: historicError }
     }
 
     return { success: true }
