@@ -2,15 +2,6 @@ import { supabase } from "../../core/supabase/supabaseClient"
 import { BookId, UserId } from "../../core/types"
 import imageCompression from 'browser-image-compression'
 
-interface RegisterReviewForNewBookProps {
-    bookId?: BookId
-    bookName: string
-    authorName: string
-    rating: number
-    reviewText: string
-    imageFile: File | null
-}
-
 interface InsertReviewData {
     user_id: UserId
     title: string
@@ -19,6 +10,15 @@ interface InsertReviewData {
     text: string
     imageurl: string
     book_id?: string
+}
+
+interface RegisterReviewForNewBookProps {
+    bookId?: BookId
+    bookName: string
+    authorName: string
+    rating: number
+    reviewText: string
+    imageFile: File | null
 }
 
 export async function registerReviewForNewBook({ bookId = "", bookName, authorName, rating, reviewText, imageFile }: RegisterReviewForNewBookProps) {
@@ -37,10 +37,10 @@ export async function registerReviewForNewBook({ bookId = "", bookName, authorNa
     }
 
     const compressOptions = {
-      maxSizeMB: 1, // tamaño máximo en MB
-      maxWidthOrHeight: 1920, // redimensionar si es necesario
-      useWebWorker: true,
-      fileType: 'image/webp',
+        maxSizeMB: 1, // tamaño máximo en MB
+        maxWidthOrHeight: 1920, // redimensionar si es necesario
+        useWebWorker: true,
+        fileType: 'image/webp',
     }
 
     const compressedFile = await imageCompression(imageFile, compressOptions)
@@ -81,12 +81,30 @@ export async function registerReviewForNewBook({ bookId = "", bookName, authorNa
     }
 
     // Insertar la review
-    const { error: insertError } = await supabase
+    const { data: insertedReviews, error: insertError } = await supabase
         .from('reviews')
-        .insert(insertData);
+        .insert(insertData)
+        .select('id')
+        .single();
 
     if (insertError) {
         return { success: false, message: 'Error guardar la reseña', error: insertError }
+    }
+
+    const newReviewId = insertedReviews.id;
+
+    // Registrar la accion realizado en el historico
+    const { error: historicError } = await supabase
+        .from('historic')
+        .insert({
+            user_id: uuid_UserId,
+            action_type_id: 1, // 1 = tipo review
+            target_id: newReviewId,
+            review_id: newReviewId
+        });
+
+    if (historicError) {
+        return { success: false, message: 'Error al registrar la acción', error: historicError };
     }
 
     return { success: true }
@@ -103,7 +121,7 @@ interface RegisterReviewForExistingBookProps {
 
 export async function registerReviewForExistingBook({ bookId, bookName, authorName, rating, reviewText, imageUrl = "" }: RegisterReviewForExistingBookProps) {
     // Validar que los campos no esten vacios
-    if (!bookId || !bookName || !authorName || !rating || !reviewText) { 
+    if (!bookId || !bookName || !authorName || !rating || !reviewText) {
         return { success: false, message: 'Todos los campos son obligatorios' }
     }
 
@@ -127,12 +145,30 @@ export async function registerReviewForExistingBook({ bookId, bookName, authorNa
     }
 
     // Insertar la review
-    const { error: insertError } = await supabase
+    const { data: insertedReviews, error: insertError } = await supabase
         .from('reviews')
-        .insert(insertData);
+        .insert(insertData)
+        .select('id')
+        .single();
 
     if (insertError) {
         return { success: false, message: 'Error guardar la reseña', error: insertError }
+    }
+
+    const newReviewId = insertedReviews.id;
+
+    // Registrar la accion realizado en el historico
+    const { error: historicError } = await supabase
+        .from('historic')
+        .insert({
+            user_id: uuid_UserId,
+            action_type_id: 1, // 1 = tipo review
+            target_id: newReviewId,
+            review_id: newReviewId
+        });
+
+    if (historicError) {
+        return { success: false, message: 'Error al registrar la acción', error: historicError };
     }
 
     return { success: true }
