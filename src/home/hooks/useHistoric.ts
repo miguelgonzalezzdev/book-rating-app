@@ -13,6 +13,8 @@ export function useHistoric () {
         const fetchHistoric = async () => {
             if (!currentAuthUser) return
 
+             setIsLoading(true)
+
             try {
                 
                 const data = await getHistoric({ currentAuthUserId: currentAuthUser.id })
