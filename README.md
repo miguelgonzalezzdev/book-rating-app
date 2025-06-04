@@ -4,13 +4,13 @@ Biblioclase es una aplicación diseñada para fomentar el hábito de la lectura 
 
 ## 🚀 Características principales
 
+- 💻 Single-page application (SPA)
+
 - 📖 Búsqueda de libros por género literario
 
 - ✍️ Publicación de reseñas y opiniones
 
-- 🤝 Interacción entre usuarios
-
-- 🌟 Entorno diseñado especialmente para niños
+- 🤝 Interacción entre usuarios mediante comentarios
 
 ## 🛠️ Tecnologías utilizadas
 
