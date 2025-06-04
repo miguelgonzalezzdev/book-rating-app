@@ -20,7 +20,7 @@ export type ListOfGenres = Genre[]
 export type GenreId = Genre["id"]
 export type GenreName = Genre["name"]
 export type GenreColor = Genre["color"]
-export type GenreIcon= Genre["icon"]
+export type GenreIcon = Genre["icon"]
 //***** END Tipos para GENRES *****//
 
 //***** START Tipos para BOOK *****//
@@ -88,10 +88,37 @@ export type ListOfComments = Comment[]
 export type CommentId = Comment["id"]
 //***** END Tipos para COMMENT *****//
 
+//***** START Tipos para HISTORIC *****//
+export interface Historic {
+    id: string;
+    action_type_id: number;
+    created_at: string; // o `Date` si lo vas a parsear como objeto Date
+    user_id: string;
+    target_id: string;
+    review_id: string;
+    profiles: {
+        id: string;
+        name: string;
+        surname: string;
+        profileimage: string;
+    } | null;
+    reviews: {
+        id: string;
+        book_id: string;
+        author: string;
+        title: string;
+        text: string;
+        imageurl: string;
+    } | null;
+}
+export type ListOfHistoric = Historic[]
+export type HistoricId = Historic["id"]
+//***** END Tipos para COMMENT *****//
+
 export type AlertType = typeof ALERT_TYPES[keyof typeof ALERT_TYPES];
 
 export interface IconComponentProps {
-  width?: number;
-  height?: number;
-  className?: string;
+    width?: number;
+    height?: number;
+    className?: string;
 }
