@@ -23,14 +23,18 @@ export const HistoricCard = ({ historic }: HistoricCardProps) => {
         minute: '2-digit',
     });
 
-    const handleClick = () => {
+    const handleClickProfile = () => {
         navigate(`/profile/${historic.user_id}`)
+    }
+
+    const handleClickReview = () => {
+        navigate(`/profile/${historic.reviews?.user_id}`)
     }
 
     return (
         <div className="flex flex-col place-content-end p-4 md:p-6 dark:bg-neutral-600 rounded-2xl shadow-md border border-gray-200 dark:border-neutral-700 w-full lg:w-300 h-75">
             <div className="flex items-center gap-3 mb-auto min-w-0">
-                <div onClick={handleClick} className="cursor-pointer">
+                <div onClick={handleClickProfile} className="cursor-pointer">
                     <img
                         src={historic.profiles?.profileimage || 'placeholder_img_profile.webp'}
                         alt={`${historic.profiles?.name} profile image`}
@@ -38,11 +42,11 @@ export const HistoricCard = ({ historic }: HistoricCardProps) => {
                     />
                 </div>
                 <p className="flex-1 text-md dark:text-neutral-50">
-                    <span onClick={handleClick} className="dark:text-neutral-50 font-bold cursor-pointer">{historic.profiles?.name} {historic.profiles?.surname}</span> {mensaje}
+                    <span onClick={handleClickProfile} className="dark:text-neutral-50 font-bold cursor-pointer">{historic.profiles?.name} {historic.profiles?.surname}</span> {mensaje}
                 </p>
             </div>
-            <div onClick={handleClick} className="flex flex-row gap-6 my-4 mx-2 md:mx-10 lg:mx-20 p-3 sm:p-4 md:p-6 border border-gray-200 dark:border-neutral-500 cursor-pointer">
-                <div onClick={handleClick} className={`w-14 md:w-20 aspect-[3/4] overflow-hidden border-neutral-300 dark:border-neutral-500`}>
+            <div onClick={handleClickReview} className="flex flex-row gap-6 my-4 mx-2 md:mx-10 lg:mx-20 p-3 sm:p-4 md:p-6 border border-gray-200 dark:border-neutral-500 cursor-pointer">
+                <div className={`w-14 md:w-20 aspect-[3/4] overflow-hidden border-neutral-300 dark:border-neutral-500`}>
                     <img
                         src={historic.reviews?.imageurl || 'placeholder_img_book.webp'}
                         alt="Book cover"

@@ -1,8 +1,8 @@
 import { supabase } from "../../core/supabase/supabaseClient";
-import { ListOfHistoric, UserId } from "../../core/types";
+import { BookId, ListOfHistoric, UserId } from "../../core/types";
 
 interface HistoricProfile {
-    id: string
+    id: UserId
     name: string
     surname: string
     profileimage: string
@@ -10,7 +10,8 @@ interface HistoricProfile {
 
 interface HistoricReview {
     id: string
-    book_id: string
+    user_id: UserId
+    book_id: BookId
     title: string
     author: string
     imageurl: string
@@ -21,9 +22,9 @@ interface HistoricItem {
     id: string
     action_type_id: number
     target_id: string
-    review_id: string
+    review_id: UserId
     created_at: string
-    user_id: string
+    user_id: UserId
     profiles: HistoricProfile | HistoricProfile[] | null
     reviews: HistoricReview | HistoricReview[] | null
 }
@@ -54,6 +55,7 @@ export async function getHistoric({ currentAuthUserId }: GetHistoricProps): Prom
             ),
             reviews (
                 id,
+                user_id,
                 book_id,
                 title,
                 author,

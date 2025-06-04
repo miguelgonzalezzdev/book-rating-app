@@ -26,26 +26,26 @@ export type GenreIcon = Genre["icon"]
 //***** START Tipos para BOOK *****//
 export interface BookDetails {
     id: string
-    title: string;
-    author: string;
-    year: string;
-    isbn: string;
-    publisher: string;
-    description: string;
-    genreId1: number;
-    genreId2: number;
-    genreId3: number;
-    imageUrl: string;
-    bookUrl: string;
-    rating: number;
-    page_count: number;
+    title: string
+    author: string
+    year: string
+    isbn: string
+    publisher: string
+    description: string
+    genreId1: number
+    genreId2: number
+    genreId3: number
+    imageUrl: string
+    bookUrl: string
+    rating: number
+    page_count: number
 }
 export interface Book {
-    id: BookId;
-    title: BookTitle;
-    author: BookAuthor;
-    rating: BookRating;
-    imageUrl: BookImageUrl;
+    id: BookId
+    title: BookTitle
+    author: BookAuthor
+    rating: BookRating
+    imageUrl: BookImageUrl
 }
 
 export type ListOfBooks = Book[]
@@ -90,35 +90,36 @@ export type CommentId = Comment["id"]
 
 //***** START Tipos para HISTORIC *****//
 export interface Historic {
-    id: string;
-    action_type_id: number;
-    created_at: string; // o `Date` si lo vas a parsear como objeto Date
-    user_id: string;
-    target_id: string;
-    review_id: string;
+    id: string
+    action_type_id: number
+    created_at: string
+    user_id: UserId
+    target_id: string
+    review_id: ReviewId
     profiles: {
-        id: string;
-        name: string;
-        surname: string;
-        profileimage: string;
-    } | null;
+        id: UserId
+        name: string
+        surname: string
+        profileimage: string
+    } | null
     reviews: {
-        id: string;
-        book_id: string;
-        author: string;
-        title: string;
-        text: string;
-        imageurl: string;
-    } | null;
+        id: string
+        user_id: UserId
+        book_id: BookId
+        author: string
+        title: string
+        text: string
+        imageurl: string
+    } | null
 }
 export type ListOfHistoric = Historic[]
 export type HistoricId = Historic["id"]
 //***** END Tipos para COMMENT *****//
 
-export type AlertType = typeof ALERT_TYPES[keyof typeof ALERT_TYPES];
+export type AlertType = typeof ALERT_TYPES[keyof typeof ALERT_TYPES]
 
 export interface IconComponentProps {
-    width?: number;
-    height?: number;
-    className?: string;
+    width?: number
+    height?: number
+    className?: string
 }
