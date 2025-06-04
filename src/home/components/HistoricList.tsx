@@ -8,7 +8,7 @@ export const HistoricList = () => {
 
     if (isLoading) {
         return (
-            <div className="space-y-4">
+            <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 w-full">
                 {Array.from({ length: 5 }).map((_, index) => (
                     <SkeletonHistoricCard key={index} />
                 ))}

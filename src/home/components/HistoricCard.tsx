@@ -42,9 +42,12 @@ export const HistoricCard = ({ historic }: HistoricCardProps) => {
                 </p>
             </div>
             <div onClick={handleClick} className="flex flex-row gap-6 my-4 mx-2 md:mx-10 lg:mx-20 p-3 sm:p-4 md:p-6 border border-gray-200 dark:border-neutral-500 cursor-pointer">
-                <img
-                    src={historic.reviews?.imageurl || 'placeholder_img_book.webp'}
-                    className="w-24 h-24 object-cover rounded-none" />
+                <div onClick={handleClick} className={`w-14 md:w-20 aspect-[3/4] overflow-hidden border-neutral-300 dark:border-neutral-500`}>
+                    <img
+                        src={historic.reviews?.imageurl || 'placeholder_img_book.webp'}
+                        alt="Book cover"
+                        className="w-full h-full object-cover" />
+                </div>        
                 <p className="w-full text-md dark:text-neutral-50 line-clamp-3">{historic.reviews?.text}</p>
             </div>
             <div className="mt-auto text-xs dark:text-neutral-50 font-medium">{formattedDate}</div>
