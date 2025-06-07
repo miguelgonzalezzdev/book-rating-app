@@ -9,14 +9,20 @@ import { ConfirmModal } from "../../core/components/ConfirmModal";
 import { useAuthStore } from "../../core/store/authStore";
 import { SkeletonProfile } from "./SkeletonProfile";
 import { UserReviewsList } from "./UserReviewsList";
+import { useNavigate } from "react-router";
 
 export function ProfilePage() {
     const { userId, name, surname, email, aboutme, profileimage, posts, followers, following, handleName, handleSurname, handleEmail, handleAboutme, handleSubmit, handleImageChange, error, isLoading } = useUserProfileData()
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const logout = useAuthStore((state) => state.logout)
+    const navigate = useNavigate()
 
     const handleLogout = () => {
         setShowConfirmModal(true);
+    }
+
+    const handlePublisBook = () => {
+        navigate("/publishing")
     }
 
     if (isLoading) return <SkeletonProfile />
@@ -108,11 +114,18 @@ export function ProfilePage() {
 
                     <FormButton text="Guardar cambios" />
 
-                    <div className="pt-4 border-t border-neutral-300 dark:border-neutral-500 flex justify-center">
+                    <div className="py-4 border-t border-neutral-300 dark:border-neutral-500 flex justify-center">
                         <button onClick={handleLogout} type="button" className="text-md font-semibold text-red-700 dark:text-red-400 saturate-150 hover:underline">
                             Cerrar sesión
                         </button>
                     </div>
+                    <p className="text-sm text-center text-neutral-700 dark:text-neutral-300">
+                        ¿Te gusta escribir?{" "}
+                        <span onClick={handlePublisBook} className="text-blue-600 hover:underline dark:text-blue-400 cursor-pointer" >
+                            Publica tu libro
+                        </span>{" "}
+                        y compártelo con la comunidad
+                    </p>
                 </form>
             </section>
 
