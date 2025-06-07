@@ -1,6 +1,9 @@
+import toast from "react-hot-toast"
 import { FormButton } from "../../core/components/FormButton"
 import { FormInputField } from "../../core/components/FormInputField"
 import { FormLabel } from "../../core/components/FormLabel"
+import { MultipleGenreSelector } from "../../core/components/MultipleGenreSelector"
+import { useGenresSelector } from "../../core/hooks/useGenresSelector"
 import { PhotoPlusIcon } from "../../core/icons/PhotoPlusIcon"
 import { usePublishBook } from "../hooks/usePublishBook"
 
@@ -13,9 +16,7 @@ export function PublishBookPage() {
         publisher,
         pages,
         description,
-        genreid1,
-        genreid2,
-        genreid3,
+        selectedGenres,
         imageFile,
         imageUrl,
         bookFile,
@@ -28,16 +29,57 @@ export function PublishBookPage() {
         handlePublisher,
         handlePages,
         handleDescription,
+        handleGenreChange,
         handleImageSelected,
         handleBookFile,
         handleSubmitBook
     } = usePublishBook()
+    const { genres, error: errorGenres, isLoading: isLoadingGenres } = useGenresSelector()
+
+    if (errorGenres) {
+        toast.error("Error al obtener los géneros.");
+    }
 
     return (
         <div className="min-h-screen w-full bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 flex items-center justify-start flex-col gap-10 px-4 py-10">
             <section className="w-full max-w-2xl bg-white dark:bg-neutral-600 rounded-2xl p-6 md:p-10 space-y-6 shadow-lg border border-gray-200 dark:border-neutral-700">
                 <h1 className="text-2xl md:text-3xl text-center font-semibold">Publicar libro</h1>
                 <form onSubmit={handleSubmitBook} className="space-y-6">
+
+                    {imageUrl && (
+                        <div className="w-full flex justify-center">
+                            <label htmlFor="inputImage" className="w-24 md:w-42 aspect-[3/4] overflow-hidden cursor-pointer flex items-center justify-center">
+                                <img
+                                    src={imageUrl?.trim() ? imageUrl : "../placeholder_img_book.webp"}
+                                    alt="Imagen del libro"
+                                    className="w-full h-full object-cover"
+                                />
+                                <input
+                                    id='inputImage'
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageSelected}
+                                    className="hidden"
+                                />
+                            </label>
+                        </div>
+                    )}
+
+                    {!imageUrl && (
+                        <div className="w-full flex justify-center">
+                            <label htmlFor="inputImage" className="w-24 md:w-42 aspect-[3/4] flex items-center justify-center border-2 border-dashed border-neutral-400 rounded-md cursor-pointer">
+                                <PhotoPlusIcon width={42} height={42} className="text-neutral-400 ml-1" />
+                                <input
+                                    id='inputImage'
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageSelected}
+                                    className="hidden"
+                                />
+                            </label>
+                        </div>
+                    )}
+
                     <div>
                         <FormLabel text="Título" htmlFor="title" />
                         <FormInputField
@@ -110,6 +152,24 @@ export function PublishBookPage() {
                             error={!!(error && pages === 0)}
                         />
                     </div>
+                    {isLoadingGenres ? (
+                        <>
+                            {[...Array(3)].map((_, index) => (
+                                <div key={index}>
+                                    <div  className="w-20 h-4 bg-neutral-200 dark:bg-neutral-700 rounded mb-1 animate-pulse"></div>
+                                    <div className="w-full px-4 py-3 rounded-lg bg-neutral-200 dark:bg-neutral-700 animate-pulse">
+                                        <div className="h-7 bg-neutral-300 dark:bg-neutral-600 rounded"></div>
+                                    </div>
+                                </div>
+                            ))}
+                        </>
+                    ) : (
+                        <MultipleGenreSelector
+                            selectedGenres={selectedGenres}
+                            onChange={handleGenreChange}
+                            allGenres={genres}
+                        />
+                    )}
                     <div>
                         <FormLabel text="Sinopsis " htmlFor="description" />
                         <textarea
@@ -120,57 +180,25 @@ export function PublishBookPage() {
                             placeholder="Breve resumen del libro..."
                         />
                     </div>
-                    <div className="w-full flex items-center md:items-stretch justify-center flex-col md:flex-row gap-2 md:gap-6">
-                        {imageUrl && (
-                            <label htmlFor="inputImage" className="w-24 md:w-42 aspect-[3/4] overflow-hidden cursor-pointer">
-                                <img
-                                    src={imageUrl?.trim() ? imageUrl : "../placeholder_img_book.webp"}
-                                    alt="Imagen del libro"
-                                    className="w-full h-full object-cover"
-                                />
-                                <input
-                                    id='inputImage'
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleImageSelected}
-                                    className="hidden"
-                                />
-                            </label>
-                        )}
-
-                        {!imageUrl && (
-                            <label htmlFor="inputImage" className="w-24 md:w-42 aspect-[3/4] flex items-center justify-center border-2 border-dashed border-neutral-400 rounded-md cursor-pointer">
-                                <PhotoPlusIcon width={42} height={42} className="text-neutral-400 ml-1" />
-                                <input
-                                    id='inputImage'
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleImageSelected}
-                                    className="hidden"
-                                />
-                            </label>
-                        )}
-
-                        <div className="flex flex-col gap-2 w-full">
-                            <FormLabel text="Archivo del libro" htmlFor="bookFile" />
-                            <label htmlFor="bookFile" className="flex items-center justify-between gap-3 bg-neutral-200 dark:bg-neutral-700 px-4 py-3 rounded-lg cursor-pointer hover:bg-neutral-300 dark:hover:bg-neutral-800 transition-colors border border-neutral-300 dark:border-transparent">
-                                <span className="text-sm text-neutral-700 dark:text-neutral-200">
-                                    {bookFile?.name || "Selecciona un archivo PDF o imagen"}
-                                </span>
-                                <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">
-                                    Seleccionar 
-                                </span>
-                                <input
-                                    id="bookFile"
-                                    name="bookFile"
-                                    type="file"
-                                    accept=".pdf, image/*"
-                                    onChange={handleBookFile}
-                                    className="hidden"
-                                />
-                            </label>
-                            <p className="text-sm text-neutral-700 dark:text-neutral-300 mt-1">Formatos permitidos: PDF o imagen (JPG, PNG, etc.)</p>
-                        </div>
+                    <div className="flex flex-col gap-2 w-full">
+                        <FormLabel text="Archivo del libro" htmlFor="bookFile" />
+                        <label htmlFor="bookFile" className="flex items-center justify-between gap-3 bg-neutral-200 dark:bg-neutral-700 px-4 py-3 rounded-lg cursor-pointer hover:bg-neutral-300 dark:hover:bg-neutral-800 transition-colors border border-neutral-300 dark:border-transparent">
+                            <span className="text-sm text-neutral-700 dark:text-neutral-200">
+                                {bookFile?.name || "Selecciona un archivo PDF o imagen"}
+                            </span>
+                            <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">
+                                Seleccionar
+                            </span>
+                            <input
+                                id="bookFile"
+                                name="bookFile"
+                                type="file"
+                                accept=".pdf, image/*"
+                                onChange={handleBookFile}
+                                className="hidden"
+                            />
+                        </label>
+                        <p className="text-sm text-neutral-700 dark:text-neutral-300 mt-1">Formatos permitidos: PDF o imagen (JPG, PNG, etc.)</p>
                     </div>
                     <FormButton text="Enviar" />
                 </form>

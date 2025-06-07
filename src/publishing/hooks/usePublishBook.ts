@@ -19,6 +19,12 @@ export function usePublishBook() {
     const [error, setError] = useState("")
     const [isLoading, setIsLoading] = useState(true)
 
+    const selectedGenres = {
+        genre1: genreid1.toString(),
+        genre2: genreid2.toString(),
+        genre3: genreid3.toString(),
+    };
+
     const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
         setError("")
         event.preventDefault()
@@ -68,6 +74,23 @@ export function usePublishBook() {
         setDescription(newDescription)
     }
 
+    const handleGenreChange = (key: string, value: string) => {
+        const numValue = parseInt(value, 10);
+        switch (key) {
+            case "genre1":
+                setGenreid1(numValue)
+                break
+            case "genre2":
+                setGenreid2(numValue)
+                break
+            case "genre3":
+                setGenreid3(numValue)
+                break
+            default:
+                break
+        }
+    }
+
     // Para guardar y mostrar la imagen seleccionada
     const handleImageSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
         setError("")
@@ -103,6 +126,7 @@ export function usePublishBook() {
         genreid1,
         genreid2,
         genreid3,
+        selectedGenres,
         imageFile,
         imageUrl,
         bookFile,
@@ -115,6 +139,7 @@ export function usePublishBook() {
         handlePublisher,
         handlePages,
         handleDescription,
+        handleGenreChange,
         handleImageSelected,
         handleBookFile,
         handleSubmitBook
