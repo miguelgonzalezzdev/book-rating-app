@@ -4,6 +4,7 @@ import { ALERT_TYPES } from "./constants"
 export interface User {
     id: string
     email: string
+    isAdmin?: boolean;
 }
 export type UserId = User["id"]
 export type UserName = User["name"]

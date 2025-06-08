@@ -12,6 +12,7 @@ export async function getBooksForSelect({ search }: SearchBooksProps): Promise<B
         .from('books')
         .select('id, title, author, rating, imageurl')
         .or(`title.ilike.%${search}%,author.ilike.%${search}%`)
+        .eq('validated', 1)
         .order('title', { ascending: true })
 
     if (error) {
@@ -38,6 +39,7 @@ export async function getBookSelectedById({ bookId }: GetBookSelectedByIdProps) 
         .from('books')
         .select('id, title, author, imageurl')
         .eq('id', bookId)
+        .eq('validated', 1)
         .single()
 
     if (!data || error) return { success: false, message: 'Error al obtener los datos del libros' }

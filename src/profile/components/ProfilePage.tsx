@@ -120,11 +120,11 @@ export function ProfilePage() {
                         </button>
                     </div>
                     <p className="text-sm text-center text-neutral-700 dark:text-neutral-300">
-                        ¿Te gusta escribir?{" "}
-                        <span onClick={handlePublisBook} className="text-blue-600 hover:underline dark:text-blue-400 cursor-pointer" >
-                            Publica tu libro
+                        ¿Te gusta escribir o no encuentras el libro que buscas?{" "}
+                        <span onClick={handlePublisBook} className="text-blue-600 hover:underline dark:text-blue-400 cursor-pointer font-semibold" >
+                            Publícalo
                         </span>{" "}
-                        y compártelo con la comunidad
+                        y compártelo con la comunidad.
                     </p>
                 </form>
             </section>

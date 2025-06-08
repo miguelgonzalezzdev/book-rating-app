@@ -12,6 +12,7 @@ export async function getBook({ bookId }: GetBookProps) {
         .from('books')
         .select('id, title, author, year, isbn, publisher, description, genreid1, genreid2, genreid3, imageurl, bookurl, rating, page_count')
         .eq('id', bookId)
+        .eq('validated', 1)
         .single()
 
     if (error) throw new Error(error.message)
@@ -46,7 +47,8 @@ export async function getBooksByGenre({ genreId }: GetBooksByGenreProps): Promis
     const { data, error } = await supabase
         .from('books')
         .select('id, title, author, rating, imageurl')
-        .or(`genreid1.eq.${genreId},genreid2.eq.${genreId},genreid3.eq.${genreId}`);
+        .or(`genreid1.eq.${genreId},genreid2.eq.${genreId},genreid3.eq.${genreId}`)
+        .eq('validated', 1);
 
     if (error) throw new Error(error.message)
 
@@ -56,7 +58,7 @@ export async function getBooksByGenre({ genreId }: GetBooksByGenreProps): Promis
         author: book.author,
         rating: book.rating,
         imageUrl: book.imageurl,
-    }));
+    }))
 }
 
 interface SearchBooksProps {
@@ -70,6 +72,7 @@ export async function searchBooks({ search }: SearchBooksProps): Promise<Book[]>
         .from('books')
         .select('id, title, author, rating, imageurl')
         .or(`title.ilike.%${search}%,author.ilike.%${search}%`)
+        .eq('validated', 1)
         .order('title', { ascending: true })
 
     if (error) {

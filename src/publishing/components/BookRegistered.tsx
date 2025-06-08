@@ -10,7 +10,7 @@ export function BookRegistered() {
     return (
         <div className="min-h-screen bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 flex items-center justify-center p-4">
             <section className="w-full max-w-xl bg-white dark:bg-neutral-600 rounded-2xl p-8 md:p-12 shadow-md border border-gray-200 dark:border-neutral-700 flex flex-col gap-8 text-center">
-                <h1 className="text-3xl font-semibold">¡Libro registrado con éxito!</h1>
+                <h1 className="text-3xl font-semibold">¡Solicitud registrada con éxito!</h1>
                 <p className="text-lg">
                     Gracias por enviar tu libro. Los administradores de Biblioclase revisarán la información enviada.
                 </p>
@@ -26,6 +26,5 @@ export function BookRegistered() {
                 </button>
             </section>
         </div>
-
     )
 }

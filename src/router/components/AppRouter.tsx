@@ -13,6 +13,8 @@ import { PublicOnlyRoute } from "./PublicOnlyRoute.tsx"
 import { PublicProfilePage } from "../../profile/components/PublicProfilePage.tsx"
 import { PublishBookPage } from "../../publishing/components/PublishBookPage.tsx"
 import { BookRegistered } from "../../publishing/components/BookRegistered.tsx"
+import { AdminRoute } from "./AdminRoute.tsx"
+import { AdminDashboard } from "../../admin/components/AdminDashboard.tsx"
 
 export const AppRouter = () => {
     return (
@@ -29,7 +31,7 @@ export const AppRouter = () => {
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/search/:query" element={<BooksList />} />
                 <Route path="/search/book/:query" element={<BookPage />} />
-                
+
                 {/* Rutas solo visibles al estar logeado */}
                 <Route element={<ProtectedRoute />}>
                     <Route path="/review" element={<ReviewPage />} />
@@ -37,6 +39,11 @@ export const AppRouter = () => {
                     <Route path="/profile/:userId" element={<PublicProfilePage />} />
                     <Route path="/publishing" element={<PublishBookPage />} />
                     <Route path="/bookregistered" element={<BookRegistered />} />
+                </Route>
+
+                {/* Rutas solo visibles al ser admin */}
+                <Route element={<AdminRoute />}>
+                    <Route path="/admin" element={<AdminDashboard />} />
                 </Route>
             </Route>
 

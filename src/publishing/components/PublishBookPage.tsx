@@ -213,7 +213,7 @@ export function PublishBookPage() {
                     {error && (
                         <p className="text-red-500 text-md text-center">{error}</p>
                     )}
-                    <FormButton text="Enviar" />
+                    <FormButton text="Enviar solicitud" />
                 </form>
             </section>
         </div>
