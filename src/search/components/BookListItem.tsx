@@ -33,9 +33,9 @@ export function BookListItem({ bookId, title, author, rating, imageUrl }: BookLi
                 <p className="text-md semibold text-neutral-700 dark:text-neutral-300">
                     {author}
                 </p>
-                <p className="mt-2 flex justify-start">
+                <div className="mt-2 flex justify-start">
                     <StarRating initialRating={rating} disabled={true} className="w-5 h-5" />
-                </p>
+                </div>
             </div>
         </li>
     )

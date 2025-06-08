@@ -28,7 +28,7 @@ export const BookPage = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 flex items-center justify-center flex-col gap-10 px-4 py-10">
+    <div className="min-h-screen w-full bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 flex items-center justify-start flex-col gap-10 px-4 py-10">
       <section className="bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-50 p-4 md:p-16">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-20">
           <div className="flex flex-col items-center justify-start gap-4">

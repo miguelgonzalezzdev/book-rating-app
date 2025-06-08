@@ -7,7 +7,7 @@ const currentYear = new Date().getFullYear();
 
 export function usePublishBook() {
     const currentAuthUser = useAuthStore((state) => state.user)
-     const navigate = useNavigate()
+    const navigate = useNavigate()
     const [title, setTitle] = useState("")
     const [author, setAuthor] = useState("")
     const [year, setYear] = useState(currentYear)
@@ -61,7 +61,7 @@ export function usePublishBook() {
         } catch (error) {
 
             setError(error instanceof Error ? error.message ?? "Ha ocurrido un error inesperado. El libro no registrado." : "Ha ocurrido un error inesperado. El libro no registrado.")
-        
+
         } finally {
             setIsLoading(false)
         }
@@ -153,7 +153,8 @@ export function usePublishBook() {
         }
     }
 
-    const handleSubmitBook = async (event: React.FormEvent<HTMLFormElement>) => { console.log("ENTRA")
+    const handleSubmitBook = async (event: React.FormEvent<HTMLFormElement>) => {
+        console.log("ENTRA")
         event.preventDefault()
         await submitBook()
     }
