@@ -12,6 +12,7 @@ import { ProtectedRoute } from "./ProtectedRoute.tsx"
 import { PublicOnlyRoute } from "./PublicOnlyRoute.tsx"
 import { PublicProfilePage } from "../../profile/components/PublicProfilePage.tsx"
 import { PublishBookPage } from "../../publishing/components/PublishBookPage.tsx"
+import { BookRegistered } from "../../publishing/components/BookRegistered.tsx"
 
 export const AppRouter = () => {
     return (
@@ -35,6 +36,7 @@ export const AppRouter = () => {
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/profile/:userId" element={<PublicProfilePage />} />
                     <Route path="/publishing" element={<PublishBookPage />} />
+                    <Route path="/bookregistered" element={<BookRegistered />} />
                 </Route>
             </Route>
 

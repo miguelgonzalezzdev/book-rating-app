@@ -6,6 +6,7 @@ import { MultipleGenreSelector } from "../../core/components/MultipleGenreSelect
 import { useGenresSelector } from "../../core/hooks/useGenresSelector"
 import { PhotoPlusIcon } from "../../core/icons/PhotoPlusIcon"
 import { usePublishBook } from "../hooks/usePublishBook"
+import { Loader } from "../../core/components/Loader"
 
 export function PublishBookPage() {
     const {
@@ -17,7 +18,6 @@ export function PublishBookPage() {
         pages,
         description,
         selectedGenres,
-        imageFile,
         imageUrl,
         bookFile,
         error,
@@ -38,6 +38,16 @@ export function PublishBookPage() {
 
     if (errorGenres) {
         toast.error("Error al obtener los géneros.");
+    }
+
+    if (error) {
+        toast.error(error);
+    }
+
+    if (isLoading) {
+        return (
+            <Loader />
+        )
     }
 
     return (
@@ -67,8 +77,8 @@ export function PublishBookPage() {
 
                     {!imageUrl && (
                         <div className="w-full flex justify-center">
-                            <label htmlFor="inputImage" className="w-24 md:w-42 aspect-[3/4] flex items-center justify-center border-2 border-dashed border-neutral-400 rounded-md cursor-pointer">
-                                <PhotoPlusIcon width={42} height={42} className="text-neutral-400 ml-1" />
+                            <label htmlFor="inputImage" className={`w-24 md:w-42 aspect-[3/4] flex items-center justify-center border-2 border-dashed rounded-md cursor-pointer ${error && !imageUrl ? 'border-red-600' : 'border-neutral-400'}`}>
+                                <PhotoPlusIcon width={42} height={42} className={`${error && !imageUrl ? 'text-red-600 ml-1' : 'text-neutral-400 ml-1'}`} />
                                 <input
                                     id='inputImage'
                                     type="file"
@@ -81,7 +91,7 @@ export function PublishBookPage() {
                     )}
 
                     <div>
-                        <FormLabel text="Título" htmlFor="title" />
+                        <FormLabel text="Título" htmlFor="title" error={!!(error && title === "")}/>
                         <FormInputField
                             id="title"
                             name="title"
@@ -93,7 +103,7 @@ export function PublishBookPage() {
                         />
                     </div>
                     <div>
-                        <FormLabel text="Autor" htmlFor="author" />
+                        <FormLabel text="Autor" htmlFor="author" error={!!(error && author === "")}/>
                         <FormInputField
                             id="author"
                             name="author"
@@ -105,7 +115,7 @@ export function PublishBookPage() {
                         />
                     </div>
                     <div>
-                        <FormLabel text="Año publicación" htmlFor="year" />
+                        <FormLabel text="Año publicación" htmlFor="year" error={!!(error && year === 0)}/>
                         <FormInputField
                             id="year"
                             name="year"
@@ -113,7 +123,7 @@ export function PublishBookPage() {
                             placeholder="2025"
                             value={year?.toString() ?? ""}
                             onChange={handleYear}
-                            error={!!(error && year.toString() === "")}
+                            error={!!(error && year === 0)}
                         />
                     </div>
                     <div>
@@ -141,7 +151,7 @@ export function PublishBookPage() {
                         />
                     </div>
                     <div>
-                        <FormLabel text="Páginas" htmlFor="pages" />
+                        <FormLabel text="Páginas" htmlFor="pages" error={!!(error && pages === 0)}/>
                         <FormInputField
                             id="pages"
                             name="pages"
@@ -171,7 +181,7 @@ export function PublishBookPage() {
                         />
                     )}
                     <div>
-                        <FormLabel text="Sinopsis " htmlFor="description" />
+                        <FormLabel text="Sinopsis " htmlFor="description" error={!!(error && description === "")}/>
                         <textarea
                             id="description"
                             value={description}
@@ -181,7 +191,7 @@ export function PublishBookPage() {
                         />
                     </div>
                     <div className="flex flex-col gap-2 w-full">
-                        <FormLabel text="Archivo del libro" htmlFor="bookFile" />
+                        <FormLabel text="Archivo del libro" htmlFor="bookFile" error={!!(error && !bookFile)}/>
                         <label htmlFor="bookFile" className="flex items-center justify-between gap-3 bg-neutral-200 dark:bg-neutral-700 px-4 py-3 rounded-lg cursor-pointer hover:bg-neutral-300 dark:hover:bg-neutral-800 transition-colors border border-neutral-300 dark:border-transparent">
                             <span className="text-sm text-neutral-700 dark:text-neutral-200">
                                 {bookFile?.name || "Selecciona un archivo PDF o imagen"}
@@ -200,6 +210,9 @@ export function PublishBookPage() {
                         </label>
                         <p className="text-sm text-neutral-700 dark:text-neutral-300 mt-1">Formatos permitidos: PDF o imagen (JPG, PNG, etc.)</p>
                     </div>
+                    {error && (
+                        <p className="text-red-500 text-md text-center">{error}</p>
+                    )}
                     <FormButton text="Enviar" />
                 </form>
             </section>

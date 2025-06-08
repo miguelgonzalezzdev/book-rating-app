@@ -1,8 +1,13 @@
 import { useState } from "react"
+import { useAuthStore } from "../../core/store/authStore";
+import { saveNewBook } from "../services/publishingBook";
+import { useNavigate } from "react-router";
 
 const currentYear = new Date().getFullYear();
 
 export function usePublishBook() {
+    const currentAuthUser = useAuthStore((state) => state.user)
+     const navigate = useNavigate()
     const [title, setTitle] = useState("")
     const [author, setAuthor] = useState("")
     const [year, setYear] = useState(currentYear)
@@ -17,13 +22,50 @@ export function usePublishBook() {
     const [imageUrl, setImageUrl] = useState("")
     const [bookFile, setBookFile] = useState<File | null>(null)
     const [error, setError] = useState("")
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
 
     const selectedGenres = {
         genre1: genreid1.toString(),
         genre2: genreid2.toString(),
         genre3: genreid3.toString(),
-    };
+    }
+
+    const submitBook = async () => {
+        try {
+            setIsLoading(true)
+
+            const result = await saveNewBook({
+                userId: currentAuthUser?.id || "",
+                title,
+                author,
+                year,
+                isbn,
+                publisher,
+                pages,
+                description,
+                genreid1,
+                genreid2,
+                genreid3,
+                imageFile,
+                bookFile
+            })
+
+            if (!result.success) {
+                console.log(result?.error || "error")
+                setError(result?.message || "Ha ocurrido un error inesperado. El libro no registrado.")
+                return
+            }
+
+            navigate("/bookregistered")
+
+        } catch (error) {
+
+            setError(error instanceof Error ? error.message ?? "Ha ocurrido un error inesperado. El libro no registrado." : "Ha ocurrido un error inesperado. El libro no registrado.")
+        
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
     const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
         setError("")
@@ -75,7 +117,7 @@ export function usePublishBook() {
     }
 
     const handleGenreChange = (key: string, value: string) => {
-        const numValue = parseInt(value, 10);
+        const numValue = parseInt(value, 10)
         switch (key) {
             case "genre1":
                 setGenreid1(numValue)
@@ -111,8 +153,9 @@ export function usePublishBook() {
         }
     }
 
-    const handleSubmitBook = () => {
-
+    const handleSubmitBook = async (event: React.FormEvent<HTMLFormElement>) => { console.log("ENTRA")
+        event.preventDefault()
+        await submitBook()
     }
 
     return {

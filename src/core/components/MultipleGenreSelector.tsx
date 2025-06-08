@@ -26,8 +26,6 @@ export function MultipleGenreSelector({ selectedGenres, onChange, allGenres }: M
         return allGenres.filter(genre => !selectedValues.includes(genre.id))
     }
 
-
-
     return (
         <>
             {Object.entries(selectedGenres).map(([key, value]) => (
