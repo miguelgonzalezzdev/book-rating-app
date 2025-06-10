@@ -12,7 +12,7 @@ export const BookPage = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   const { query } = useParams()
   const bookId = query || ""
-  const { title, author, year, isbn, publisher, description, imageUrl, genreid1, genreid2, genreid3, rating, pageCount, isLoading, error } = useBook({ bookId })
+  const { title, author, year, isbn, publisher, description, imageUrl, bookUrl, genreid1, genreid2, genreid3, rating, pageCount, isLoading, error } = useBook({ bookId })
   const genres = [genreid1, genreid2, genreid3].filter((id) => id != null && id !== 0);
 
   if (isLoading) return <SkeletonBookPage />
@@ -39,16 +39,18 @@ export const BookPage = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="mt-4">
-              <a
-                href={""}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
-              >
-                Leer libro
-              </a>
-            </div>
+            {isAuthenticated &&
+              < div className="mt-4">
+                <a
+                  href={bookUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+                >
+                  Leer libro
+                </a>
+              </div>
+            }
           </div>
 
           <div className="flex flex-col gap-10">
@@ -87,7 +89,7 @@ export const BookPage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section >
       <section className="w-full md:px-10">
         {isAuthenticated
           ?
@@ -103,6 +105,6 @@ export const BookPage = () => {
 
         }
       </section>
-    </div>
+    </div >
   )
 }

@@ -40,7 +40,7 @@ export function PublishBookPage() {
         toast.error("Error al obtener los géneros.");
     }
 
-    if (error) {
+    if (error && error!=="") {
         toast.error(error);
     }
 

@@ -16,6 +16,7 @@ interface InsertBookData {
     imageurl: string
     bookurl: string
     rating: number
+    validated?: number
 }
 
 interface SaveNewBookProps {
@@ -59,7 +60,7 @@ export async function saveNewBook({ userId = "", title = "", author = "", year =
     const imgFileName = `${crypto.randomUUID()}.webp`
 
     const { error: imgUploadError } = await supabase.storage
-        .from('review-images')
+        .from('books-images')
         .upload(imgFileName, imageCompressedFile, { upsert: true })
 
     if (imgUploadError) {
@@ -68,7 +69,7 @@ export async function saveNewBook({ userId = "", title = "", author = "", year =
 
     // Obtener URL publica de la imagen subida
     const { data: publicUrlImage } = supabase.storage
-        .from('review-images')
+        .from('books-images')
         .getPublicUrl(imgFileName)
 
     if (!publicUrlImage || !publicUrlImage.publicUrl) {
@@ -138,7 +139,7 @@ export async function saveNewBook({ userId = "", title = "", author = "", year =
         genreid3: genreid3 === 0 ? null : genreid3,
         imageurl: imageUrl,
         bookurl: bookUrl,
-        rating: 0
+        rating: 0,
     }
 
     // Insertar el nuevo libro

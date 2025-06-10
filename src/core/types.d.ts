@@ -4,10 +4,24 @@ import { ALERT_TYPES } from "./constants"
 export interface User {
     id: string
     email: string
-    isAdmin?: boolean;
+    isAdmin?: boolean
 }
 export type UserId = User["id"]
 export type UserName = User["name"]
+
+export interface UserInfo {
+    id: UserId
+    email: string
+    name: UserName
+    surname: string
+    about: string
+    image: string
+    followersCount: number
+    followingCount: number
+    postsCount: number
+    isAdmin?: boolean
+}
+export type ListOfUserInfo = UserInfo[]
 //***** END Tipos para GENRES *****//
 
 //***** START Tipos para GENRES *****//

@@ -31,6 +31,7 @@ export function usePublishBook() {
     }
 
     const submitBook = async () => {
+        setError("")
         try {
             setIsLoading(true)
 
@@ -154,7 +155,6 @@ export function usePublishBook() {
     }
 
     const handleSubmitBook = async (event: React.FormEvent<HTMLFormElement>) => {
-        console.log("ENTRA")
         event.preventDefault()
         await submitBook()
     }
