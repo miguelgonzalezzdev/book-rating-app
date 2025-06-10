@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { ListOfUserInfo } from "../../core/types";
 import { useAuthStore } from "../../core/store/authStore";
-import { getAllUsers } from "../services/getAllUsers";
+import { getAllUsers } from "../services/users";
 
 export function useUsers () {
     const isAuthenticated = useAuthStore(state => state.isAuthenticated)

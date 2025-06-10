@@ -64,6 +64,7 @@ export interface Book {
 }
 
 export type ListOfBooks = Book[]
+export type ListOfBooksDetails = BookDetails[]
 export type BookId = BookDetails["id"]
 export type BookTitle = BookDetails["title"]
 export type BookAuthor = BookDetails["author"]
