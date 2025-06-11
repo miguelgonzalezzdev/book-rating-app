@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { UsersList } from "./UsersList";
 import { BooksList } from "./BooksList";
-import { BooksToValidateList } from "./BooksToValidateList";
+import { BooksUnvalidatedList } from "./BooksUnvalidatedList";
 
 const sections = ["usuarios", "libros", "solicitudes"]
 
@@ -20,7 +20,7 @@ export function AdminDashboard() {
                 )
             case "solicitudes":
                 return (
-                    <BooksToValidateList />
+                    <BooksUnvalidatedList />
                 )
             default:
                 return

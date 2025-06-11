@@ -33,6 +33,12 @@ export function UsersList() {
                         </tr>
                     }
 
+                    {!error && !isLoading && users.length === 0 &&
+                        < tr >
+                            <td className="text-center text-neutral-700 dark:text-neutral-300" colSpan={6}>No se han encontrado usuarios</td>
+                        </tr>
+                    }
+
                     {!error && !isLoading && users.length > 0 && users.map((user) => (
                         <tr key={user.id} className="border-b border-gray-300 dark:border-neutral-500 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition">
                             <td className="py-3 px-4 text-left">

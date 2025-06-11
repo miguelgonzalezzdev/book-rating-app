@@ -1,11 +1,12 @@
 import { useBooks } from "../hooks/useBooks"
 
-export function BooksList() {
+export function BooksUnvalidatedList() {
     const {
         books,
         isLoading,
-        error
-    } = useBooks({ type: 1 })
+        error,
+        handleValidateBook
+    } = useBooks({ type: 2 })
 
     return (
         <div className="overflow-x-auto">
@@ -18,24 +19,25 @@ export function BooksList() {
                         <th className="py-3 px-4 text-sm font-semibold text-left">PUBLICADO</th>
                         <th className="py-3 px-4 text-sm font-semibold text-left">GÉNEROS</th>
                         <th className="py-3 px-4 text-sm font-semibold text-left">PÁGINAS</th>
+                        <th className="py-3 px-4 text-sm font-semibold text-left">ACCIONES</th>
                     </tr>
                 </thead>
                 <tbody>
                     {isLoading &&
                         <tr>
-                            <td className="text-center text-neutral-700 dark:text-neutral-300" colSpan={6}>Cargando libros...</td>
+                            <td className="text-center text-neutral-700 dark:text-neutral-300" colSpan={7}>Cargando libros...</td>
                         </tr>
                     }
 
                     {error && !isLoading && books.length === 0 &&
                         <tr>
-                            <td className="text-center text-neutral-700 dark:text-neutral-300" colSpan={6}>Error al obtener los libros</td>
+                            <td className="text-center text-neutral-700 dark:text-neutral-300" colSpan={7}>Error al obtener los libros</td>
                         </tr>
                     }
 
                     {!error && !isLoading && books.length === 0 &&
                         < tr >
-                            <td className="text-center text-neutral-700 dark:text-neutral-300" colSpan={6}>No se han encontrado libros</td>
+                            <td className="text-center text-neutral-700 dark:text-neutral-300" colSpan={7}>No se han encontrado libros pendientes de validar</td>
                         </tr>
                     }
 
@@ -54,10 +56,19 @@ export function BooksList() {
                             <td className="py-3 px-4 text-left">{book.year}</td>
                             <td className="py-3 px-4 text-left">{[book.genre1, book.genre2, book.genre3].filter(Boolean).join(', ')}</td>
                             <td className="py-3 px-4 text-left">{book.pageCount}</td>
+                            <td className="py-3 px-4 align-middle text-left">
+                                <button
+                                    type="button"
+                                    onClick={() => handleValidateBook({ bookId: book.id })}
+                                    className="bg-green-600 hover:bg-green-700 transition-colors text-white font-bold py-2 px-4 rounded-lg shadow-md"
+                                >
+                                    Validar
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-        </div>
+        </div >
     )
 }
