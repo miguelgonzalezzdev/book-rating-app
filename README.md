@@ -6,11 +6,15 @@ Biblioclase es una aplicación diseñada para fomentar el hábito de la lectura 
 
 - 💻 Single-page application (SPA)
 
-- 📖 Búsqueda de libros por género literario
+- 🔍 Búsqueda de libros por género literario o nombre
 
 - ✍️ Publicación de reseñas y opiniones
 
-- 🤝 Interacción entre usuarios mediante comentarios
+- 💬 Interacción entre usuarios mediante comentarios
+
+- 📕 Envío de solicitudes para registrar nuevos libros
+
+- ✔ Panel de administración
 
 ## 🛠️ Tecnologías utilizadas
 
@@ -27,3 +31,9 @@ Biblioclase es una aplicación diseñada para fomentar el hábito de la lectura 
 - Tailwind CSS
 
 - HTML
+
+## 🌍 Accede a la aplicación
+
+Puedes visitar la aplicación pulsando en el siguiente enlace:
+
+👉 [**biblioclase.netlify.app**](https://biblioclase.netlify.app/)
